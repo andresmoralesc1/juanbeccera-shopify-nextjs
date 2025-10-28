@@ -1,5 +1,5 @@
 import { CartProvider } from 'components/cart/cart-context';
-import { Navbar } from 'components/layout/navbar';
+import NavbarIntegrated from '@/components/custom/NavbarIntegrated';
 import { WelcomeToast } from 'components/welcome-toast';
 import { GeistSans } from 'geist/font/sans';
 import { getCart } from 'lib/shopify';
@@ -7,6 +7,17 @@ import { ReactNode } from 'react';
 import { Toaster } from 'sonner';
 import './globals.css';
 import { baseUrl } from 'lib/utils';
+import localFont from 'next/font/local';
+
+const belleza = localFont({
+  src: '../fonts/Belleza-Regular.ttf',
+  variable: '--font-belleza',
+});
+
+const moderat = localFont({
+  src: '../fonts/Moderat-Black.ttf',
+  variable: '--font-moderat',
+});
 
 const { SITE_NAME } = process.env;
 
@@ -31,10 +42,10 @@ export default async function RootLayout({
   const cart = getCart();
 
   return (
-    <html lang="en" className={GeistSans.variable}>
+    <html lang="es" className={`${GeistSans.variable} ${belleza.variable} ${moderat.variable}`}>
       <body className="bg-neutral-50 text-black selection:bg-teal-300 dark:bg-neutral-900 dark:text-white dark:selection:bg-pink-500 dark:selection:text-white">
         <CartProvider cartPromise={cart}>
-          <Navbar />
+          <NavbarIntegrated />
           <main>
             {children}
             <Toaster closeButton />

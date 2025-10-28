@@ -1,10 +1,26 @@
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fcommerce&project-name=commerce&repo-name=commerce&demo-title=Next.js%20Commerce&demo-url=https%3A%2F%2Fdemo.vercel.store&demo-image=https%3A%2F%2Fbigcommerce-demo-asset-ksvtgfvnd.vercel.app%2Fbigcommerce.png&env=COMPANY_NAME,SHOPIFY_REVALIDATION_SECRET,SHOPIFY_STORE_DOMAIN,SHOPIFY_STOREFRONT_ACCESS_TOKEN,SITE_NAME)
+# Juan Becerra - Tienda E-commerce Integrada
 
-# Next.js Commerce
+Tienda de e-commerce personalizada que combina el diseño elegante de Juan Becerra con la funcionalidad completa de Shopify.
 
-A high-performance, server-rendered Next.js App Router ecommerce application.
+## 🎯 Características
 
-This template uses React Server Components, Server Actions, `Suspense`, `useOptimistic`, and more.
+### ✅ Diseño Personalizado
+- **Marca Juan Becerra**: Paleta de colores, tipografías y estética de lujo
+- **Componentes personalizados**: Hero, categorías, productos destacados, newsletter
+- **Fuentes exclusivas**: Belleza (serif) y Moderat (sans-serif)
+- **Responsive**: Diseño adaptable a todos los dispositivos
+
+### ✅ Integración Shopify
+- **Productos dinámicos**: Catálogo completo desde Shopify
+- **Carrito funcional**: Sistema de carrito y checkout completo
+- **Colecciones**: Organización por categorías
+- **Gestión en tiempo real**: Productos y precios actualizados automáticamente
+
+### ✅ Páginas Personalizadas
+- **Home**: Diseño completo con todos los componentes personalizados
+- **Productos**: Páginas de producto con galería y detalles
+- **Colecciones**: Páginas de categorías con filtros
+- **Búsqueda**: Sistema de búsqueda integrado
 
 <h3 id="v1-note"></h3>
 

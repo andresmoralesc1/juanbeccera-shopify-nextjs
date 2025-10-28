@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { GridTileImage } from 'components/grid/tile';
-import Footer from 'components/layout/footer';
+import FooterCustom from '@/components/custom/FooterCustom';
+import AnnouncementBar from '@/components/custom/AnnouncementBar';
 import { Gallery } from 'components/product/gallery';
 import { ProductProvider } from 'components/product/product-context';
 import { ProductDescription } from 'components/product/product-description';
@@ -80,32 +81,63 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
           __html: JSON.stringify(productJsonLd)
         }}
       />
-      <div className="mx-auto max-w-(--breakpoint-2xl) px-4">
-        <div className="flex flex-col rounded-lg border border-neutral-200 bg-white p-8 md:p-12 lg:flex-row lg:gap-8 dark:border-neutral-800 dark:bg-black">
-          <div className="h-full w-full basis-full lg:basis-4/6">
-            <Suspense
-              fallback={
-                <div className="relative aspect-square h-full max-h-[550px] w-full overflow-hidden" />
-              }
-            >
-              <Gallery
-                images={product.images.slice(0, 5).map((image: Image) => ({
-                  src: image.url,
-                  altText: image.altText
-                }))}
-              />
-            </Suspense>
-          </div>
+      <AnnouncementBar />
 
-          <div className="basis-full lg:basis-2/6">
-            <Suspense fallback={null}>
-              <ProductDescription product={product} />
-            </Suspense>
+      {/* Product Detail Section - Diseño elegante Juan Becerra */}
+      <div className="bg-white pt-32 pb-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {/* Breadcrumb */}
+          <nav className="mb-8 text-sm">
+            <ol className="flex items-center space-x-2">
+              <li>
+                <Link href="/" className="text-gray-500 hover:text-[#620c0b] transition-colors">
+                  Inicio
+                </Link>
+              </li>
+              <li className="text-gray-400">/</li>
+              <li>
+                <Link href="/search" className="text-gray-500 hover:text-[#620c0b] transition-colors">
+                  Productos
+                </Link>
+              </li>
+              <li className="text-gray-400">/</li>
+              <li className="text-gray-900 font-medium">{product.title}</li>
+            </ol>
+          </nav>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+            {/* Gallery */}
+            <div className="lg:sticky lg:top-32 lg:self-start">
+              <Suspense
+                fallback={
+                  <div className="relative aspect-square h-full w-full overflow-hidden bg-gray-100" />
+                }
+              >
+                <Gallery
+                  images={product.images.map((image: Image) => ({
+                    src: image.url,
+                    altText: image.altText
+                  }))}
+                />
+              </Suspense>
+            </div>
+
+            {/* Product Info */}
+            <div className="flex flex-col">
+              <Suspense fallback={null}>
+                <ProductDescription product={product} />
+              </Suspense>
+            </div>
           </div>
         </div>
-        <RelatedProducts id={product.id} />
       </div>
-      <Footer />
+
+      {/* Related Products */}
+      <Suspense fallback={<div className="py-16 text-center">Cargando productos relacionados...</div>}>
+        <RelatedProducts id={product.id} />
+      </Suspense>
+
+      <FooterCustom />
     </ProductProvider>
   );
 }
@@ -116,34 +148,48 @@ async function RelatedProducts({ id }: { id: string }) {
   if (!relatedProducts.length) return null;
 
   return (
-    <div className="py-8">
-      <h2 className="mb-4 text-2xl font-bold">Related Products</h2>
-      <ul className="flex w-full gap-4 overflow-x-auto pt-1">
-        {relatedProducts.map((product) => (
-          <li
-            key={product.handle}
-            className="aspect-square w-full flex-none min-[475px]:w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5"
-          >
+    <div className="py-16 bg-[#364e41]">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <h2 className="font-belleza text-3xl lg:text-4xl font-light tracking-wide mb-8 text-white text-center">
+          También te puede interesar
+        </h2>
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+          {relatedProducts.map((product) => (
             <Link
-              className="relative h-full w-full"
+              key={product.handle}
               href={`/product/${product.handle}`}
+              className="group relative block"
               prefetch={true}
             >
-              <GridTileImage
-                alt={product.title}
-                label={{
-                  title: product.title,
-                  amount: product.priceRange.maxVariantPrice.amount,
-                  currencyCode: product.priceRange.maxVariantPrice.currencyCode
-                }}
-                src={product.featuredImage?.url}
-                fill
-                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
-              />
+              <div className="aspect-square overflow-hidden bg-gray-100 relative">
+                {/* Marco minimalista */}
+                <div className="absolute top-3 left-3 right-3 bottom-3 border border-white/30 z-20 transition-all duration-500 group-hover:border-white/60 pointer-events-none"></div>
+
+                {product.featuredImage && (
+                  <img
+                    src={product.featuredImage.url}
+                    alt={product.title}
+                    className="h-full w-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
+                  />
+                )}
+
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:from-black/70 transition-all duration-300"></div>
+
+                {/* Contenido de texto */}
+                <div className="absolute inset-0 flex flex-col justify-end p-4">
+                  <h3 className="text-sm font-semibold text-white tracking-wider">
+                    {product.title}
+                  </h3>
+                  <p className="text-white text-sm font-bold mt-1">
+                    ${parseFloat(product.priceRange.maxVariantPrice.amount).toLocaleString('es-CO')}
+                  </p>
+                </div>
+              </div>
             </Link>
-          </li>
-        ))}
-      </ul>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

@@ -18,7 +18,7 @@ function SubmitButton({
   quantity: number;
 }) {
   const baseClasses =
-    'w-full flex items-center justify-center gap-3 px-8 py-4 text-sm tracking-[0.15em] uppercase font-medium transition-all duration-300';
+    'font-moderat w-full flex items-center justify-center gap-3 px-8 py-4 text-sm tracking-[0.15em] uppercase font-medium transition-all duration-300';
 
   const enabledClasses = 'bg-[#620c0b] text-white hover:bg-[#4a0908]';
   const disabledClasses = 'bg-gray-300 text-gray-500 cursor-not-allowed';

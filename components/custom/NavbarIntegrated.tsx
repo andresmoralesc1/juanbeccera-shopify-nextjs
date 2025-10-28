@@ -87,10 +87,10 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
               </nav>
 
               <div className="flex items-center space-x-3">
-                <button className={`hidden lg:block p-2 rounded-full transition-colors ${isScrolled || isSolidVariant ? 'hover:bg-gray-100' : 'hover:bg-white/20'}`}>
+                <button className={`hidden lg:block p-2 transition-colors ${isScrolled || isSolidVariant ? 'hover:bg-gray-100' : 'hover:bg-white/20'}`}>
                   <Search className={`h-5 w-5 ${isScrolled || isSolidVariant ? 'text-black' : 'text-white'}`} />
                 </button>
-                <button className={`p-2 rounded-full transition-colors ${isScrolled || isSolidVariant ? 'hover:bg-gray-100' : 'hover:bg-white/20'}`}>
+                <button className={`p-2 transition-colors ${isScrolled || isSolidVariant ? 'hover:bg-gray-100' : 'hover:bg-white/20'}`}>
                   <User className={`h-5 w-5 ${isScrolled || isSolidVariant ? 'text-black' : 'text-white'}`} />
                 </button>
                 {/* Integrar carrito de Shopify */}
@@ -105,7 +105,7 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(true)}
-              className={`lg:hidden p-2 rounded-full transition-colors ${isScrolled || isSolidVariant ? 'hover:bg-gray-100' : 'hover:bg-white/20'}`}
+              className={`lg:hidden p-2 transition-colors ${isScrolled || isSolidVariant ? 'hover:bg-gray-100' : 'hover:bg-white/20'}`}
             >
               <Menu className={`h-6 w-6 ${isScrolled || isSolidVariant ? 'text-black' : 'text-white'}`} />
             </button>
@@ -135,7 +135,7 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
           />
           <button
             onClick={() => setIsMobileMenuOpen(false)}
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            className="p-2 hover:bg-gray-100 transition-colors"
           >
             <X className="h-6 w-6 text-gray-900" />
           </button>
@@ -155,11 +155,11 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
         </nav>
 
         <div className="p-6 border-t space-y-4">
-          <button className="w-full flex items-center gap-3 p-3 hover:bg-gray-100 rounded-lg transition-colors">
+          <button className="w-full flex items-center gap-3 p-3 hover:bg-gray-100 transition-colors">
             <Search className="h-5 w-5 text-gray-900" />
             <span className="text-gray-900">Buscar</span>
           </button>
-          <button className="w-full flex items-center gap-3 p-3 hover:bg-gray-100 rounded-lg transition-colors">
+          <button className="w-full flex items-center gap-3 p-3 hover:bg-gray-100 transition-colors">
             <User className="h-5 w-5 text-gray-900" />
             <span className="text-gray-900">Mi Cuenta</span>
           </button>

@@ -32,7 +32,7 @@ export default function Newsletter() {
       )}
 
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#620c0b]/10 mb-6">
+        <div className="inline-flex items-center justify-center w-16 h-16 bg-[#620c0b]/10 mb-6">
           <Mail className="h-8 w-8 text-[#620c0b]" />
         </div>
 

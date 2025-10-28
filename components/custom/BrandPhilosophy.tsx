@@ -66,7 +66,7 @@ export default function BrandPhilosophy() {
               Trabajamos únicamente con los mejores materiales: cuero genuino, textiles premium y herrajes de alta calidad que garantizan durabilidad y estilo atemporal.
             </p>
             <div className="pt-4">
-              <a href="#productos" className="inline-block text-white text-sm tracking-[0.2em] uppercase font-medium border-b-2 border-white/50 hover:border-white transition-colors pb-1">
+              <a href="/search" className="font-moderat inline-block text-white text-sm tracking-[0.2em] uppercase font-medium border-b-2 border-white/50 hover:border-white transition-colors pb-1">
                 Explorar Colección
               </a>
             </div>

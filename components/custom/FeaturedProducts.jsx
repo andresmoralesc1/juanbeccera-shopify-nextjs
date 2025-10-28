@@ -119,9 +119,9 @@ export default function FeaturedProducts({ products, title = "Productos Destacad
               Descubre nuestros artículos más populares y exclusivos. Cada pieza ha sido cuidadosamente seleccionada para ofrecerte la mejor calidad y estilo.
             </p>
             <div className="flex justify-center lg:justify-start">
-              <a 
-                href="#productos" 
-                className="inline-flex items-center gap-3 font-moderat text-white text-sm sm:text-base tracking-[0.15em] uppercase font-light border border-white/50 px-8 py-3 hover:bg-white hover:text-black transition-all duration-300"
+              <a
+                href="/search"
+                className="inline-flex items-center gap-3 font-moderat bg-[#620c0b] text-white text-sm sm:text-base tracking-[0.15em] uppercase font-medium px-8 py-3 hover:bg-[#4a0908] transition-all duration-300"
               >
                 Ver Todos
               </a>

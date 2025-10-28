@@ -78,7 +78,7 @@ export default function SeasonalBanner() {
                   {/* Botón elegante pero legible */}
                   <a
                     href={slide.href}
-                    className="group inline-flex items-center gap-3 font-moderat bg-white text-black px-8 py-4 text-sm sm:text-base tracking-[0.15em] uppercase font-semibold hover:bg-gray-100 transition-all duration-300"
+                    className="group inline-flex items-center gap-3 font-moderat bg-[#620c0b] text-white px-8 py-4 text-sm sm:text-base tracking-[0.15em] uppercase font-semibold hover:bg-[#4a0908] transition-all duration-300"
                   >
                     {slide.buttonText}
                     <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -4,9 +4,9 @@ import { notFound } from 'next/navigation';
 import { GridTileImage } from 'components/grid/tile';
 import FooterCustom from '@/components/custom/FooterCustom';
 import AnnouncementBar from '@/components/custom/AnnouncementBar';
-import { Gallery } from 'components/product/gallery';
+import { GalleryCustom } from 'components/product/gallery-custom';
 import { ProductProvider } from 'components/product/product-context';
-import { ProductDescription } from 'components/product/product-description';
+import { ProductDescriptionCustom } from 'components/product/product-description-custom';
 import { HIDDEN_PRODUCT_TAG } from 'lib/constants';
 import { getProduct, getProductRecommendations } from 'lib/shopify';
 import { Image } from 'lib/shopify/types';
@@ -86,34 +86,15 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
       {/* Product Detail Section - Diseño elegante Juan Becerra */}
       <div className="bg-white pt-32 pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {/* Breadcrumb */}
-          <nav className="mb-8 text-sm">
-            <ol className="flex items-center space-x-2">
-              <li>
-                <Link href="/" className="text-gray-500 hover:text-[#620c0b] transition-colors">
-                  Inicio
-                </Link>
-              </li>
-              <li className="text-gray-400">/</li>
-              <li>
-                <Link href="/search" className="text-gray-500 hover:text-[#620c0b] transition-colors">
-                  Productos
-                </Link>
-              </li>
-              <li className="text-gray-400">/</li>
-              <li className="text-gray-900 font-medium">{product.title}</li>
-            </ol>
-          </nav>
-
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-            {/* Gallery */}
+            {/* Gallery with Vertical Thumbnails */}
             <div className="lg:sticky lg:top-32 lg:self-start">
               <Suspense
                 fallback={
                   <div className="relative aspect-square h-full w-full overflow-hidden bg-gray-100" />
                 }
               >
-                <Gallery
+                <GalleryCustom
                   images={product.images.map((image: Image) => ({
                     src: image.url,
                     altText: image.altText
@@ -122,10 +103,10 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
               </Suspense>
             </div>
 
-            {/* Product Info */}
+            {/* Product Info with Custom Design */}
             <div className="flex flex-col">
               <Suspense fallback={null}>
-                <ProductDescription product={product} />
+                <ProductDescriptionCustom product={product} />
               </Suspense>
             </div>
           </div>

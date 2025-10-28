@@ -40,43 +40,54 @@ export default async function CategoryPage(props: {
     <>
       <AnnouncementBar />
 
-      {/* Collection Header - Diseño elegante */}
-      <div className="bg-[#364e41] pt-32 pb-16">
+      {/* Collection Header - Compacto y enfocado */}
+      <div className="bg-[#364e41] pt-24 pb-6">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {/* Breadcrumb */}
-          <nav className="mb-8 text-sm">
-            <ol className="flex items-center space-x-2">
+          {/* Breadcrumb compacto */}
+          <nav className="mb-3 text-xs">
+            <ol className="flex items-center gap-2">
               <li>
                 <Link href="/" className="text-white/70 hover:text-white transition-colors">
                   Inicio
                 </Link>
               </li>
-              <li className="text-white/50">/</li>
+              <li className="text-white/30">›</li>
               <li>
                 <Link href="/search" className="text-white/70 hover:text-white transition-colors">
                   Colecciones
                 </Link>
               </li>
-              <li className="text-white/50">/</li>
+              <li className="text-white/30">›</li>
               <li className="text-white font-medium">{collection.title}</li>
             </ol>
           </nav>
 
           <div className="text-center max-w-3xl mx-auto">
-            <h1 className="font-belleza text-4xl sm:text-5xl lg:text-6xl font-light tracking-wide mb-6 text-white">
+            <h1 className="font-belleza text-2xl sm:text-3xl lg:text-4xl font-light tracking-wide mb-3 text-white">
               {collection.title}
+              <span className="text-base font-normal text-white/70 ml-3">
+                ({products.length} {products.length === 1 ? 'producto' : 'productos'})
+              </span>
             </h1>
             {collection.description && (
-              <p className="text-white/90 text-lg leading-relaxed">
-                {collection.description}
-              </p>
+              <details className="mt-2">
+                <summary className="text-sm text-white/80 cursor-pointer hover:text-white transition-colors inline-flex items-center gap-1">
+                  Ver descripción
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </summary>
+                <p className="text-white/90 text-sm mt-2 leading-relaxed">
+                  {collection.description}
+                </p>
+              </details>
             )}
           </div>
         </div>
       </div>
 
       {/* Products Grid */}
-      <section className="bg-white py-16">
+      <section className="bg-white py-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {products.length === 0 ? (
             <div className="text-center py-12">
@@ -89,16 +100,9 @@ export default async function CategoryPage(props: {
               </Link>
             </div>
           ) : (
-            <>
-              <div className="flex justify-between items-center mb-8">
-                <p className="text-sm text-gray-600">
-                  {products.length} {products.length === 1 ? 'producto' : 'productos'}
-                </p>
-              </div>
-              <Grid className="grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-                <ProductGridItems products={products} />
-              </Grid>
-            </>
+            <Grid className="grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 lg:gap-4">
+              <ProductGridItems products={products} />
+            </Grid>
           )}
         </div>
       </section>

@@ -72,7 +72,7 @@ export default function FeaturedProducts({ products, title = "Productos Destacad
               <Slider ref={sliderRef} {...settings}>
                 {extendedProducts.map((product, index) => (
                   <div key={`${product.slug}-${index}`} className="px-3">
-                    <a href={`/products/${product.slug}`} className="group relative block">
+                    <a href={`/product/${product.slug}`} className="group relative block">
                       <div className="relative h-[400px] sm:h-[450px] lg:h-[500px] w-full overflow-hidden bg-gray-200">
                         {/* Marco minimalista */}
                         <div className="absolute top-6 left-6 right-6 bottom-6 border border-white/30 z-20 transition-all duration-500 group-hover:border-white/60 pointer-events-none"></div>

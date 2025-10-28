@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import CartModal from 'components/cart/modal';
 import { Suspense } from 'react';
 
+// IMPORTANTE: Verificar que estas colecciones existan en Shopify con estos handles exactos
+// Ajustar los handles según las colecciones reales en tu tienda Shopify
 const navLinks = [
   { href: "/search", text: "Nueva Colección", highlight: false },
   { href: "/search/hombre", text: "Hombre", highlight: false },

@@ -18,16 +18,16 @@ export default function Footer() {
               con calidad y sofisticación en cada pieza de nuestra colección exclusiva.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">
+              <a href="https://facebook.com/juanbecerra.shop" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors duration-200">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">
+              <a href="https://instagram.com/juanbecerra_shop" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors duration-200">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">
+              <a href="https://twitter.com/juanbecerra_co" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors duration-200">
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">
+              <a href="https://youtube.com/@juanbecerra" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors duration-200">
                 <Youtube className="h-5 w-5" />
               </a>
             </div>
@@ -37,12 +37,12 @@ export default function Footer() {
           <div>
             <h4 className="text-lg mb-6">Categorías</h4>
             <ul className="space-y-3">
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Nueva Colección</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Hombre</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Mujer</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Accesorios</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Sale</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Lookbook</a></li>
+              <li><a href="/search" className="text-gray-400 hover:text-white transition-colors duration-200">Nueva Colección</a></li>
+              <li><a href="/search/hombre" className="text-gray-400 hover:text-white transition-colors duration-200">Hombre</a></li>
+              <li><a href="/search/mujer" className="text-gray-400 hover:text-white transition-colors duration-200">Mujer</a></li>
+              <li><a href="/search/accesorios" className="text-gray-400 hover:text-white transition-colors duration-200">Accesorios</a></li>
+              <li><a href="/search/sale" className="text-gray-400 hover:text-white transition-colors duration-200">Sale</a></li>
+              <li><a href="/search" className="text-gray-400 hover:text-white transition-colors duration-200">Todas las Colecciones</a></li>
             </ul>
           </div>
 
@@ -50,12 +50,12 @@ export default function Footer() {
           <div>
             <h4 className="text-lg mb-6">Ayuda</h4>
             <ul className="space-y-3">
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Centro de Ayuda</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Guía de Tallas</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Envíos y Devoluciones</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Métodos de Pago</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Rastrear Pedido</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">Contacto</a></li>
+              <li><a href="/pages/ayuda" className="text-gray-400 hover:text-white transition-colors duration-200">Centro de Ayuda</a></li>
+              <li><a href="/pages/guia-de-tallas" className="text-gray-400 hover:text-white transition-colors duration-200">Guía de Tallas</a></li>
+              <li><a href="/pages/envios-y-devoluciones" className="text-gray-400 hover:text-white transition-colors duration-200">Envíos y Devoluciones</a></li>
+              <li><a href="/pages/metodos-de-pago" className="text-gray-400 hover:text-white transition-colors duration-200">Métodos de Pago</a></li>
+              <li><a href="/pages/rastrear-pedido" className="text-gray-400 hover:text-white transition-colors duration-200">Rastrear Pedido</a></li>
+              <li><a href="/pages/contacto" className="text-gray-400 hover:text-white transition-colors duration-200">Contacto</a></li>
             </ul>
           </div>
 
@@ -91,13 +91,13 @@ export default function Footer() {
               © 2024 Juan Becerra. Todos los derechos reservados.
             </p>
             <div className="flex space-x-6">
-              <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">
+              <a href="/pages/politica-de-privacidad" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">
                 Política de Privacidad
               </a>
-              <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">
+              <a href="/pages/terminos-y-condiciones" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">
                 Términos y Condiciones
               </a>
-              <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">
+              <a href="/pages/cookies" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">
                 Cookies
               </a>
             </div>

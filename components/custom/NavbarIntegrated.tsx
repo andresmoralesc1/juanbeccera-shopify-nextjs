@@ -4,6 +4,7 @@ import { Search, User, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import CartModal from 'components/cart/modal';
 import { Suspense } from 'react';
+import { usePathname } from 'next/navigation';
 
 // IMPORTANTE: Verificar que estas colecciones existan en Shopify con estos handles exactos
 // Ajustar los handles según las colecciones reales en tu tienda Shopify
@@ -15,7 +16,12 @@ const navLinks = [
 ];
 
 export default function NavbarIntegrated({ variant = 'transparent' }) {
-  const isSolidVariant = variant === 'solid';
+  const pathname = usePathname();
+
+  // Si estamos en páginas de búsqueda/catálogo o producto, forzar variant solid
+  const isSearchOrProductPage = pathname?.startsWith('/search') || pathname?.startsWith('/product');
+  const isSolidVariant = variant === 'solid' || isSearchOrProductPage;
+
   const [isScrolled, setIsScrolled] = useState(isSolidVariant);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 

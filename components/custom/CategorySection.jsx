@@ -104,9 +104,6 @@ export default function CategorySection() {
                   <div key={`${category.id}-${index}`} className="px-3">
                     <a href={category.href} className="group relative block">
                       <div className="relative h-[400px] sm:h-[450px] lg:h-[500px] w-full overflow-hidden bg-gray-200">
-                        {/* Marco minimalista */}
-                        <div className="absolute top-6 left-6 right-6 bottom-6 border border-white/30 z-20 transition-all duration-500 group-hover:border-white/60 pointer-events-none"></div>
-
                         <img
                           src={category.imageSrc}
                           alt={category.name}

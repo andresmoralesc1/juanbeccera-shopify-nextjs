@@ -74,9 +74,6 @@ export default function FeaturedProducts({ products, title = "Productos Destacad
                   <div key={`${product.slug}-${index}`} className="px-3">
                     <a href={`/product/${product.slug}`} className="group relative block">
                       <div className="relative h-[400px] sm:h-[450px] lg:h-[500px] w-full overflow-hidden bg-gray-200">
-                        {/* Marco minimalista */}
-                        <div className="absolute top-6 left-6 right-6 bottom-6 border border-white/30 z-20 transition-all duration-500 group-hover:border-white/60 pointer-events-none"></div>
-
                         <img
                           src={product.imageSrc}
                           alt={product.name}
@@ -135,7 +132,7 @@ export default function FeaturedProducts({ products, title = "Productos Destacad
         .custom-dots-products {
           display: flex !important;
           justify-content: center;
-          gap: 0.5rem;
+          gap: 0.75rem;
           margin-top: 2rem;
           list-style: none;
           padding: 0;
@@ -146,11 +143,10 @@ export default function FeaturedProducts({ products, title = "Productos Destacad
         }
 
         .custom-dots-products li button {
-          width: 8px;
-          height: 8px;
+          width: 32px;
+          height: 2px;
           padding: 0;
-          border-radius: 50%;
-          background-color: rgba(255, 255, 255, 0.3);
+          background-color: rgba(255, 255, 255, 0.4);
           border: none;
           cursor: pointer;
           transition: all 0.3s ease;
@@ -159,14 +155,12 @@ export default function FeaturedProducts({ products, title = "Productos Destacad
         }
 
         .custom-dots-products li button:hover {
-          background-color: rgba(255, 255, 255, 0.5);
-          transform: scale(1.2);
+          background-color: rgba(255, 255, 255, 0.7);
         }
 
         .custom-dots-products li.slick-active button {
-          width: 24px;
-          border-radius: 4px;
-          background-color: rgba(255, 255, 255, 0.9);
+          width: 48px;
+          background-color: rgba(255, 255, 255, 1);
         }
 
         .custom-dots-products li button:before {

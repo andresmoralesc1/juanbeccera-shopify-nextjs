@@ -53,9 +53,6 @@ export default function InstagramFeed() {
                       <span className="font-moderat text-white font-semibold">{post.likes}</span>
                     </div>
                   </div>
-                  
-                  {/* Borde blanco sutil en hover */}
-                  <div className="absolute inset-0 border-2 border-transparent group-hover:border-white/40 transition-all duration-300 pointer-events-none"></div>
                 </div>
               </a>
             </div>

@@ -450,8 +450,6 @@ export async function getProducts({
   cacheTag(TAGS.products);
   cacheLife('days');
 
-  console.log('🛒 [SHOPIFY DEBUG] getProducts called with:', { query, reverse, sortKey });
-
   const res = await shopifyFetch<ShopifyProductsOperation>({
     query: getProductsQuery,
     variables: {
@@ -461,13 +459,7 @@ export async function getProducts({
     }
   });
 
-  console.log('🛒 [SHOPIFY DEBUG] Shopify response status:', res.status);
-  console.log('🛒 [SHOPIFY DEBUG] Products in response:', res.body.data.products);
-
-  const products = reshapeProducts(removeEdgesAndNodes(res.body.data.products));
-  console.log('🛒 [SHOPIFY DEBUG] Products after reshape:', products.length);
-
-  return products;
+  return reshapeProducts(removeEdgesAndNodes(res.body.data.products));
 }
 
 // This is called from `app/api/revalidate.ts` so providers can control revalidation logic.

@@ -13,9 +13,17 @@ export default async function SearchPage(props: {
 }) {
   const searchParams = await props.searchParams;
   const { sort, q: searchValue } = searchParams as { [key: string]: string };
+
+  console.log('📄 [SEARCH PAGE DEBUG] Search params received:', searchParams);
+  console.log('📄 [SEARCH PAGE DEBUG] Search value (q):', searchValue);
+  console.log('📄 [SEARCH PAGE DEBUG] Sort:', sort);
+
   const { sortKey, reverse } = sorting.find((item) => item.slug === sort) || defaultSort;
 
+  console.log('📄 [SEARCH PAGE DEBUG] Calling getProducts with:', { sortKey, reverse, query: searchValue });
   const products = await getProducts({ sortKey, reverse, query: searchValue });
+  console.log('📄 [SEARCH PAGE DEBUG] Products returned:', products.length);
+
   const resultsText = products.length === 1 ? 'producto' : 'productos';
 
   return (

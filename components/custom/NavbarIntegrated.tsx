@@ -142,16 +142,26 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
                       <form
                         onSubmit={(e) => {
                           e.preventDefault();
+                          console.log('🔍 [SEARCH DEBUG] Form submitted');
+                          console.log('🔍 [SEARCH DEBUG] Search query:', searchQuery);
+
                           if (searchQuery.trim()) {
                             // Cerrar el dropdown inmediatamente
                             setIsSearchOpen(false);
+                            console.log('🔍 [SEARCH DEBUG] Dropdown closed');
+
                             // Navegar a la página de búsqueda
                             const searchUrl = `/search?q=${encodeURIComponent(searchQuery)}`;
+                            console.log('🔍 [SEARCH DEBUG] Navigating to:', searchUrl);
                             router.push(searchUrl);
+
                             // Limpiar el query después de un pequeño delay
                             setTimeout(() => {
                               setSearchQuery('');
+                              console.log('🔍 [SEARCH DEBUG] Query cleared');
                             }, 100);
+                          } else {
+                            console.log('🔍 [SEARCH DEBUG] Query is empty, not searching');
                           }
                         }}
                         className="p-4"

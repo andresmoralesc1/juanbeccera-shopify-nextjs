@@ -102,11 +102,11 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
               </nav>
 
               <div className="flex items-center space-x-3">
-                {/* Search Dropdown */}
-                <div className="hidden lg:block relative">
+                {/* Search Dropdown - Desktop y Mobile */}
+                <div className="relative">
                   <button
                     onClick={() => setIsSearchOpen(!isSearchOpen)}
-                    className={`p-2 transition-colors ${isScrolled || isSolidVariant ? 'hover:bg-gray-100' : 'hover:bg-white/20'}`}
+                    className={`p-2 transition-colors hidden lg:block ${isScrolled || isSolidVariant ? 'hover:bg-gray-100' : 'hover:bg-white/20'}`}
                     aria-label="Abrir búsqueda"
                   >
                     <Search className={`h-5 w-5 ${isScrolled || isSolidVariant ? 'text-black' : 'text-white'}`} />
@@ -116,13 +116,13 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
                   {isSearchOpen && (
                     <>
                       <div
-                        className="fixed inset-0 z-[45]"
+                        className="fixed inset-0 z-[55] bg-black/10"
                         onClick={() => {
                           setIsSearchOpen(false);
                           setSearchQuery('');
                         }}
                       />
-                      <div className="absolute right-0 top-full mt-2 w-80 bg-white shadow-lg border border-gray-200 z-[50]">
+                      <div className="fixed lg:absolute left-4 right-4 lg:right-0 lg:left-auto top-24 lg:top-full lg:mt-2 w-auto lg:w-80 bg-white shadow-xl border border-gray-200 z-[60] rounded-lg overflow-hidden">
                         <form
                           onSubmit={(e) => {
                             e.preventDefault();
@@ -140,13 +140,12 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
                               value={searchQuery}
                               onChange={(e) => setSearchQuery(e.target.value)}
                               placeholder="Buscar productos..."
-                              autoFocus
                               className="w-full border-b border-gray-300 focus:border-[#620c0b] outline-none pb-2 text-sm text-gray-900 placeholder:text-gray-400 transition-colors"
                             />
                             <Search className="absolute right-0 bottom-2 h-4 w-4 text-gray-400 pointer-events-none" />
                           </div>
                           <p className="mt-2 text-xs text-gray-500">
-                            Enter para buscar
+                            Presiona Enter para buscar
                           </p>
                         </form>
                       </div>
@@ -222,7 +221,7 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
           <button
             onClick={() => {
               setIsMobileMenuOpen(false);
-              setIsSearchOpen(true);
+              setTimeout(() => setIsSearchOpen(true), 300);
             }}
             className="w-full flex items-center gap-3 p-3 hover:bg-gray-100 transition-colors"
           >

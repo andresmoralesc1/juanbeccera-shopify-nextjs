@@ -96,13 +96,52 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
               </nav>
 
               <div className="flex items-center space-x-3">
-                <button
-                  onClick={() => setIsSearchOpen(true)}
-                  className={`hidden lg:block p-2 transition-colors ${isScrolled || isSolidVariant ? 'hover:bg-gray-100' : 'hover:bg-white/20'}`}
-                  aria-label="Abrir búsqueda"
-                >
-                  <Search className={`h-5 w-5 ${isScrolled || isSolidVariant ? 'text-black' : 'text-white'}`} />
-                </button>
+                {/* Search Dropdown */}
+                <div className="hidden lg:block relative">
+                  <button
+                    onClick={() => setIsSearchOpen(!isSearchOpen)}
+                    className={`p-2 transition-colors ${isScrolled || isSolidVariant ? 'hover:bg-gray-100' : 'hover:bg-white/20'}`}
+                    aria-label="Abrir búsqueda"
+                  >
+                    <Search className={`h-5 w-5 ${isScrolled || isSolidVariant ? 'text-black' : 'text-white'}`} />
+                  </button>
+
+                  {/* Dropdown minimalista */}
+                  {isSearchOpen && (
+                    <>
+                      <div
+                        className="fixed inset-0 z-30"
+                        onClick={() => setIsSearchOpen(false)}
+                      />
+                      <div className="absolute right-0 top-full mt-2 w-80 bg-white shadow-lg border border-gray-200 z-40">
+                        <div className="p-4">
+                          <div className="relative">
+                            <input
+                              type="text"
+                              value={searchQuery}
+                              onChange={(e) => setSearchQuery(e.target.value)}
+                              onKeyDown={(e) => {
+                                if (e.key === 'Enter' && searchQuery.trim()) {
+                                  router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
+                                  setIsSearchOpen(false);
+                                  setSearchQuery('');
+                                }
+                              }}
+                              placeholder="Buscar productos..."
+                              autoFocus
+                              className="w-full border-b border-gray-300 focus:border-[#620c0b] outline-none pb-2 text-sm text-gray-900 placeholder:text-gray-400 transition-colors"
+                            />
+                            <Search className="absolute right-0 bottom-2 h-4 w-4 text-gray-400" />
+                          </div>
+                          <p className="mt-2 text-xs text-gray-500">
+                            Enter para buscar
+                          </p>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+
                 <button className={`p-2 transition-colors ${isScrolled || isSolidVariant ? 'hover:bg-gray-100' : 'hover:bg-white/20'}`}>
                   <User className={`h-5 w-5 ${isScrolled || isSolidVariant ? 'text-black' : 'text-white'}`} />
                 </button>
@@ -185,55 +224,6 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
         </div>
       </div>
 
-      {/* Search Modal */}
-      {isSearchOpen && (
-        <>
-          {/* Overlay */}
-          <div
-            className="fixed inset-0 bg-black/50 z-[80] transition-opacity"
-            onClick={() => setIsSearchOpen(false)}
-          />
-
-          {/* Search Panel */}
-          <div className="fixed top-0 left-0 right-0 z-[90] bg-white shadow-lg">
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-              <div className="flex items-center gap-4">
-                <div className="flex-1 relative">
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' && searchQuery.trim()) {
-                        router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
-                        setIsSearchOpen(false);
-                        setSearchQuery('');
-                      }
-                    }}
-                    placeholder="Buscar productos..."
-                    autoFocus
-                    className="w-full font-belleza text-2xl sm:text-3xl font-light border-b-2 border-gray-300 focus:border-[#620c0b] outline-none pb-3 text-gray-900 placeholder:text-gray-400"
-                  />
-                  <Search className="absolute right-0 top-1/2 -translate-y-1/2 h-6 w-6 text-gray-400" />
-                </div>
-                <button
-                  onClick={() => {
-                    setIsSearchOpen(false);
-                    setSearchQuery('');
-                  }}
-                  className="p-2 hover:bg-gray-100 transition-colors"
-                  aria-label="Cerrar búsqueda"
-                >
-                  <X className="h-6 w-6 text-gray-900" />
-                </button>
-              </div>
-              <p className="mt-4 text-sm text-gray-500 font-moderat">
-                Presiona Enter para buscar
-              </p>
-            </div>
-          </div>
-        </>
-      )}
     </>
   );
 }

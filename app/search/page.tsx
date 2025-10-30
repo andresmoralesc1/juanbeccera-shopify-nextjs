@@ -4,8 +4,8 @@ import { defaultSort, sorting } from 'lib/constants';
 import { getProducts } from 'lib/shopify';
 
 export const metadata = {
-  title: 'Search',
-  description: 'Search for products in the store.'
+  title: 'Buscar Productos',
+  description: 'Busca productos en la tienda.'
 };
 
 export default async function SearchPage(props: {
@@ -16,23 +16,40 @@ export default async function SearchPage(props: {
   const { sortKey, reverse } = sorting.find((item) => item.slug === sort) || defaultSort;
 
   const products = await getProducts({ sortKey, reverse, query: searchValue });
-  const resultsText = products.length > 1 ? 'results' : 'result';
+  const resultsText = products.length === 1 ? 'producto' : 'productos';
 
   return (
     <>
       {searchValue ? (
-        <p className="mb-4">
-          {products.length === 0
-            ? 'There are no products that match '
-            : `Showing ${products.length} ${resultsText} for `}
-          <span className="font-bold">&quot;{searchValue}&quot;</span>
-        </p>
+        <div className="mb-6">
+          {products.length === 0 ? (
+            <div className="text-center py-8">
+              <p className="text-lg text-gray-900 mb-2">
+                No se encontraron productos para <span className="font-bold">&quot;{searchValue}&quot;</span>
+              </p>
+              <p className="text-sm text-gray-600">
+                Intenta con otros términos de búsqueda o explora nuestras categorías
+              </p>
+            </div>
+          ) : (
+            <p className="text-sm text-gray-600">
+              Mostrando {products.length} {resultsText} para <span className="font-semibold text-gray-900">&quot;{searchValue}&quot;</span>
+            </p>
+          )}
+        </div>
       ) : null}
+
       {products.length > 0 ? (
-        <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-6">
           <ProductGridItems products={products} />
         </Grid>
-      ) : null}
+      ) : searchValue ? null : (
+        <div className="text-center py-12">
+          <p className="text-gray-600">
+            Usa el buscador para encontrar productos
+          </p>
+        </div>
+      )}
     </>
   );
 }

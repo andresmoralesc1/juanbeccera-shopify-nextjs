@@ -143,9 +143,15 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
                         onSubmit={(e) => {
                           e.preventDefault();
                           if (searchQuery.trim()) {
-                            router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
+                            // Cerrar el dropdown inmediatamente
                             setIsSearchOpen(false);
-                            setSearchQuery('');
+                            // Navegar a la página de búsqueda
+                            const searchUrl = `/search?q=${encodeURIComponent(searchQuery)}`;
+                            router.push(searchUrl);
+                            // Limpiar el query después de un pequeño delay
+                            setTimeout(() => {
+                              setSearchQuery('');
+                            }, 100);
                           }
                         }}
                         className="p-4"

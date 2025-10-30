@@ -90,7 +90,9 @@ export async function updateItemQuantity(
 
     revalidateTag(TAGS.cart);
   } catch (e) {
-    console.error(e);
+    if (process.env.NODE_ENV === 'development') {
+      console.error(e);
+    }
     return 'Error updating item quantity';
   }
 }

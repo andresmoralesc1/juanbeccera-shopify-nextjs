@@ -42,6 +42,7 @@ function AccordionItem({ title, content, icon, isOpen, onClick }: AccordionItemP
 export function ProductDescriptionCustom({ product }: { product: Product }) {
   const [quantity, setQuantity] = useState(1);
   const [openAccordion, setOpenAccordion] = useState<number | null>(0);
+  const MAX_QUANTITY = 99; // Límite máximo de cantidad
 
   const handleAccordionClick = (index: number) => {
     setOpenAccordion(openAccordion === index ? null : index);
@@ -110,8 +111,9 @@ export function ProductDescriptionCustom({ product }: { product: Product }) {
         <div className="inline-flex items-center border border-gray-300">
           <button
             onClick={() => setQuantity(Math.max(1, quantity - 1))}
-            className="px-4 py-3 text-gray-600 hover:bg-gray-50 transition-colors"
+            className="px-4 py-3 text-gray-600 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label="Disminuir cantidad"
+            disabled={quantity <= 1}
           >
             <Minus className="h-4 w-4" />
           </button>
@@ -119,13 +121,19 @@ export function ProductDescriptionCustom({ product }: { product: Product }) {
             {quantity}
           </span>
           <button
-            onClick={() => setQuantity(quantity + 1)}
-            className="px-4 py-3 text-gray-600 hover:bg-gray-50 transition-colors"
+            onClick={() => setQuantity(Math.min(MAX_QUANTITY, quantity + 1))}
+            className="px-4 py-3 text-gray-600 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label="Aumentar cantidad"
+            disabled={quantity >= MAX_QUANTITY}
           >
             <Plus className="h-4 w-4" />
           </button>
         </div>
+        {quantity >= MAX_QUANTITY && (
+          <p className="text-xs text-gray-500 mt-2">
+            Cantidad máxima alcanzada
+          </p>
+        )}
       </div>
 
       {/* Botón Add to Cart - Grande y prominente estilo Versace con color Juan Becerra */}

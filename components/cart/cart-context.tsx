@@ -23,7 +23,7 @@ type CartAction =
     }
   | {
       type: 'ADD_ITEM';
-      payload: { variant: ProductVariant; product: Product };
+      payload: { variant: ProductVariant; product: Product; quantity?: number };
     };
 
 type CartContextType = {
@@ -68,9 +68,10 @@ function updateCartItem(
 function createOrUpdateCartItem(
   existingItem: CartItem | undefined,
   variant: ProductVariant,
-  product: Product
+  product: Product,
+  quantityToAdd: number = 1
 ): CartItem {
-  const quantity = existingItem ? existingItem.quantity + 1 : 1;
+  const quantity = existingItem ? existingItem.quantity + quantityToAdd : quantityToAdd;
   const totalAmount = calculateItemCost(quantity, variant.price.amount);
 
   return {
@@ -163,14 +164,15 @@ function cartReducer(state: Cart | undefined, action: CartAction): Cart {
       };
     }
     case 'ADD_ITEM': {
-      const { variant, product } = action.payload;
+      const { variant, product, quantity = 1 } = action.payload;
       const existingItem = currentCart.lines.find(
         (item) => item.merchandise.id === variant.id
       );
       const updatedItem = createOrUpdateCartItem(
         existingItem,
         variant,
-        product
+        product,
+        quantity
       );
 
       const updatedLines = existingItem
@@ -223,8 +225,8 @@ export function useCart() {
     });
   };
 
-  const addCartItem = (variant: ProductVariant, product: Product) => {
-    updateOptimisticCart({ type: 'ADD_ITEM', payload: { variant, product } });
+  const addCartItem = (variant: ProductVariant, product: Product, quantity: number = 1) => {
+    updateOptimisticCart({ type: 'ADD_ITEM', payload: { variant, product, quantity } });
   };
 
   return useMemo(

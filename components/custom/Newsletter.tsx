@@ -8,9 +8,29 @@ export default function Newsletter() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [toast, setToast] = useState<{ message: string; type: string } | null>(null);
 
+  const validateEmail = (email: string): boolean => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
+
   const handleSubmit = () => {
+    // Validación de email
+    if (!email.trim()) {
+      setToast({ message: 'Por favor ingresa tu email', type: 'error' });
+      setTimeout(() => setToast(null), 3000);
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      setToast({ message: 'Por favor ingresa un email válido', type: 'error' });
+      setTimeout(() => setToast(null), 3000);
+      return;
+    }
+
     setIsSubmitting(true);
 
+    // TODO: Integrar con servicio de email marketing (Mailchimp, SendGrid, etc.)
+    // Por ahora solo simulación
     setTimeout(() => {
       setIsSubmitting(false);
       setToast({ message: '¡Gracias por suscribirte!', type: 'success' });
@@ -23,7 +43,7 @@ export default function Newsletter() {
     <div className="bg-white py-16 sm:py-24">
       {toast && (
         <div
-          className={`fixed top-5 right-5 rounded-lg px-6 py-4 shadow-lg text-white transition-all duration-300 z-50 ${
+          className={`fixed top-24 right-5 rounded-lg px-6 py-4 shadow-lg text-white transition-all duration-300 z-50 ${
             toast.type === 'success' ? 'bg-green-600' : 'bg-red-600'
           }`}
         >

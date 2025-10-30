@@ -55,7 +55,7 @@ export default function CategorySectionDynamic({ collections }: CategorySectionD
     if (handleLower.includes('camiseta')) return '/sacos.webp'; // Usar sacos como placeholder
     if (handleLower.includes('combo')) return '/cinturones.webp'; // Usar cinturones como placeholder
 
-    return '/placeholder.jpg';
+    return '/sacos.webp'; // Fallback por defecto
   };
 
   // Filtrar colecciones válidas (excluir las ocultas y "All") y agregar imágenes

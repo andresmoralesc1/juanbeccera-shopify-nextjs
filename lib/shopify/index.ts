@@ -323,7 +323,9 @@ export async function getCollectionProducts({
   });
 
   if (!res.body.data.collection) {
-    console.log(`No collection found for \`${collection}\``);
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`No collection found for \`${collection}\``);
+    }
     return [];
   }
 
@@ -480,7 +482,9 @@ export async function revalidate(req: NextRequest): Promise<NextResponse> {
   const isProductUpdate = productWebhooks.includes(topic);
 
   if (!secret || secret !== process.env.SHOPIFY_REVALIDATION_SECRET) {
-    console.error('Invalid revalidation secret.');
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Invalid revalidation secret.');
+    }
     return NextResponse.json({ status: 401 });
   }
 

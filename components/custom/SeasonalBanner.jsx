@@ -12,7 +12,7 @@ const slides = [
     title: 'Colección Otoño/Invierno 2025',
     subtitle: 'Descubre las piezas que definirán tu estilo esta temporada.',
     buttonText: 'Ver la Colección',
-    href: '/collections/fall-winter-2025',
+    href: '/search',
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ const slides = [
     title: 'Accesorios que Dejan Huella',
     subtitle: 'Eleva tu look con nuestros cinturones y billeteras de cuero genuino.',
     buttonText: 'Explorar Accesorios',
-    href: '/collections/accesorios',
+    href: '/search/accesorios',
   },
 ];
 

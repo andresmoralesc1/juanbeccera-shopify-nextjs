@@ -86,10 +86,8 @@ export function AddToCartCustom({
   return (
     <form
       action={async () => {
-        // Añadir la cantidad especificada al carrito
-        for (let i = 0; i < quantity; i++) {
-          addCartItem(finalVariant, product);
-        }
+        // Añadir la cantidad especificada al carrito (optimizado)
+        addCartItem(finalVariant, product, quantity);
         addItemAction();
       }}
     >

@@ -50,12 +50,12 @@ export default function Footer() {
           <div>
             <h4 className="text-lg mb-6">Ayuda</h4>
             <ul className="space-y-3">
-              <li><a href="/pages/ayuda" className="text-gray-400 hover:text-white transition-colors duration-200">Centro de Ayuda</a></li>
-              <li><a href="/pages/guia-de-tallas" className="text-gray-400 hover:text-white transition-colors duration-200">Guía de Tallas</a></li>
-              <li><a href="/pages/envios-y-devoluciones" className="text-gray-400 hover:text-white transition-colors duration-200">Envíos y Devoluciones</a></li>
-              <li><a href="/pages/metodos-de-pago" className="text-gray-400 hover:text-white transition-colors duration-200">Métodos de Pago</a></li>
-              <li><a href="/pages/rastrear-pedido" className="text-gray-400 hover:text-white transition-colors duration-200">Rastrear Pedido</a></li>
-              <li><a href="/pages/contacto" className="text-gray-400 hover:text-white transition-colors duration-200">Contacto</a></li>
+              <li><a href="/search" className="text-gray-400 hover:text-white transition-colors duration-200">Centro de Ayuda</a></li>
+              <li><a href="/search" className="text-gray-400 hover:text-white transition-colors duration-200">Guía de Tallas</a></li>
+              <li><a href="/search" className="text-gray-400 hover:text-white transition-colors duration-200">Envíos y Devoluciones</a></li>
+              <li><a href="/search" className="text-gray-400 hover:text-white transition-colors duration-200">Métodos de Pago</a></li>
+              <li><a href="/search" className="text-gray-400 hover:text-white transition-colors duration-200">Rastrear Pedido</a></li>
+              <li><a href="mailto:hola@juanbecerra.co" className="text-gray-400 hover:text-white transition-colors duration-200">Contacto</a></li>
             </ul>
           </div>
 
@@ -88,16 +88,16 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-6">
             <p className="text-gray-400 text-sm">
-              © 2024 Juan Becerra. Todos los derechos reservados.
+              © {new Date().getFullYear()} Juan Becerra. Todos los derechos reservados.
             </p>
             <div className="flex space-x-6">
-              <a href="/pages/politica-de-privacidad" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">
+              <a href="/search" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">
                 Política de Privacidad
               </a>
-              <a href="/pages/terminos-y-condiciones" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">
+              <a href="/search" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">
                 Términos y Condiciones
               </a>
-              <a href="/pages/cookies" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">
+              <a href="/search" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">
                 Cookies
               </a>
             </div>

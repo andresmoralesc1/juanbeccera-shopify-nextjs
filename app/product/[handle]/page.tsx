@@ -13,6 +13,8 @@ import { Image } from 'lib/shopify/types';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { Breadcrumbs } from '@/components/ui/breadcrumbs';
+import { StickyAddToCart } from 'components/product/sticky-add-to-cart';
+import { TrustBadges } from '@/components/ui/trust-badges';
 
 export async function generateMetadata(props: {
   params: Promise<{ handle: string }>;
@@ -121,6 +123,11 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
               </Suspense>
             </div>
           </div>
+
+          {/* Trust Badges */}
+          <div className="mt-16">
+            <TrustBadges />
+          </div>
         </div>
       </div>
 
@@ -128,6 +135,9 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
       <Suspense fallback={<div className="py-16 text-center">Cargando productos relacionados...</div>}>
         <RelatedProducts id={product.id} />
       </Suspense>
+
+      {/* Sticky Add to Cart for Mobile */}
+      <StickyAddToCart product={product} />
 
       <FooterCustom />
     </ProductProvider>
@@ -150,17 +160,19 @@ async function RelatedProducts({ id }: { id: string }) {
             <Link
               key={product.handle}
               href={`/product/${product.handle}`}
-              className="group relative block"
+              className="group relative block product-card"
               prefetch={true}
             >
-              <div className="aspect-[3/4] overflow-hidden bg-gray-100 relative mb-3">
+              <div className="aspect-[3/4] overflow-hidden bg-gray-100 relative mb-3 rounded-sm">
                 {product.featuredImage && (
                   <img
                     src={product.featuredImage.url}
                     alt={product.title}
-                    className="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    className="h-full w-full object-cover object-center image-hover-zoom"
                   />
                 )}
+                {/* Overlay sutil en hover */}
+                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-5 image-overlay" />
               </div>
 
               {/* Info debajo de la imagen - estilo Versace */}

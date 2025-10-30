@@ -133,7 +133,12 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
 
                   {/* Dropdown minimalista */}
                   {isSearchOpen && (
-                    <div className="absolute right-0 top-full mt-2 w-80 max-w-[calc(100vw-2rem)] bg-white shadow-2xl border border-gray-200 rounded-lg overflow-hidden z-[100]">
+                    <div
+                      className="absolute right-0 top-full mt-2 w-80 max-w-[calc(100vw-2rem)] bg-white shadow-2xl border border-gray-200 rounded-lg overflow-hidden z-[100] animate-slideDownFade"
+                      style={{
+                        animation: 'slideDownFade 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                      }}
+                    >
                       <form
                         onSubmit={(e) => {
                           e.preventDefault();
@@ -216,12 +221,15 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
         </div>
 
         <nav className="flex flex-col p-6 space-y-6">
-          {navLinks.map((link) => (
+          {navLinks.map((link, index) => (
             <Link
               key={link.text}
               href={link.href}
               className={`font-belleza text-xl tracking-wider hover:text-[#620c0b] transition-colors ${link.highlight ? 'font-semibold text-[#620c0b]' : 'font-medium text-gray-900'}`}
               onClick={() => setIsMobileMenuOpen(false)}
+              style={{
+                animation: isMobileMenuOpen ? `fadeInStagger 0.4s ease-out ${index * 0.1}s both` : 'none'
+              }}
             >
               {link.text}
             </Link>

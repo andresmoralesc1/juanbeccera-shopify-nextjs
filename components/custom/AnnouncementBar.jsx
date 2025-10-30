@@ -4,8 +4,8 @@ import { ArrowRight } from 'lucide-react';
 
 const AnnouncementBar = () => {
   return (
-    <div className="fixed top-0 left-0 right-0 z-[60] bg-[#620c0b] text-white text-sm font-light h-[38px]">
-      <div className="container mx-auto px-4 h-full flex justify-center items-center text-center">
+    <div className="fixed top-0 left-0 right-0 z-[60] bg-[#620c0b] text-white text-sm font-light h-[38px] w-full">
+      <div className="h-full flex justify-center items-center text-center px-4">
         <p>
           <span role="img" aria-label="party popper">🎉</span>
           <span className="hidden sm:inline mx-2">

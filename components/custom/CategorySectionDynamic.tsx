@@ -108,8 +108,8 @@ export default function CategorySectionDynamic({ collections }: CategorySectionD
   };
 
   return (
-    <div className="bg-[#364e41] py-16 sm:py-24">
-      <div className="mx-auto max-w-[95%] px-4 sm:px-6 lg:px-8">
+    <div className="bg-[#364e41] py-16 sm:py-24 overflow-hidden">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
           {/* Caption - Izquierda */}

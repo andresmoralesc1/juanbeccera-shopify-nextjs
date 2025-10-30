@@ -50,6 +50,12 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
     }
   }, [isMobileMenuOpen]);
 
+  // Cerrar búsqueda cuando cambia la ruta
+  useEffect(() => {
+    setIsSearchOpen(false);
+    setSearchQuery('');
+  }, [pathname]);
+
   return (
     <>
       <header
@@ -110,33 +116,39 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
                   {isSearchOpen && (
                     <>
                       <div
-                        className="fixed inset-0 z-30"
-                        onClick={() => setIsSearchOpen(false)}
+                        className="fixed inset-0 z-[45]"
+                        onClick={() => {
+                          setIsSearchOpen(false);
+                          setSearchQuery('');
+                        }}
                       />
-                      <div className="absolute right-0 top-full mt-2 w-80 bg-white shadow-lg border border-gray-200 z-40">
-                        <div className="p-4">
+                      <div className="absolute right-0 top-full mt-2 w-80 bg-white shadow-lg border border-gray-200 z-[50]">
+                        <form
+                          onSubmit={(e) => {
+                            e.preventDefault();
+                            if (searchQuery.trim()) {
+                              router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
+                              setIsSearchOpen(false);
+                              setSearchQuery('');
+                            }
+                          }}
+                          className="p-4"
+                        >
                           <div className="relative">
                             <input
                               type="text"
                               value={searchQuery}
                               onChange={(e) => setSearchQuery(e.target.value)}
-                              onKeyDown={(e) => {
-                                if (e.key === 'Enter' && searchQuery.trim()) {
-                                  router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
-                                  setIsSearchOpen(false);
-                                  setSearchQuery('');
-                                }
-                              }}
                               placeholder="Buscar productos..."
                               autoFocus
                               className="w-full border-b border-gray-300 focus:border-[#620c0b] outline-none pb-2 text-sm text-gray-900 placeholder:text-gray-400 transition-colors"
                             />
-                            <Search className="absolute right-0 bottom-2 h-4 w-4 text-gray-400" />
+                            <Search className="absolute right-0 bottom-2 h-4 w-4 text-gray-400 pointer-events-none" />
                           </div>
                           <p className="mt-2 text-xs text-gray-500">
                             Enter para buscar
                           </p>
-                        </div>
+                        </form>
                       </div>
                     </>
                   )}

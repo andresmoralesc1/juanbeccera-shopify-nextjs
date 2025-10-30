@@ -151,11 +151,10 @@ export default function CategorySection() {
         }
 
         .custom-dots-minimal li button {
-          width: 8px;
-          height: 8px;
+          width: 32px;
+          height: 2px;
           padding: 0;
-          border-radius: 50%;
-          background-color: rgba(255, 255, 255, 0.3);
+          background-color: rgba(255, 255, 255, 0.4);
           border: none;
           cursor: pointer;
           transition: all 0.3s ease;
@@ -164,14 +163,12 @@ export default function CategorySection() {
         }
 
         .custom-dots-minimal li button:hover {
-          background-color: rgba(255, 255, 255, 0.5);
-          transform: scale(1.2);
+          background-color: rgba(255, 255, 255, 0.6);
         }
 
         .custom-dots-minimal li.slick-active button {
-          width: 24px;
-          border-radius: 4px;
-          background-color: rgba(255, 255, 255, 0.9);
+          width: 48px;
+          background-color: rgba(255, 255, 255, 1);
         }
 
         .custom-dots-minimal li button:before {

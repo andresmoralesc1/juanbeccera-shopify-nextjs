@@ -78,7 +78,7 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed top-[38px] left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled || isSolidVariant
             ? 'bg-white/95 backdrop-blur-md shadow-md'
             : 'bg-transparent'

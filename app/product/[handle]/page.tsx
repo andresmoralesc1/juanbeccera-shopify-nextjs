@@ -12,6 +12,7 @@ import { getProduct, getProductRecommendations } from 'lib/shopify';
 import { Image } from 'lib/shopify/types';
 import Link from 'next/link';
 import { Suspense } from 'react';
+import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 
 export async function generateMetadata(props: {
   params: Promise<{ handle: string }>;
@@ -86,6 +87,16 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
       {/* Product Detail Section - Diseño Versace con identidad Juan Becerra */}
       <div className="bg-white pt-28 pb-16">
         <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
+          {/* Breadcrumbs */}
+          <div className="mb-8">
+            <Breadcrumbs
+              items={[
+                { label: 'Productos', href: '/search' },
+                { label: product.title }
+              ]}
+            />
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-16">
             {/* Gallery - 60% width (3 columns) */}
             <div className="lg:col-span-3">

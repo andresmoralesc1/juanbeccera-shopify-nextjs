@@ -21,20 +21,24 @@ function AccordionItem({ title, content, icon, isOpen, onClick }: AccordionItemP
     <div className="border-b border-gray-200">
       <button
         onClick={onClick}
-        className="w-full flex items-center justify-between py-5 text-left transition-colors"
+        className="w-full flex items-center justify-between py-5 text-left transition-colors hover:text-[#620c0b] group"
       >
-        <span className="font-moderat text-sm uppercase tracking-wider font-medium text-gray-900">{title}</span>
-        <span className="text-gray-400 text-xl font-light">
-          {isOpen ? '−' : '+'}
+        <span className="font-moderat text-sm uppercase tracking-wider font-medium text-gray-900 group-hover:text-[#620c0b] transition-colors">
+          {title}
+        </span>
+        <span className={`text-gray-400 text-xl font-light transition-all duration-300 ${isOpen ? 'rotate-45' : 'rotate-0'}`}>
+          +
         </span>
       </button>
-      {isOpen && (
-        <div className="pb-6">
-          <div className="text-gray-600 leading-relaxed text-sm">
-            {content}
-          </div>
+      <div
+        className={`overflow-hidden transition-all duration-500 ease-in-out ${
+          isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
+        <div className="pb-6 text-gray-600 leading-relaxed text-sm animate-fadeIn">
+          {content}
         </div>
-      )}
+      </div>
     </div>
   );
 }

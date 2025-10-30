@@ -2,11 +2,12 @@
 
 import { useState } from 'react';
 import { Mail } from 'lucide-react';
+import { Toast } from '@/components/ui/toast';
 
 export default function Newsletter() {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [toast, setToast] = useState<{ message: string; type: string } | null>(null);
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
 
   const validateEmail = (email: string): boolean => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -42,13 +43,11 @@ export default function Newsletter() {
   return (
     <div className="bg-white py-16 sm:py-24">
       {toast && (
-        <div
-          className={`fixed top-24 right-5 rounded-lg px-6 py-4 shadow-lg text-white transition-all duration-300 z-50 ${
-            toast.type === 'success' ? 'bg-green-600' : 'bg-red-600'
-          }`}
-        >
-          {toast.message}
-        </div>
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
       )}
 
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">

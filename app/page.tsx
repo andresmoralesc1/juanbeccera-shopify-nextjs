@@ -9,6 +9,7 @@ import Newsletter from '@/components/custom/Newsletter';
 import InstagramFeed from '@/components/custom/InstagramFeed';
 import FooterCustom from '@/components/custom/FooterCustom';
 import { getProducts, getCollections } from 'lib/shopify';
+import { CategorySliderSkeleton, ProductGridSkeleton } from '@/components/ui/skeleton';
 
 export const metadata = {
   description:
@@ -47,11 +48,17 @@ export default function HomePage() {
     <main>
       <AnnouncementBar />
       <HeroSection />
-      <Suspense fallback={<div className="py-24 bg-[#364e41] text-center text-white">Cargando categorías...</div>}>
+      <Suspense fallback={<CategorySliderSkeleton />}>
         <CategorySectionWrapper />
       </Suspense>
       <SeasonalBanner />
-      <Suspense fallback={<div className="py-24 text-center">Cargando productos...</div>}>
+      <Suspense fallback={
+        <div className="bg-[#364e41] py-16 sm:py-24">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <ProductGridSkeleton count={6} />
+          </div>
+        </div>
+      }>
         <FeaturedProductsSection />
       </Suspense>
       <BrandPhilosophy />

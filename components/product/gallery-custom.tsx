@@ -13,14 +13,14 @@ export function GalleryCustom({ images }: { images: { src: string; altText: stri
   return (
     <div className="flex flex-col gap-4">
       {/* Imagen Principal - Estilo Versace minimalista */}
-      <div className="relative aspect-square w-full overflow-hidden bg-gray-50">
+      <div className="relative aspect-[3/4] w-full overflow-hidden bg-gray-50">
         {images[selectedImage] && (
           <Image
             src={images[selectedImage].src}
             alt={images[selectedImage].altText}
             fill
             sizes="(min-width: 1024px) 60vw, 100vw"
-            className="object-cover"
+            className="object-cover object-center"
             priority={selectedImage === 0}
           />
         )}
@@ -44,7 +44,7 @@ export function GalleryCustom({ images }: { images: { src: string; altText: stri
                 alt={image.altText}
                 fill
                 sizes="96px"
-                className="object-cover"
+                className="object-cover object-center"
               />
             </button>
           ))}

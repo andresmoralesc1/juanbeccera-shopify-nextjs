@@ -165,7 +165,7 @@ export default function CategorySectionDynamic({ collections }: CategorySectionD
         .custom-dots-minimal {
           display: flex !important;
           justify-content: center;
-          gap: 0.5rem;
+          gap: 0.75rem;
           margin-top: 2rem;
           list-style: none;
           padding: 0;
@@ -188,7 +188,7 @@ export default function CategorySectionDynamic({ collections }: CategorySectionD
         }
 
         .custom-dots-minimal li button:hover {
-          background-color: rgba(255, 255, 255, 0.6);
+          background-color: rgba(255, 255, 255, 0.7);
         }
 
         .custom-dots-minimal li.slick-active button {

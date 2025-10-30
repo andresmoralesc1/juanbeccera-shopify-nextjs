@@ -84,7 +84,7 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
       <AnnouncementBar />
 
       {/* Product Detail Section - Diseño Versace con identidad Juan Becerra */}
-      <div className="bg-white pt-32 pb-16">
+      <div className="bg-white pt-28 pb-16">
         <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-16">
             {/* Gallery - 60% width (3 columns) */}
@@ -104,7 +104,7 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
             </div>
 
             {/* Product Info - 40% width (2 columns) - Sticky */}
-            <div className="lg:col-span-2 lg:sticky lg:top-32 lg:self-start">
+            <div className="lg:col-span-2 lg:sticky lg:top-24 lg:self-start">
               <Suspense fallback={null}>
                 <ProductDescriptionCustom product={product} />
               </Suspense>

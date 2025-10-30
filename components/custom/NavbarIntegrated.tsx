@@ -78,14 +78,14 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
   return (
     <>
       <header
-        className={`fixed top-[38px] -mt-px left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled || isSolidVariant
             ? 'bg-white/95 backdrop-blur-md shadow-md'
             : 'bg-transparent'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="h-20 py-3 flex items-center justify-between">
+          <div className="h-20 py-3 flex items-center justify-between relative">
 
             <nav className="hidden lg:flex items-center space-x-8">
               {navLinks.slice(0, 2).map((link) => (
@@ -97,12 +97,12 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
             </nav>
 
             {/* Logo - Center */}
-            <div className="absolute left-1/2 -translate-x-1/2">
-              <Link href="/">
+            <div className="absolute left-1/2 -translate-x-1/2 pointer-events-none">
+              <Link href="/" className="pointer-events-auto">
                 <img
                   src="/logo-juan-becerra.png"
                   alt="Juan Becerra"
-                  className={`h-30 lg:h-40 w-auto transition-all duration-500 ${
+                  className={`h-16 sm:h-20 lg:h-32 w-auto transition-all duration-500 ${
                     isScrolled || isSolidVariant ? 'brightness-100' : 'brightness-0 invert'
                   }`}
                 />
@@ -110,7 +110,7 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
             </div>
 
             {/* Right Navigation & Actions */}
-            <div className="flex items-center space-x-8">
+            <div className="flex items-center space-x-2 sm:space-x-4 lg:space-x-8">
               <nav className="hidden lg:flex items-center space-x-8">
                 {navLinks.slice(2).map((link) => (
                   <Link key={link.text} href={link.href} className={`font-belleza text-lg tracking-wider transition-colors duration-300 relative group ${isScrolled || isSolidVariant ? 'text-black hover:text-[#620c0b]' : 'text-white hover:text-gray-200'} ${link.highlight ? 'font-semibold' : 'font-medium'}`}>
@@ -120,7 +120,7 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
                 ))}
               </nav>
 
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-1 sm:space-x-2 lg:space-x-3">
                 {/* Search Dropdown - Desktop y Mobile */}
                 <div className="relative" ref={searchRef}>
                   <button
@@ -133,7 +133,7 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
 
                   {/* Dropdown minimalista */}
                   {isSearchOpen && (
-                    <div className="absolute right-0 top-full mt-2 w-80 bg-white shadow-2xl border border-gray-200 rounded-lg overflow-hidden z-[100]">
+                    <div className="absolute right-0 top-full mt-2 w-80 max-w-[calc(100vw-2rem)] bg-white shadow-2xl border border-gray-200 rounded-lg overflow-hidden z-[100]">
                       <form
                         onSubmit={(e) => {
                           e.preventDefault();

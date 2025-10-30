@@ -1,30 +1,53 @@
 'use client'
+import { useEffect, useState } from 'react';
+
 export default function HeroSection() {
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <section className="relative h-[90vh] sm:h-screen flex items-center justify-center overflow-hidden w-full">
-      {/* Background Image */}
+      {/* Background Image with Parallax */}
       <div className="absolute inset-0">
         <img
           src="/banner-home-juan-becerra.jpg"
           alt="Banner Juan Becerra"
           className="w-full h-full object-cover"
+          style={{
+            transform: `translateY(${scrollY * 0.5}px)`,
+            transition: 'transform 0.1s ease-out'
+          }}
         />
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-black/30"></div>
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+      <div
+        className="relative z-10 text-center text-white max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"
+        style={{
+          opacity: Math.max(0, 1 - scrollY / 400),
+          transform: `translateY(${scrollY * 0.2}px)`
+        }}
+      >
+
         <h1 className="font-belleza text-4xl sm:text-5xl lg:text-7xl font-light tracking-wide mb-6 sm:mb-8 leading-tight">
           Nueva Colección
         </h1>
-        
+
         <p className="font-light text-base sm:text-lg lg:text-xl mb-10 sm:mb-12 max-w-2xl mx-auto opacity-90 leading-relaxed">
-          Descubre las últimas tendencias en moda premium. 
+          Descubre las últimas tendencias en moda premium.
           Elegancia y sofisticación en cada pieza.
         </p>
-        
+
         {/* Botones estilo editorial */}
         <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
           {/* Botón primario - Underline style */}

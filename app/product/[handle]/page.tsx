@@ -15,6 +15,8 @@ import { Suspense } from 'react';
 import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 import { StickyAddToCart } from 'components/product/sticky-add-to-cart';
 import { TrustBadges } from '@/components/ui/trust-badges';
+import { TrackRecentlyViewed } from 'components/product/track-recently-viewed';
+import { RecentlyViewed } from 'components/product/recently-viewed';
 
 export async function generateMetadata(props: {
   params: Promise<{ handle: string }>;
@@ -84,6 +86,7 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
           __html: JSON.stringify(productJsonLd)
         }}
       />
+      <TrackRecentlyViewed product={product} />
       <AnnouncementBar />
 
       {/* Product Detail Section - Diseño Versace con identidad Juan Becerra */}
@@ -135,6 +138,9 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
       <Suspense fallback={<div className="py-16 text-center">Cargando productos relacionados...</div>}>
         <RelatedProducts id={product.id} />
       </Suspense>
+
+      {/* Recently Viewed Products */}
+      <RecentlyViewed currentProductId={product.id} />
 
       {/* Sticky Add to Cart for Mobile */}
       <StickyAddToCart product={product} />

@@ -2,9 +2,11 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { ImageZoomModal } from '@/components/ui/image-zoom-modal';
 
 export function GalleryCustom({ images }: { images: { src: string; altText: string }[] }) {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   if (!images || images.length === 0) {
     return null;
@@ -21,8 +23,11 @@ export function GalleryCustom({ images }: { images: { src: string; altText: stri
         {gridImages.map((image, index) => (
           <button
             key={index}
-            onClick={() => setSelectedImage(selectedImage === index ? null : index)}
-            className="group relative aspect-[3/4] overflow-hidden bg-gray-50 hover:opacity-95 transition-opacity"
+            onClick={() => {
+              setSelectedImage(index);
+              setIsModalOpen(true);
+            }}
+            className="group relative aspect-[3/4] overflow-hidden bg-gray-50 hover:opacity-95 transition-opacity cursor-zoom-in"
           >
             <Image
               src={image.src}
@@ -52,8 +57,11 @@ export function GalleryCustom({ images }: { images: { src: string; altText: stri
             return (
               <button
                 key={actualIndex}
-                onClick={() => setSelectedImage(actualIndex)}
-                className="relative flex-shrink-0 h-20 w-20 overflow-hidden border border-gray-300 hover:border-gray-400 transition-all duration-200"
+                onClick={() => {
+                  setSelectedImage(actualIndex);
+                  setIsModalOpen(true);
+                }}
+                className="relative flex-shrink-0 h-20 w-20 overflow-hidden border border-gray-300 hover:border-gray-400 transition-all duration-200 cursor-zoom-in"
               >
                 <Image
                   src={image.src}
@@ -68,61 +76,13 @@ export function GalleryCustom({ images }: { images: { src: string; altText: stri
         </div>
       )}
 
-      {/* Modal de imagen ampliada (opcional - se activa al hacer clic) */}
-      {selectedImage !== null && images[selectedImage] && (
-        <div
-          className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4"
-          onClick={() => setSelectedImage(null)}
-        >
-          <div className="relative max-w-6xl max-h-[90vh] w-full h-full">
-            <Image
-              src={images[selectedImage].src}
-              alt={images[selectedImage].altText}
-              fill
-              sizes="90vw"
-              className="object-contain"
-            />
-            <button
-              onClick={() => setSelectedImage(null)}
-              className="absolute top-4 right-4 text-white bg-black/50 hover:bg-black/70 rounded-full p-2 transition-colors"
-              aria-label="Cerrar"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-            {/* Navegación entre imágenes */}
-            {selectedImage > 0 && (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setSelectedImage(selectedImage - 1);
-                }}
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-white bg-black/50 hover:bg-black/70 rounded-full p-2 transition-colors"
-                aria-label="Anterior"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-            )}
-            {selectedImage < images.length - 1 && (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setSelectedImage(selectedImage + 1);
-                }}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-white bg-black/50 hover:bg-black/70 rounded-full p-2 transition-colors"
-                aria-label="Siguiente"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            )}
-          </div>
-        </div>
-      )}
+      {/* Image Zoom Modal Premium */}
+      <ImageZoomModal
+        images={images}
+        currentIndex={selectedImage ?? 0}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 }

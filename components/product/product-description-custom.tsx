@@ -21,20 +21,15 @@ function AccordionItem({ title, content, icon, isOpen, onClick }: AccordionItemP
     <div className="border-b border-gray-200">
       <button
         onClick={onClick}
-        className="w-full flex items-center justify-between py-5 text-left hover:bg-gray-50 transition-colors px-4"
+        className="w-full flex items-center justify-between py-5 text-left transition-colors"
       >
-        <div className="flex items-center gap-3">
-          {icon && <span className="text-gray-600">{icon}</span>}
-          <span className="font-moderat text-base font-medium text-gray-900">{title}</span>
-        </div>
-        {isOpen ? (
-          <ChevronUp className="h-5 w-5 text-gray-500" />
-        ) : (
-          <ChevronDown className="h-5 w-5 text-gray-500" />
-        )}
+        <span className="font-moderat text-sm uppercase tracking-wider font-medium text-gray-900">{title}</span>
+        <span className="text-gray-400 text-xl font-light">
+          {isOpen ? '−' : '+'}
+        </span>
       </button>
       {isOpen && (
-        <div className="px-4 pb-6">
+        <div className="pb-6">
           <div className="text-gray-600 leading-relaxed text-sm">
             {content}
           </div>
@@ -86,98 +81,70 @@ export function ProductDescriptionCustom({ product }: { product: Product }) {
   ];
 
   return (
-    <>
-      {/* Breadcrumbs */}
-      <nav aria-label="Breadcrumb" className="mb-6">
-        <ol role="list" className="flex items-center space-x-2 text-sm text-gray-500">
-          <li>
-            <Link href="/" className="hover:text-[#620c0b] transition-colors">
-              Inicio
-            </Link>
-          </li>
-          <li className="text-gray-400">/</li>
-          <li>
-            <Link href="/search" className="hover:text-[#620c0b] transition-colors">
-              Productos
-            </Link>
-          </li>
-          <li className="text-gray-400">/</li>
-          <li className="text-gray-900 font-medium">{product.title}</li>
-        </ol>
-      </nav>
+    <div className="flex flex-col h-full">
+      {/* Título - Estilo Versace */}
+      <h1 className="font-belleza text-2xl sm:text-3xl font-light tracking-wide mb-4 text-gray-900 uppercase">
+        {product.title}
+      </h1>
 
-      {/* Título y Precio */}
+      {/* Precio - Prominente */}
       <div className="mb-8">
-        <h1 className="font-belleza text-3xl sm:text-4xl lg:text-5xl font-light tracking-wide mb-4 text-gray-900">
-          {product.title}
-        </h1>
-        <div className="flex items-baseline gap-3">
-          <span className="text-3xl font-medium text-[#620c0b]">
-            <Price
-              amount={product.priceRange.maxVariantPrice.amount}
-              currencyCode={product.priceRange.maxVariantPrice.currencyCode}
-            />
-          </span>
-        </div>
+        <span className="font-moderat text-xl font-semibold text-gray-900">
+          <Price
+            amount={product.priceRange.maxVariantPrice.amount}
+            currencyCode={product.priceRange.maxVariantPrice.currencyCode}
+          />
+        </span>
       </div>
 
       {/* Selector de Variantes (Tallas, Colores, etc.) */}
-      <div className="mb-8">
+      <div className="mb-6">
         <VariantSelector options={product.options} variants={product.variants} />
       </div>
 
-      {/* Selector de Cantidad y Botón de Añadir */}
-      <div className="space-y-4 mb-8">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Cantidad
-          </label>
-          <div className="inline-flex items-center border border-gray-300 rounded">
-            <button
-              onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              className="px-4 py-3 text-gray-600 hover:bg-gray-100 transition-colors"
-              aria-label="Disminuir cantidad"
-            >
-              <Minus className="h-4 w-4" />
-            </button>
-            <span className="px-6 py-3 text-center min-w-[60px] font-medium">
-              {quantity}
-            </span>
-            <button
-              onClick={() => setQuantity(quantity + 1)}
-              className="px-4 py-3 text-gray-600 hover:bg-gray-100 transition-colors"
-              aria-label="Aumentar cantidad"
-            >
-              <Plus className="h-4 w-4" />
-            </button>
-          </div>
+      {/* Selector de Cantidad - Minimalista */}
+      <div className="mb-6">
+        <label className="block font-moderat text-xs uppercase tracking-wider font-medium text-gray-700 mb-3">
+          Cantidad
+        </label>
+        <div className="inline-flex items-center border border-gray-300">
+          <button
+            onClick={() => setQuantity(Math.max(1, quantity - 1))}
+            className="px-4 py-3 text-gray-600 hover:bg-gray-50 transition-colors"
+            aria-label="Disminuir cantidad"
+          >
+            <Minus className="h-4 w-4" />
+          </button>
+          <span className="px-6 py-3 text-center min-w-[60px] font-medium text-gray-900">
+            {quantity}
+          </span>
+          <button
+            onClick={() => setQuantity(quantity + 1)}
+            className="px-4 py-3 text-gray-600 hover:bg-gray-50 transition-colors"
+            aria-label="Aumentar cantidad"
+          >
+            <Plus className="h-4 w-4" />
+          </button>
         </div>
+      </div>
 
-        {/* Botón Añadir al Carrito Personalizado */}
+      {/* Botón Add to Cart - Grande y prominente estilo Versace con color Juan Becerra */}
+      <div className="mb-8">
         <AddToCartCustom product={product} quantity={quantity} />
       </div>
 
-      {/* Acordeón de Detalles */}
-      <div className="mt-10 border-t border-gray-200">
+      {/* Acordeón de Detalles - Estilo Versace minimalista */}
+      <div className="border-t border-gray-200">
         {productDetails.map((item, index) => (
           <AccordionItem
             key={index}
             title={item.title}
             content={item.content}
-            icon={item.icon}
             isOpen={openAccordion === index}
             onClick={() => handleAccordionClick(index)}
           />
         ))}
       </div>
-
-      {/* Información adicional */}
-      <div className="mt-8 pt-8 border-t border-gray-200">
-        <p className="text-sm text-gray-500 flex items-center gap-2">
-          <Shield className="h-4 w-4" />
-          Compra 100% segura y protegida
-        </p>
-      </div>
-    </>
+    </div>
   );
 }

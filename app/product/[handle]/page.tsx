@@ -83,12 +83,12 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
       />
       <AnnouncementBar />
 
-      {/* Product Detail Section - Diseño elegante Juan Becerra */}
+      {/* Product Detail Section - Diseño Versace con identidad Juan Becerra */}
       <div className="bg-white pt-32 pb-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-            {/* Gallery with Vertical Thumbnails */}
-            <div className="lg:sticky lg:top-32 lg:self-start">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-16">
+            {/* Gallery - 60% width (3 columns) */}
+            <div className="lg:col-span-3">
               <Suspense
                 fallback={
                   <div className="relative aspect-square h-full w-full overflow-hidden bg-gray-100" />
@@ -103,8 +103,8 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
               </Suspense>
             </div>
 
-            {/* Product Info with Custom Design */}
-            <div className="flex flex-col">
+            {/* Product Info - 40% width (2 columns) - Sticky */}
+            <div className="lg:col-span-2 lg:sticky lg:top-32 lg:self-start">
               <Suspense fallback={null}>
                 <ProductDescriptionCustom product={product} />
               </Suspense>
@@ -129,12 +129,12 @@ async function RelatedProducts({ id }: { id: string }) {
   if (!relatedProducts.length) return null;
 
   return (
-    <div className="py-16 bg-[#364e41]">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <h2 className="font-belleza text-3xl lg:text-4xl font-light tracking-wide mb-8 text-white text-center">
-          También te puede interesar
+    <div className="py-16 bg-gray-50">
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
+        <h2 className="font-belleza text-2xl lg:text-3xl font-light tracking-wide mb-10 text-gray-900 text-center">
+          También podría gustarte
         </h2>
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
           {relatedProducts.map((product) => (
             <Link
               key={product.handle}
@@ -142,30 +142,24 @@ async function RelatedProducts({ id }: { id: string }) {
               className="group relative block"
               prefetch={true}
             >
-              <div className="aspect-square overflow-hidden bg-gray-100 relative">
-                {/* Marco minimalista */}
-                <div className="absolute top-3 left-3 right-3 bottom-3 border border-white/30 z-20 transition-all duration-500 group-hover:border-white/60 pointer-events-none"></div>
-
+              <div className="aspect-[3/4] overflow-hidden bg-gray-100 relative mb-3">
                 {product.featuredImage && (
                   <img
                     src={product.featuredImage.url}
                     alt={product.title}
-                    className="h-full w-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
+                    className="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                   />
                 )}
+              </div>
 
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:from-black/70 transition-all duration-300"></div>
-
-                {/* Contenido de texto */}
-                <div className="absolute inset-0 flex flex-col justify-end p-4">
-                  <h3 className="text-sm font-semibold text-white tracking-wider">
-                    {product.title}
-                  </h3>
-                  <p className="text-white text-sm font-bold mt-1">
-                    ${parseFloat(product.priceRange.maxVariantPrice.amount).toLocaleString('es-CO')}
-                  </p>
-                </div>
+              {/* Info debajo de la imagen - estilo Versace */}
+              <div className="text-left">
+                <h3 className="font-belleza text-sm font-light text-gray-900 tracking-wide mb-1">
+                  {product.title}
+                </h3>
+                <p className="font-moderat text-sm font-semibold text-gray-900">
+                  ${parseFloat(product.priceRange.maxVariantPrice.amount).toLocaleString('es-CO')} COP
+                </p>
               </div>
             </Link>
           ))}

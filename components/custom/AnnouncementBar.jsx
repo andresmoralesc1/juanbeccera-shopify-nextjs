@@ -8,11 +8,11 @@ const AnnouncementBar = () => {
       <div className="h-full flex justify-center items-center text-center px-4 max-w-7xl mx-auto">
         <div className="flex items-center gap-2 flex-wrap justify-center">
           <span role="img" aria-label="party popper" className="text-base">🎉</span>
-          <span className="hidden sm:inline">
-            ¡Oferta por tiempo limitado! Obtén hasta 20% de descuento.
+          <span className="font-belleza hidden sm:inline">
+            ENVÍO GRATIS DESDE $150.000 COP
           </span>
-          <span className="inline sm:hidden">
-            ¡Ofertas especiales!
+          <span className="font-belleza inline sm:hidden">
+            ENVÍO GRATIS DESDE $150.000 COP
           </span>
           <a href="/search/sale" className="font-semibold underline hover:text-white/80 transition-colors duration-300 inline-flex items-center gap-1 whitespace-nowrap">
             Ver detalles

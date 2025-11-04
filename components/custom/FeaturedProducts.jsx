@@ -134,12 +134,12 @@ export default function FeaturedProducts({ products, title = "Productos Destacad
               )}
 
               {/* Dots de navegación */}
-              <div className="flex justify-center gap-3 mt-8">
+              <div className="flex justify-center gap-0 mt-8">
                 {products.map((product, index) => (
                   <button
                     key={product.slug}
                     onClick={() => scrollToCard(index)}
-                    className={`transition-all duration-300 h-0.5 ${
+                    className={`transition-all duration-300 h-px ${
                       index === activeIndex
                         ? 'w-12 bg-white'
                         : 'w-8 bg-white/40 hover:bg-white/70'

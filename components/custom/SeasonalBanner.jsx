@@ -96,7 +96,7 @@ export default function SeasonalBanner() {
         .seasonal-dots {
           display: flex !important;
           justify-content: flex-start;
-          gap: 0.75rem;
+          gap: 0;
           position: absolute;
           bottom: 3rem;
           left: 1.5rem;
@@ -124,7 +124,7 @@ export default function SeasonalBanner() {
 
         .seasonal-dots li button {
           width: 32px;
-          height: 2px;
+          height: 1px;
           padding: 0;
           background-color: rgba(255, 255, 255, 0.4);
           border: none;

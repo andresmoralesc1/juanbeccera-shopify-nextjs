@@ -166,12 +166,12 @@ export default function CategorySection() {
               )}
 
               {/* Dots de navegación */}
-              <div className="flex justify-center gap-3 mt-8">
+              <div className="flex justify-center gap-0 mt-8">
                 {categories.map((category, index) => (
                   <button
                     key={category.id}
                     onClick={() => scrollToCard(index)}
-                    className={`transition-all duration-300 h-0.5 ${
+                    className={`transition-all duration-300 h-px ${
                       index === activeIndex
                         ? 'w-12 bg-white'
                         : 'w-8 bg-white/40 hover:bg-white/70'

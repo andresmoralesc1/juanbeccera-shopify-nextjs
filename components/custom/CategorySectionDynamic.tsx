@@ -190,12 +190,12 @@ export default function CategorySectionDynamic({ collections }: CategorySectionD
               )}
 
               {/* Dots de navegación */}
-              <div className="flex justify-center gap-3 mt-6">
+              <div className="flex justify-center gap-3 mt-8">
                 {validCollections.map((category, index) => (
                   <button
                     key={category.handle}
                     onClick={() => scrollToCard(index)}
-                    className={`transition-all duration-300 h-0.5 rounded-full ${
+                    className={`transition-all duration-300 h-0.5 ${
                       index === activeIndex
                         ? 'w-12 bg-white'
                         : 'w-8 bg-white/40 hover:bg-white/70'

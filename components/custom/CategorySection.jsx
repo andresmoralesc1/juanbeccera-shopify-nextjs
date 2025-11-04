@@ -99,7 +99,9 @@ export default function CategorySection() {
           slidesToScroll: 1,
           centerMode: false,
           centerPadding: '0px',
-          autoplay: false, // Desactivar autoplay en mobile
+          autoplay: false,
+          variableWidth: false,
+          adaptiveHeight: true,
         }
       }
     ],
@@ -126,11 +128,11 @@ export default function CategorySection() {
 
           {/* Slider - Derecha */}
           <div className="lg:col-span-9">
-            <div className="relative">
+            <div className="relative overflow-hidden">
               {/* React Slick Slider */}
               <Slider ref={sliderRef} {...settings}>
                 {displayCategories.map((category, index) => (
-                  <div key={`${category.id}-${index}`} className="px-1 sm:px-3">
+                  <div key={`${category.id}-${index}`} className="px-0 sm:px-3">
                     <a
                       href={category.href}
                       className="group relative block active:scale-[0.98] transition-transform duration-150"
@@ -229,10 +231,25 @@ export default function CategorySection() {
           }
         }
 
-        /* Mejorar rendimiento en mobile */
+        /* Forzar 1 card en mobile */
         @media (max-width: 640px) {
           .slick-slide img {
             will-change: auto;
+          }
+
+          .slick-slider .slick-track {
+            margin-left: 0;
+            margin-right: 0;
+          }
+
+          .slick-slide {
+            width: 100% !important;
+          }
+
+          .slick-slide > div {
+            width: 100% !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
           }
         }
       `}</style>

@@ -1,9 +1,6 @@
 'use client'
 import { useRef, useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import Slider from 'react-slick';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 const categories = [
   {
@@ -32,80 +29,55 @@ const categories = [
   },
 ];
 
-// Componente de flecha personalizada
-const CustomArrow = ({ direction, onClick }) => (
-  <button
-    onClick={onClick}
-    className={`hidden sm:block absolute ${direction === 'left' ? 'left-4' : 'right-4'} top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 lg:p-4 rounded-full shadow-lg transition-all duration-300 z-30 hover:scale-110 min-w-[44px] min-h-[44px] flex items-center justify-center`}
-    aria-label={direction === 'left' ? 'Anterior' : 'Siguiente'}
-  >
-    {direction === 'left' ? (
-      <ChevronLeft className="h-6 w-6 lg:h-7 lg:w-7 text-gray-900" />
-    ) : (
-      <ChevronRight className="h-6 w-6 lg:h-7 lg:w-7 text-gray-900" />
-    )}
-  </button>
-);
-
 export default function CategorySection() {
-  const sliderRef = useRef(null);
-  const [isMobile, setIsMobile] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const scrollContainerRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
 
-  // Detectar mobile y prefers-reduced-motion
+  // Detectar posición del scroll para actualizar indicadores
+  const handleScroll = () => {
+    if (!scrollContainerRef.current) return;
+
+    const container = scrollContainerRef.current;
+    const scrollLeft = container.scrollLeft;
+    const cardWidth = container.offsetWidth;
+    const index = Math.round(scrollLeft / cardWidth);
+
+    setActiveIndex(index);
+    setCanScrollLeft(scrollLeft > 10);
+    setCanScrollRight(scrollLeft < container.scrollWidth - container.offsetWidth - 10);
+  };
+
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 640);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-
-    // Verificar si el usuario prefiere movimiento reducido
-    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setPrefersReducedMotion(motionQuery.matches);
-
-    const handleMotionChange = (e) => setPrefersReducedMotion(e.matches);
-    motionQuery.addEventListener('change', handleMotionChange);
-
-    return () => {
-      window.removeEventListener('resize', checkMobile);
-      motionQuery.removeEventListener('change', handleMotionChange);
-    };
+    const container = scrollContainerRef.current;
+    if (container) {
+      container.addEventListener('scroll', handleScroll);
+      handleScroll(); // Initial check
+      return () => container.removeEventListener('scroll', handleScroll);
+    }
   }, []);
 
-  // No triplicar categorías en mobile, usar las originales
-  const displayCategories = isMobile ? categories : [...categories, ...categories, ...categories];
+  // Navegar a una card específica
+  const scrollToCard = (index) => {
+    if (!scrollContainerRef.current) return;
+    const container = scrollContainerRef.current;
+    const cardWidth = container.offsetWidth;
+    container.scrollTo({
+      left: cardWidth * index,
+      behavior: 'smooth'
+    });
+  };
 
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 700,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    autoplay: !isMobile && !prefersReducedMotion, // Deshabilitar autoplay en mobile y si prefiere movimiento reducido
-    autoplaySpeed: 5000, // Aumentado de 2000 a 5000ms
-    pauseOnHover: true,
-    arrows: false,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        }
-      },
-      {
-        breakpoint: 640,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          centerMode: false,
-          centerPadding: '0px',
-          autoplay: false,
-          variableWidth: false,
-          adaptiveHeight: true,
-        }
-      }
-    ],
-    dotsClass: "slick-dots custom-dots-minimal",
+  // Navegar con botones
+  const scrollPrev = () => {
+    const newIndex = Math.max(0, activeIndex - 1);
+    scrollToCard(newIndex);
+  };
+
+  const scrollNext = () => {
+    const newIndex = Math.min(categories.length - 1, activeIndex + 1);
+    scrollToCard(newIndex);
   };
 
   return (
@@ -128,11 +100,19 @@ export default function CategorySection() {
 
           {/* Slider - Derecha */}
           <div className="lg:col-span-9">
-            <div className="relative overflow-hidden">
-              {/* React Slick Slider */}
-              <Slider ref={sliderRef} {...settings}>
-                {displayCategories.map((category, index) => (
-                  <div key={`${category.id}-${index}`} className="px-0 sm:px-3">
+            <div className="relative">
+
+              {/* Scroll Container */}
+              <div
+                ref={scrollContainerRef}
+                className="scroll-container flex gap-3 sm:gap-4 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory hide-scrollbar"
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              >
+                {categories.map((category, index) => (
+                  <div
+                    key={category.id}
+                    className="snap-start shrink-0 w-full sm:w-[calc(50%-8px)] lg:w-[calc(33.333%-11px)]"
+                  >
                     <a
                       href={category.href}
                       className="group relative block active:scale-[0.98] transition-transform duration-150"
@@ -162,94 +142,81 @@ export default function CategorySection() {
                     </a>
                   </div>
                 ))}
-              </Slider>
+              </div>
 
-              {/* Botones de navegación personalizados - Ocultos en mobile */}
-              <CustomArrow direction="left" onClick={() => sliderRef.current?.slickPrev()} />
-              <CustomArrow direction="right" onClick={() => sliderRef.current?.slickNext()} />
-            </div>
+              {/* Botones de navegación - Solo desktop */}
+              {canScrollLeft && (
+                <button
+                  onClick={scrollPrev}
+                  className="hidden lg:flex absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg transition-all duration-300 z-30 hover:scale-110 min-w-[44px] min-h-[44px] items-center justify-center"
+                  aria-label="Anterior"
+                >
+                  <ChevronLeft className="h-6 w-6 text-gray-900" />
+                </button>
+              )}
 
-            {/* Indicador de swipe solo en mobile */}
-            {isMobile && (
-              <div className="text-center mt-4 text-white/60 text-xs animate-pulse sm:hidden">
+              {canScrollRight && (
+                <button
+                  onClick={scrollNext}
+                  className="hidden lg:flex absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg transition-all duration-300 z-30 hover:scale-110 min-w-[44px] min-h-[44px] items-center justify-center"
+                  aria-label="Siguiente"
+                >
+                  <ChevronRight className="h-6 w-6 text-gray-900" />
+                </button>
+              )}
+
+              {/* Dots de navegación */}
+              <div className="flex justify-center gap-3 mt-6">
+                {categories.map((category, index) => (
+                  <button
+                    key={category.id}
+                    onClick={() => scrollToCard(index)}
+                    className={`transition-all duration-300 h-0.5 rounded-full ${
+                      index === activeIndex
+                        ? 'w-12 bg-white'
+                        : 'w-8 bg-white/40 hover:bg-white/70'
+                    }`}
+                    aria-label={`Ir a ${category.name}`}
+                    style={{ minHeight: '44px', display: 'flex', alignItems: 'center' }}
+                  />
+                ))}
+              </div>
+
+              {/* Indicador de swipe solo en mobile */}
+              <div className="block sm:hidden text-center mt-4 text-white/60 text-xs animate-pulse">
                 ← Desliza para ver más →
               </div>
-            )}
+            </div>
           </div>
         </div>
       </div>
 
-      <style jsx global>{`
-        .custom-dots-minimal {
-          display: flex !important;
-          justify-content: center;
-          gap: 0.75rem;
-          margin-top: 1.5rem;
-          list-style: none;
-          padding: 0;
+      <style jsx>{`
+        .hide-scrollbar {
+          -webkit-overflow-scrolling: touch;
         }
 
-        .custom-dots-minimal li {
-          margin: 0;
-        }
-
-        .custom-dots-minimal li button {
-          width: 32px;
-          height: 2px;
-          padding: 0;
-          background-color: rgba(255, 255, 255, 0.4);
-          border: none;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          font-size: 0;
-          line-height: 0;
-          min-height: 44px; /* Área de toque accesible */
-          display: flex;
-          align-items: center;
-        }
-
-        .custom-dots-minimal li button:hover {
-          background-color: rgba(255, 255, 255, 0.7);
-        }
-
-        .custom-dots-minimal li.slick-active button {
-          width: 48px;
-          background-color: rgba(255, 255, 255, 1);
-        }
-
-        .custom-dots-minimal li button:before {
+        .hide-scrollbar::-webkit-scrollbar {
           display: none;
         }
 
         /* Soporte para prefers-reduced-motion */
         @media (prefers-reduced-motion: reduce) {
-          .custom-dots-minimal li button,
-          .slick-slide img,
-          .slick-slide h3,
-          .slick-slide p {
+          .scroll-container {
+            scroll-behavior: auto !important;
+          }
+
+          * {
             transition-duration: 0.01ms !important;
+            animation-duration: 0.01ms !important;
           }
         }
 
-        /* Forzar 1 card en mobile */
+        /* Optimización táctil para mobile */
         @media (max-width: 640px) {
-          .slick-slide img {
-            will-change: auto;
-          }
-
-          .slick-slider .slick-track {
-            margin-left: 0;
-            margin-right: 0;
-          }
-
-          .slick-slide {
-            width: 100% !important;
-          }
-
-          .slick-slide > div {
-            width: 100% !important;
-            padding-left: 0 !important;
-            padding-right: 0 !important;
+          .scroll-container {
+            scroll-padding: 0;
+            -webkit-overflow-scrolling: touch;
           }
         }
       `}</style>

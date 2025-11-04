@@ -1,5 +1,5 @@
 'use client'
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
@@ -36,22 +36,43 @@ const categories = [
 const CustomArrow = ({ direction, onClick }) => (
   <button
     onClick={onClick}
-    className={`absolute ${direction === 'left' ? 'left-2 sm:left-4' : 'right-2 sm:right-4'} top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 sm:p-3 lg:p-4 rounded-full shadow-lg transition-all duration-300 z-30 hover:scale-110`}
+    className={`hidden sm:block absolute ${direction === 'left' ? 'left-4' : 'right-4'} top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 lg:p-4 rounded-full shadow-lg transition-all duration-300 z-30 hover:scale-110 min-w-[44px] min-h-[44px] flex items-center justify-center`}
     aria-label={direction === 'left' ? 'Anterior' : 'Siguiente'}
   >
     {direction === 'left' ? (
-      <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 text-gray-900" />
+      <ChevronLeft className="h-6 w-6 lg:h-7 lg:w-7 text-gray-900" />
     ) : (
-      <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 text-gray-900" />
+      <ChevronRight className="h-6 w-6 lg:h-7 lg:w-7 text-gray-900" />
     )}
   </button>
 );
 
 export default function CategorySection() {
   const sliderRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
-  // Duplicar categorías para efecto infinito con pocas items
-  const extendedCategories = [...categories, ...categories, ...categories];
+  // Detectar mobile y prefers-reduced-motion
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 640);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    // Verificar si el usuario prefiere movimiento reducido
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(motionQuery.matches);
+
+    const handleMotionChange = (e) => setPrefersReducedMotion(e.matches);
+    motionQuery.addEventListener('change', handleMotionChange);
+
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      motionQuery.removeEventListener('change', handleMotionChange);
+    };
+  }, []);
+
+  // No triplicar categorías en mobile, usar las originales
+  const displayCategories = isMobile ? categories : [...categories, ...categories, ...categories];
 
   const settings = {
     dots: true,
@@ -59,8 +80,8 @@ export default function CategorySection() {
     speed: 700,
     slidesToShow: 3,
     slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 2000,
+    autoplay: !isMobile && !prefersReducedMotion, // Deshabilitar autoplay en mobile y si prefiere movimiento reducido
+    autoplaySpeed: 5000, // Aumentado de 2000 a 5000ms
     pauseOnHover: true,
     arrows: false,
     responsive: [
@@ -76,6 +97,9 @@ export default function CategorySection() {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
+          centerMode: false,
+          centerPadding: '0px',
+          autoplay: false, // Desactivar autoplay en mobile
         }
       }
     ],
@@ -83,16 +107,21 @@ export default function CategorySection() {
   };
 
   return (
-    <div className="bg-[#364e41] py-16 sm:py-24 overflow-hidden">
+    <div className="bg-[#364e41] py-12 sm:py-16 lg:py-24 overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center">
 
           {/* Caption - Izquierda */}
           <div className="lg:col-span-3 space-y-6">
-            <h2 className="font-belleza text-2xl sm:text-3xl lg:text-5xl font-light tracking-wide mb-6 sm:mb-8 leading-tight text-white text-center lg:text-left">
+            <h2 className="font-belleza text-2xl sm:text-3xl lg:text-5xl font-light tracking-wide mb-4 sm:mb-6 lg:mb-8 leading-tight text-white text-center lg:text-left">
               Explora más
             </h2>
-            <img src="/toro-juan-becerra.png" alt="toro-juan-becerra" className="h-42 w-auto mb-4 filter brightness-0 invert mx-auto lg:mx-0" />
+            <img
+              src="/toro-juan-becerra.png"
+              alt="Logo Toro Juan Becerra"
+              className="h-40 w-auto mb-4 filter brightness-0 invert mx-auto lg:mx-0"
+              loading="lazy"
+            />
           </div>
 
           {/* Slider - Derecha */}
@@ -100,25 +129,30 @@ export default function CategorySection() {
             <div className="relative">
               {/* React Slick Slider */}
               <Slider ref={sliderRef} {...settings}>
-                {extendedCategories.map((category, index) => (
-                  <div key={`${category.id}-${index}`} className="px-3">
-                    <a href={category.href} className="group relative block">
-                      <div className="relative h-[400px] sm:h-[450px] lg:h-[500px] w-full overflow-hidden bg-gray-200">
+                {displayCategories.map((category, index) => (
+                  <div key={`${category.id}-${index}`} className="px-1 sm:px-3">
+                    <a
+                      href={category.href}
+                      className="group relative block active:scale-[0.98] transition-transform duration-150"
+                    >
+                      <div className="relative h-[320px] sm:h-[400px] lg:h-[500px] w-full overflow-hidden bg-gray-200 rounded-sm">
                         <img
                           src={category.imageSrc}
-                          alt={category.name}
+                          alt={`Categoría ${category.name}`}
                           className="h-full w-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
+                          loading="lazy"
                         />
 
                         {/* Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:from-black/70 transition-all duration-300"></div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:from-black/70 group-active:from-black/75 transition-all duration-300"></div>
 
                         {/* Contenido de texto */}
-                        <div className="absolute inset-0 flex flex-col justify-end p-8 sm:p-10">
+                        <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-8 lg:p-10">
                           <h3 className="text-2xl sm:text-3xl font-semibold text-white tracking-wider transform group-hover:scale-105 transition-transform duration-300">
                             {category.name}
                           </h3>
-                          <p className="text-white text-sm sm:text-base mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          {/* CTA visible siempre en mobile, hover en desktop */}
+                          <p className="text-white text-sm sm:text-base mt-2 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1">
                             Explorar →
                           </p>
                         </div>
@@ -128,10 +162,17 @@ export default function CategorySection() {
                 ))}
               </Slider>
 
-              {/* Botones de navegación personalizados */}
+              {/* Botones de navegación personalizados - Ocultos en mobile */}
               <CustomArrow direction="left" onClick={() => sliderRef.current?.slickPrev()} />
               <CustomArrow direction="right" onClick={() => sliderRef.current?.slickNext()} />
             </div>
+
+            {/* Indicador de swipe solo en mobile */}
+            {isMobile && (
+              <div className="text-center mt-4 text-white/60 text-xs animate-pulse sm:hidden">
+                ← Desliza para ver más →
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -141,7 +182,7 @@ export default function CategorySection() {
           display: flex !important;
           justify-content: center;
           gap: 0.75rem;
-          margin-top: 2rem;
+          margin-top: 1.5rem;
           list-style: none;
           padding: 0;
         }
@@ -160,6 +201,9 @@ export default function CategorySection() {
           transition: all 0.3s ease;
           font-size: 0;
           line-height: 0;
+          min-height: 44px; /* Área de toque accesible */
+          display: flex;
+          align-items: center;
         }
 
         .custom-dots-minimal li button:hover {
@@ -173,6 +217,23 @@ export default function CategorySection() {
 
         .custom-dots-minimal li button:before {
           display: none;
+        }
+
+        /* Soporte para prefers-reduced-motion */
+        @media (prefers-reduced-motion: reduce) {
+          .custom-dots-minimal li button,
+          .slick-slide img,
+          .slick-slide h3,
+          .slick-slide p {
+            transition-duration: 0.01ms !important;
+          }
+        }
+
+        /* Mejorar rendimiento en mobile */
+        @media (max-width: 640px) {
+          .slick-slide img {
+            will-change: auto;
+          }
         }
       `}</style>
     </div>

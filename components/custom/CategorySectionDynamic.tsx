@@ -22,8 +22,6 @@ interface CategorySectionDynamicProps {
 export default function CategorySectionDynamic({ collections }: CategorySectionDynamicProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
 
   // Mapeo de imágenes estáticas por categoría (búsqueda flexible)
   const getCategoryImage = (handle: string): string => {
@@ -34,15 +32,15 @@ export default function CategorySectionDynamic({ collections }: CategorySectionD
     if (handleLower.includes('gorra')) return '/gorras.webp';
     if (handleLower.includes('tarjetero') || handleLower.includes('billetera')) return '/tarjeteros.webp';
     if (handleLower.includes('saco')) return '/sacos.webp';
-    if (handleLower.includes('maleta')) return '/sacos.webp'; // Usar sacos como placeholder
-    if (handleLower.includes('media')) return '/tarjeteros.webp'; // Usar tarjeteros como placeholder
-    if (handleLower.includes('camiseta')) return '/sacos.webp'; // Usar sacos como placeholder
-    if (handleLower.includes('combo')) return '/cinturones.webp'; // Usar cinturones como placeholder
+    if (handleLower.includes('maleta')) return '/sacos.webp';
+    if (handleLower.includes('media')) return '/tarjeteros.webp';
+    if (handleLower.includes('camiseta')) return '/sacos.webp';
+    if (handleLower.includes('combo')) return '/cinturones.webp';
 
-    return '/sacos.webp'; // Fallback por defecto
+    return '/sacos.webp';
   };
 
-  // Filtrar colecciones válidas (excluir las ocultas y "All") y agregar imágenes
+  // Filtrar colecciones válidas y agregar imágenes
   const validCollections = collections
     .filter(c =>
       c.handle !== '' &&
@@ -51,7 +49,6 @@ export default function CategorySectionDynamic({ collections }: CategorySectionD
     )
     .map(c => ({
       ...c,
-      // Priorizar imagen de Shopify, luego fallback a imágenes estáticas
       imageSrc: c.image?.url || getCategoryImage(c.handle)
     }));
 
@@ -59,25 +56,83 @@ export default function CategorySectionDynamic({ collections }: CategorySectionD
     return null;
   }
 
-  // Detectar posición del scroll para actualizar indicadores
+  // Calcular cuántas cards se ven a la vez según el viewport
+  const getVisibleCards = () => {
+    if (typeof window === 'undefined') return 3;
+    const width = window.innerWidth;
+    if (width < 640) return 1; // mobile: 1 card
+    if (width < 1024) return 2; // tablet: 2 cards
+    return 3; // desktop: 3 cards
+  };
+
+  const [visibleCards, setVisibleCards] = useState(3);
+
+  useEffect(() => {
+    const updateVisibleCards = () => {
+      setVisibleCards(getVisibleCards());
+    };
+    
+    updateVisibleCards();
+    window.addEventListener('resize', updateVisibleCards);
+    return () => window.removeEventListener('resize', updateVisibleCards);
+  }, []);
+
+  // Calcular cuántos dots (páginas) necesitamos
+  const totalPages = Math.ceil(validCollections.length / visibleCards);
+  const activePage = Math.floor(activeIndex / visibleCards);
+
+  // Detectar posición del scroll
   const handleScroll = () => {
     if (!scrollContainerRef.current) return;
 
     const container = scrollContainerRef.current;
-    const scrollLeft = container.scrollLeft;
-    const cardWidth = container.offsetWidth;
-    const index = Math.round(scrollLeft / cardWidth);
+    const cards = Array.from(container.children) as HTMLElement[];
+    
+    if (cards.length === 0) return;
 
-    setActiveIndex(index);
-    setCanScrollLeft(scrollLeft > 10);
-    setCanScrollRight(scrollLeft < container.scrollWidth - container.offsetWidth - 10);
+    // Encontrar la card más cercana al centro del viewport
+    const containerRect = container.getBoundingClientRect();
+    const containerCenter = containerRect.left + containerRect.width / 2;
+    
+    let closestIndex = 0;
+    let closestDistance = Infinity;
+
+    cards.forEach((card, index) => {
+      const cardRect = card.getBoundingClientRect();
+      const cardCenter = cardRect.left + cardRect.width / 2;
+      const distance = Math.abs(cardCenter - containerCenter);
+      
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    // Normalizar el índice para que siempre esté entre 0 y validCollections.length - 1
+    const normalizedIndex = closestIndex % validCollections.length;
+    setActiveIndex(normalizedIndex);
+
+    // Si estamos en la segunda mitad duplicada, saltar sin animación al inicio
+    if (closestIndex >= validCollections.length && !container.dataset.isLooping) {
+      container.dataset.isLooping = 'true';
+      setTimeout(() => {
+        const targetCard = cards[normalizedIndex];
+        if (targetCard) {
+          const scrollAmount = targetCard.getBoundingClientRect().left - containerRect.left + container.scrollLeft;
+          container.style.scrollBehavior = 'auto';
+          container.scrollLeft = scrollAmount;
+          container.style.scrollBehavior = 'smooth';
+        }
+        delete container.dataset.isLooping;
+      }, 100);
+    }
   };
 
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (container) {
       container.addEventListener('scroll', handleScroll);
-      handleScroll(); // Initial check
+      handleScroll();
       return () => container.removeEventListener('scroll', handleScroll);
     }
   }, []);
@@ -86,21 +141,43 @@ export default function CategorySectionDynamic({ collections }: CategorySectionD
   const scrollToCard = (index: number) => {
     if (!scrollContainerRef.current) return;
     const container = scrollContainerRef.current;
-    const cardWidth = container.offsetWidth;
-    container.scrollTo({
-      left: cardWidth * index,
-      behavior: 'smooth'
-    });
+    const cards = Array.from(container.children) as HTMLElement[];
+    
+    if (cards[index]) {
+      const card = cards[index];
+      const containerRect = container.getBoundingClientRect();
+      const cardRect = card.getBoundingClientRect();
+      
+      // Calcular cuánto necesitamos scrollear para centrar la card
+      const scrollAmount = cardRect.left - containerRect.left + container.scrollLeft;
+      
+      container.scrollTo({
+        left: scrollAmount,
+        behavior: 'smooth'
+      });
+    }
   };
 
-  // Navegar con botones
+  // Navegar a una página específica
+  const scrollToPage = (pageIndex: number) => {
+    const cardIndex = pageIndex * visibleCards;
+    scrollToCard(Math.min(cardIndex, validCollections.length - 1));
+  };
+
+  // Navegación infinita
   const scrollPrev = () => {
-    const newIndex = Math.max(0, activeIndex - 1);
+    let newIndex = activeIndex - 1;
+    if (newIndex < 0) {
+      newIndex = validCollections.length - 1;
+    }
     scrollToCard(newIndex);
   };
 
   const scrollNext = () => {
-    const newIndex = Math.min(validCollections.length - 1, activeIndex + 1);
+    let newIndex = activeIndex + 1;
+    if (newIndex >= validCollections.length) {
+      newIndex = 0;
+    }
     scrollToCard(newIndex);
   };
 
@@ -132,79 +209,94 @@ export default function CategorySectionDynamic({ collections }: CategorySectionD
                 className="scroll-container flex gap-3 sm:gap-4 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory hide-scrollbar"
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               >
-                {validCollections.map((category, index) => (
-                  <div
-                    key={category.handle}
-                    className="snap-start shrink-0 w-full sm:w-[calc(50%-8px)] lg:w-[calc(33.333%-11px)]"
-                  >
-                    <Link
-                      href={category.path}
-                      className="group relative block active:scale-[0.98] transition-transform duration-150"
+                {/* Renderizar las cards dos veces para efecto infinito */}
+                {[...validCollections, ...validCollections].map((category, index) => {
+                  const originalIndex = index % validCollections.length;
+                  return (
+                    <div
+                      key={`${category.handle}-${index}`}
+                      className="snap-start shrink-0 w-full sm:w-[calc(50%-8px)] lg:w-[calc(33.333%-11px)]"
                     >
-                      <div className="relative h-[320px] sm:h-[400px] lg:h-[500px] w-full overflow-hidden bg-gray-200 rounded-sm">
-                        <img
-                          src={category.imageSrc}
-                          alt={category.title}
-                          className="h-full w-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
-                          loading="lazy"
-                        />
+                      <Link
+                        href={category.path}
+                        className="group relative block active:scale-[0.98] transition-transform duration-150"
+                      >
+                        <div className="relative h-[320px] sm:h-[400px] lg:h-[500px] w-full overflow-hidden bg-gray-200 rounded-sm">
+                          <img
+                            src={category.imageSrc}
+                            alt={category.title}
+                            className="h-full w-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
+                            loading="lazy"
+                          />
 
-                        {/* Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:from-black/70 group-active:from-black/75 transition-all duration-300"></div>
+                          {/* Overlay */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:from-black/70 group-active:from-black/75 transition-all duration-300"></div>
 
-                        {/* Contenido de texto */}
-                        <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-8 lg:p-10">
-                          <h3 className="text-2xl sm:text-3xl font-semibold text-white tracking-wider transform group-hover:scale-105 transition-transform duration-300">
-                            {category.title}
-                          </h3>
-                          {/* CTA visible siempre en mobile, hover en desktop */}
-                          <p className="text-white text-sm sm:text-base mt-2 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1">
-                            Explorar →
-                          </p>
+                          {/* Contenido de texto */}
+                          <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-8 lg:p-10">
+                            <h3 className="text-2xl sm:text-3xl font-semibold text-white tracking-wider transform group-hover:scale-105 transition-transform duration-300">
+                              {category.title}
+                            </h3>
+                            <p className="text-white text-sm sm:text-base mt-2 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1">
+                              Explorar →
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    </Link>
-                  </div>
-                ))}
+                      </Link>
+                    </div>
+                  );
+                })}
               </div>
 
-              {/* Botones de navegación - Solo desktop */}
-              {canScrollLeft && (
-                <button
-                  onClick={scrollPrev}
-                  className="hidden lg:flex absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg transition-all duration-300 z-30 hover:scale-110 min-w-[44px] min-h-[44px] items-center justify-center"
-                  aria-label="Anterior"
-                >
-                  <ChevronLeft className="h-6 w-6 text-gray-900" />
-                </button>
-              )}
+              {/* Botones de navegación - Siempre visibles, navegación infinita */}
+              <button
+                onClick={scrollPrev}
+                className="hidden lg:flex absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg transition-all duration-300 z-30 hover:scale-110 min-w-[44px] min-h-[44px] items-center justify-center"
+                aria-label="Anterior"
+              >
+                <ChevronLeft className="h-6 w-6 text-gray-900" />
+              </button>
 
-              {canScrollRight && (
-                <button
-                  onClick={scrollNext}
-                  className="hidden lg:flex absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg transition-all duration-300 z-30 hover:scale-110 min-w-[44px] min-h-[44px] items-center justify-center"
-                  aria-label="Siguiente"
-                >
-                  <ChevronRight className="h-6 w-6 text-gray-900" />
-                </button>
-              )}
+              <button
+                onClick={scrollNext}
+                className="hidden lg:flex absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg transition-all duration-300 z-30 hover:scale-110 min-w-[44px] min-h-[44px] items-center justify-center"
+                aria-label="Siguiente"
+              >
+                <ChevronRight className="h-6 w-6 text-gray-900" />
+              </button>
 
-              {/* Dots de navegación */}
-              <div className="flex justify-center gap-0 mt-8">
-                {validCollections.map((category, index) => (
-                  <button
-                    key={category.handle}
-                    onClick={() => scrollToCard(index)}
-                    className={`transition-all duration-300 h-px ${
-                      index === activeIndex
-                        ? 'w-12 bg-white'
-                        : 'w-8 bg-white/40 hover:bg-white/70'
-                    }`}
-                    aria-label={`Ir a ${category.title}`}
-                    style={{ minHeight: '44px', display: 'flex', alignItems: 'center' }}
-                  />
-                ))}
-              </div>
+{/* Dots de navegación */}
+<div className="flex justify-center items-center gap-1 mt-8">
+  {Array.from({ length: totalPages }).map((_, pageIndex) => {
+    const isActive = activePage === pageIndex;
+    return (
+      <button
+        key={pageIndex}
+        onClick={() => scrollToPage(pageIndex)}
+        style={{
+          padding: 0,
+          border: 'none',
+          background: 'transparent',
+          cursor: 'pointer',
+          fontSize: 0,
+          lineHeight: 0,
+        }}
+        aria-label={`Ir a página ${pageIndex + 1}`}
+      >
+        <div
+          style={{
+            width: isActive ? '40px' : '20px', // activo más largo
+            height: '2px',
+            backgroundColor: isActive ? '#ffffff' : 'rgba(255,255,255,0.4)',
+            transition: 'all 0.3s ease',
+          }}
+        />
+      </button>
+    );
+  })}
+</div>
+
+
 
               {/* Indicador de swipe solo en mobile */}
               <div className="block sm:hidden text-center mt-4 text-white/60 text-xs animate-pulse">
@@ -224,7 +316,6 @@ export default function CategorySectionDynamic({ collections }: CategorySectionD
           display: none;
         }
 
-        /* Soporte para prefers-reduced-motion */
         @media (prefers-reduced-motion: reduce) {
           .scroll-container {
             scroll-behavior: auto !important;
@@ -236,7 +327,6 @@ export default function CategorySectionDynamic({ collections }: CategorySectionD
           }
         }
 
-        /* Optimización táctil para mobile */
         @media (max-width: 640px) {
           .scroll-container {
             scroll-padding: 0;

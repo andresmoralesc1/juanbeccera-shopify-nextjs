@@ -6,32 +6,88 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 export default function FeaturedProducts({ products, title = "Productos Destacados" }) {
   const scrollContainerRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
 
   if (!products || products.length === 0) {
     return null;
   }
 
-  // Detectar posición del scroll para actualizar indicadores
+  // Calcular cuántas cards se ven a la vez según el viewport
+  const getVisibleCards = () => {
+    if (typeof window === 'undefined') return 3;
+    const width = window.innerWidth;
+    if (width < 640) return 1; // mobile: 1 card
+    if (width < 1024) return 2; // tablet: 2 cards
+    return 3; // desktop: 3 cards
+  };
+
+  const [visibleCards, setVisibleCards] = useState(3);
+
+  useEffect(() => {
+    const updateVisibleCards = () => {
+      setVisibleCards(getVisibleCards());
+    };
+    
+    updateVisibleCards();
+    window.addEventListener('resize', updateVisibleCards);
+    return () => window.removeEventListener('resize', updateVisibleCards);
+  }, []);
+
+  // Calcular cuántos dots (páginas) necesitamos
+  const totalPages = Math.ceil(products.length / visibleCards);
+  const activePage = Math.floor(activeIndex / visibleCards);
+
+  // Detectar posición del scroll
   const handleScroll = () => {
     if (!scrollContainerRef.current) return;
 
     const container = scrollContainerRef.current;
-    const scrollLeft = container.scrollLeft;
-    const cardWidth = container.offsetWidth;
-    const index = Math.round(scrollLeft / cardWidth);
+    const cards = Array.from(container.children);
+    
+    if (cards.length === 0) return;
 
-    setActiveIndex(index);
-    setCanScrollLeft(scrollLeft > 10);
-    setCanScrollRight(scrollLeft < container.scrollWidth - container.offsetWidth - 10);
+    // Encontrar la card más cercana al centro del viewport
+    const containerRect = container.getBoundingClientRect();
+    const containerCenter = containerRect.left + containerRect.width / 2;
+    
+    let closestIndex = 0;
+    let closestDistance = Infinity;
+
+    cards.forEach((card, index) => {
+      const cardRect = card.getBoundingClientRect();
+      const cardCenter = cardRect.left + cardRect.width / 2;
+      const distance = Math.abs(cardCenter - containerCenter);
+      
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    // Normalizar el índice
+    const normalizedIndex = closestIndex % products.length;
+    setActiveIndex(normalizedIndex);
+
+    // Loop infinito
+    if (closestIndex >= products.length && !container.dataset.isLooping) {
+      container.dataset.isLooping = 'true';
+      setTimeout(() => {
+        const targetCard = cards[normalizedIndex];
+        if (targetCard) {
+          const scrollAmount = targetCard.getBoundingClientRect().left - containerRect.left + container.scrollLeft;
+          container.style.scrollBehavior = 'auto';
+          container.scrollLeft = scrollAmount;
+          container.style.scrollBehavior = 'smooth';
+        }
+        delete container.dataset.isLooping;
+      }, 100);
+    }
   };
 
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (container) {
       container.addEventListener('scroll', handleScroll);
-      handleScroll(); // Initial check
+      handleScroll();
       return () => container.removeEventListener('scroll', handleScroll);
     }
   }, []);
@@ -40,21 +96,42 @@ export default function FeaturedProducts({ products, title = "Productos Destacad
   const scrollToCard = (index) => {
     if (!scrollContainerRef.current) return;
     const container = scrollContainerRef.current;
-    const cardWidth = container.offsetWidth;
-    container.scrollTo({
-      left: cardWidth * index,
-      behavior: 'smooth'
-    });
+    const cards = Array.from(container.children);
+    
+    if (cards[index]) {
+      const card = cards[index];
+      const containerRect = container.getBoundingClientRect();
+      const cardRect = card.getBoundingClientRect();
+      
+      const scrollAmount = cardRect.left - containerRect.left + container.scrollLeft;
+      
+      container.scrollTo({
+        left: scrollAmount,
+        behavior: 'smooth'
+      });
+    }
   };
 
-  // Navegar con botones
+  // Navegar a una página específica
+  const scrollToPage = (pageIndex) => {
+    const cardIndex = pageIndex * visibleCards;
+    scrollToCard(Math.min(cardIndex, products.length - 1));
+  };
+
+  // Navegación infinita
   const scrollPrev = () => {
-    const newIndex = Math.max(0, activeIndex - 1);
+    let newIndex = activeIndex - 1;
+    if (newIndex < 0) {
+      newIndex = products.length - 1;
+    }
     scrollToCard(newIndex);
   };
 
   const scrollNext = () => {
-    const newIndex = Math.min(products.length - 1, activeIndex + 1);
+    let newIndex = activeIndex + 1;
+    if (newIndex >= products.length) {
+      newIndex = 0;
+    }
     scrollToCard(newIndex);
   };
 
@@ -73,9 +150,10 @@ export default function FeaturedProducts({ products, title = "Productos Destacad
                 className="scroll-container flex gap-3 sm:gap-4 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory hide-scrollbar"
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               >
-                {products.map((product, index) => (
+                {/* Renderizar productos dos veces para efecto infinito */}
+                {[...products, ...products].map((product, index) => (
                   <div
-                    key={product.slug}
+                    key={`${product.slug}-${index}`}
                     className="snap-start shrink-0 w-full sm:w-[calc(50%-8px)] lg:w-[calc(33.333%-11px)]"
                   >
                     <a
@@ -101,7 +179,6 @@ export default function FeaturedProducts({ products, title = "Productos Destacad
                           <p className="text-white text-xl sm:text-2xl font-bold mt-2">
                             {product.price}
                           </p>
-                          {/* CTA visible siempre en mobile, hover en desktop */}
                           <p className="text-white text-sm sm:text-base mt-2 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300">
                             Ver Detalles →
                           </p>
@@ -112,43 +189,53 @@ export default function FeaturedProducts({ products, title = "Productos Destacad
                 ))}
               </div>
 
-              {/* Botones de navegación - Solo desktop */}
-              {canScrollLeft && (
-                <button
-                  onClick={scrollPrev}
-                  className="hidden lg:flex absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg transition-all duration-300 z-30 hover:scale-110 min-w-[44px] min-h-[44px] items-center justify-center"
-                  aria-label="Anterior"
-                >
-                  <ChevronLeft className="h-6 w-6 text-gray-900" />
-                </button>
-              )}
+              {/* Botones de navegación - Siempre visibles, navegación infinita */}
+              <button
+                onClick={scrollPrev}
+                className="hidden lg:flex absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg transition-all duration-300 z-30 hover:scale-110 min-w-[44px] min-h-[44px] items-center justify-center"
+                aria-label="Anterior"
+              >
+                <ChevronLeft className="h-6 w-6 text-gray-900" />
+              </button>
 
-              {canScrollRight && (
-                <button
-                  onClick={scrollNext}
-                  className="hidden lg:flex absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg transition-all duration-300 z-30 hover:scale-110 min-w-[44px] min-h-[44px] items-center justify-center"
-                  aria-label="Siguiente"
-                >
-                  <ChevronRight className="h-6 w-6 text-gray-900" />
-                </button>
-              )}
+              <button
+                onClick={scrollNext}
+                className="hidden lg:flex absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg transition-all duration-300 z-30 hover:scale-110 min-w-[44px] min-h-[44px] items-center justify-center"
+                aria-label="Siguiente"
+              >
+                <ChevronRight className="h-6 w-6 text-gray-900" />
+              </button>
 
-              {/* Dots de navegación */}
-              <div className="flex justify-center gap-0 mt-8">
-                {products.map((product, index) => (
-                  <button
-                    key={product.slug}
-                    onClick={() => scrollToCard(index)}
-                    className={`transition-all duration-300 h-px ${
-                      index === activeIndex
-                        ? 'w-12 bg-white'
-                        : 'w-8 bg-white/40 hover:bg-white/70'
-                    }`}
-                    aria-label={`Ir a ${product.name}`}
-                    style={{ minHeight: '44px', display: 'flex', alignItems: 'center' }}
-                  />
-                ))}
-              </div>
+     {/* Dots de navegación - Solo páginas */}
+<div className="flex justify-center items-center gap-1 mt-8">
+  {Array.from({ length: totalPages }).map((_, pageIndex) => {
+    const isActive = activePage === pageIndex;
+    return (
+      <button
+        key={pageIndex}
+        onClick={() => scrollToPage(pageIndex)}
+        className="flex items-center justify-center"
+        style={{
+          padding: 0,
+          border: 'none',
+          background: 'transparent',
+          cursor: 'pointer'
+        }}
+        aria-label={`Ir a página ${pageIndex + 1}`}
+      >
+        <div
+          style={{
+            width: isActive ? '40px' : '20px',
+            height: '2px',
+            backgroundColor: isActive ? '#ffffff' : 'rgba(255,255,255,0.5)',
+            transition: 'all 0.3s ease'
+          }}
+        />
+      </button>
+    );
+  })}
+</div>
+
 
               {/* Indicador de swipe solo en mobile */}
               <div className="block sm:hidden text-center mt-4 text-white/60 text-xs animate-pulse">

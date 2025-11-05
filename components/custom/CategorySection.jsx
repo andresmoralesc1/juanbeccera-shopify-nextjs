@@ -32,10 +32,7 @@ const categories = [
 export default function CategorySection() {
   const scrollContainerRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
 
-  // Detectar posición del scroll para actualizar indicadores
   const handleScroll = () => {
     if (!scrollContainerRef.current) return;
 
@@ -45,47 +42,51 @@ export default function CategorySection() {
     const index = Math.round(scrollLeft / cardWidth);
 
     setActiveIndex(index);
-    setCanScrollLeft(scrollLeft > 10);
-    setCanScrollRight(scrollLeft < container.scrollWidth - container.offsetWidth - 10);
   };
 
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (container) {
       container.addEventListener('scroll', handleScroll);
-      handleScroll(); // Initial check
+      handleScroll();
       return () => container.removeEventListener('scroll', handleScroll);
     }
   }, []);
 
-  // Navegar a una card específica
   const scrollToCard = (index) => {
     if (!scrollContainerRef.current) return;
     const container = scrollContainerRef.current;
-    const cardWidth = container.offsetWidth;
-    container.scrollTo({
-      left: cardWidth * index,
-      behavior: 'smooth'
-    });
+    const cards = container.children;
+    if (cards[index]) {
+      const cardLeft = cards[index].offsetLeft;
+      container.scrollTo({
+        left: cardLeft,
+        behavior: 'smooth'
+      });
+    }
   };
 
-  // Navegar con botones
   const scrollPrev = () => {
-    const newIndex = Math.max(0, activeIndex - 1);
+    let newIndex = activeIndex - 1;
+    if (newIndex < 0) {
+      newIndex = categories.length - 1;
+    }
     scrollToCard(newIndex);
   };
 
   const scrollNext = () => {
-    const newIndex = Math.min(categories.length - 1, activeIndex + 1);
+    let newIndex = activeIndex + 1;
+    if (newIndex >= categories.length) {
+      newIndex = 0;
+    }
     scrollToCard(newIndex);
   };
 
   return (
-    <div className="bg-[#364e41] py-12 sm:py-16 lg:py-24 overflow-hidden">
+    <div className="bg-pink-500 py-12 sm:py-16 lg:py-24 overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center">
 
-          {/* Caption - Izquierda */}
           <div className="lg:col-span-3 space-y-6">
             <h2 className="font-belleza text-2xl sm:text-3xl lg:text-5xl font-light tracking-wide mb-4 sm:mb-6 lg:mb-8 leading-tight text-white text-center lg:text-left">
               Explora más
@@ -98,17 +99,15 @@ export default function CategorySection() {
             />
           </div>
 
-          {/* Slider - Derecha */}
           <div className="lg:col-span-9">
             <div className="relative">
 
-              {/* Scroll Container */}
               <div
                 ref={scrollContainerRef}
-                className="scroll-container flex gap-3 sm:gap-4 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory hide-scrollbar"
+                className="flex gap-3 sm:gap-4 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory"
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               >
-                {categories.map((category, index) => (
+                {categories.map((category) => (
                   <div
                     key={category.id}
                     className="snap-start shrink-0 w-full sm:w-[calc(50%-8px)] lg:w-[calc(33.333%-11px)]"
@@ -125,15 +124,12 @@ export default function CategorySection() {
                           loading="lazy"
                         />
 
-                        {/* Overlay */}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:from-black/70 group-active:from-black/75 transition-all duration-300"></div>
 
-                        {/* Contenido de texto */}
                         <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-8 lg:p-10">
                           <h3 className="text-2xl sm:text-3xl font-semibold text-white tracking-wider transform group-hover:scale-105 transition-transform duration-300">
                             {category.name}
                           </h3>
-                          {/* CTA visible siempre en mobile, hover en desktop */}
                           <p className="text-white text-sm sm:text-base mt-2 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1">
                             Explorar →
                           </p>
@@ -144,45 +140,65 @@ export default function CategorySection() {
                 ))}
               </div>
 
-              {/* Botones de navegación - Solo desktop */}
-              {canScrollLeft && (
-                <button
-                  onClick={scrollPrev}
-                  className="hidden lg:flex absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg transition-all duration-300 z-30 hover:scale-110 min-w-[44px] min-h-[44px] items-center justify-center"
-                  aria-label="Anterior"
-                >
-                  <ChevronLeft className="h-6 w-6 text-gray-900" />
-                </button>
-              )}
+              <button
+                onClick={scrollPrev}
+                className="hidden lg:flex absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg transition-all duration-300 z-30 hover:scale-110 min-w-[44px] min-h-[44px] items-center justify-center"
+                aria-label="Anterior"
+              >
+                <ChevronLeft className="h-6 w-6 text-gray-900" />
+              </button>
 
-              {canScrollRight && (
-                <button
-                  onClick={scrollNext}
-                  className="hidden lg:flex absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg transition-all duration-300 z-30 hover:scale-110 min-w-[44px] min-h-[44px] items-center justify-center"
-                  aria-label="Siguiente"
-                >
-                  <ChevronRight className="h-6 w-6 text-gray-900" />
-                </button>
-              )}
+              <button
+                onClick={scrollNext}
+                className="hidden lg:flex absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg transition-all duration-300 z-30 hover:scale-110 min-w-[44px] min-h-[44px] items-center justify-center"
+                aria-label="Siguiente"
+              >
+                <ChevronRight className="h-6 w-6 text-gray-900" />
+              </button>
 
-              {/* Dots de navegación */}
-              <div className="flex justify-center gap-0 mt-8">
-                {categories.map((category, index) => (
-                  <button
-                    key={category.id}
-                    onClick={() => scrollToCard(index)}
-                    className={`transition-all duration-300 h-px ${
-                      index === activeIndex
-                        ? 'w-12 bg-white'
-                        : 'w-8 bg-white/40 hover:bg-white/70'
-                    }`}
-                    aria-label={`Ir a ${category.name}`}
-                    style={{ minHeight: '44px', display: 'flex', alignItems: 'center' }}
-                  />
-                ))}
+              {/* DEBUG INFO */}
+              <div className="bg-red-500 text-white p-4 rounded text-center mt-6">
+                <p className="text-lg font-bold">DEBUG MODE</p>
+                <p>Active Index: {activeIndex}</p>
+                <p>Total Categories: {categories.length}</p>
               </div>
 
-              {/* Indicador de swipe solo en mobile */}
+              <div className="flex justify-center items-center gap-6 mt-8 bg-yellow-400 p-4">
+                {categories.map((category, index) => {
+                  const isActive = activeIndex === index;
+                  return (
+                    <div key={category.id} className="flex flex-col items-center gap-2">
+                      <button
+                        onClick={() => {
+                          console.log('Clicked dot', index);
+                          scrollToCard(index);
+                        }}
+                        className="flex items-center justify-center"
+                        style={{ 
+                          minHeight: '44px', 
+                          minWidth: '60px', 
+                          padding: '10px',
+                          border: isActive ? '3px solid red' : '3px solid blue',
+                          background: isActive ? 'green' : 'gray', 
+                          cursor: 'pointer'
+                        }}
+                      >
+                        <div 
+                          style={{
+                            width: isActive ? '40px' : '20px',
+                            height: isActive ? '10px' : '4px',
+                            backgroundColor: isActive ? '#ff0000' : '#000000'
+                          }}
+                        />
+                      </button>
+                      <span className="text-xs text-black font-bold">
+                        {index} - {isActive ? 'ACTIVO' : 'inactivo'}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+
               <div className="block sm:hidden text-center mt-4 text-white/60 text-xs animate-pulse">
                 ← Desliza para ver más →
               </div>
@@ -190,36 +206,6 @@ export default function CategorySection() {
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        .hide-scrollbar {
-          -webkit-overflow-scrolling: touch;
-        }
-
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-
-        /* Soporte para prefers-reduced-motion */
-        @media (prefers-reduced-motion: reduce) {
-          .scroll-container {
-            scroll-behavior: auto !important;
-          }
-
-          * {
-            transition-duration: 0.01ms !important;
-            animation-duration: 0.01ms !important;
-          }
-        }
-
-        /* Optimización táctil para mobile */
-        @media (max-width: 640px) {
-          .scroll-container {
-            scroll-padding: 0;
-            -webkit-overflow-scrolling: touch;
-          }
-        }
-      `}</style>
     </div>
   );
 }

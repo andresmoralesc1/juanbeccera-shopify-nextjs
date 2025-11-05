@@ -4,10 +4,10 @@ import { Search, ShoppingBag, User, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const navLinks = [
-  { href: "/collections/new", text: "Nueva Colección", highlight: false },
-  { href: "/collections/hombre", text: "Hombre", highlight: false },
-  { href: "/collections/accesorios", text: "Accesorios", highlight: false },
-  { href: "/collections/sale", text: "Sale", highlight: true },
+  { href: "/search", text: "Tienda", highlight: false },
+  { href: "/search/camisetas", text: "Camisetas", highlight: false },
+  { href: "/search/billeteras-tarjeteros", text: "Accesorios", highlight: false },
+  { href: "/search", text: "Sale", highlight: true },
 ];
 
 export default function Navbar({ variant = 'transparent' }) {

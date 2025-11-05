@@ -92,61 +92,62 @@ export default function SeasonalBanner() {
         ))}
       </Slider>
 
-      <style jsx global>{`
-        .seasonal-dots {
-          display: flex !important;
-          justify-content: flex-start;
-          gap: 0;
-          position: absolute;
-          bottom: 3rem;
-          left: 1.5rem;
-          list-style: none;
-          padding: 0;
-        }
+<style jsx global>{`
+  .seasonal-dots {
+    display: flex !important;
+    justify-content: center; /* centrado debajo del slider */
+    gap: 4px; /* espacio pequeño entre barras */
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
 
-        @media (min-width: 640px) {
-          .seasonal-dots {
-            bottom: 4rem;
-            left: 3rem;
-          }
-        }
+  @media (min-width: 640px) {
+    .seasonal-dots {
+      bottom: 4rem;
+    }
+  }
 
-        @media (min-width: 1024px) {
-          .seasonal-dots {
-            bottom: 5rem;
-            left: 4rem;
-          }
-        }
+  @media (min-width: 1024px) {
+    .seasonal-dots {
+      bottom: 5rem;
+    }
+  }
 
-        .seasonal-dots li {
-          margin: 0;
-        }
+  .seasonal-dots li {
+    margin: 0;
+  }
 
-        .seasonal-dots li button {
-          width: 32px;
-          height: 1px;
-          padding: 0;
-          background-color: rgba(255, 255, 255, 0.4);
-          border: none;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          font-size: 0;
-          line-height: 0;
-        }
+  .seasonal-dots li button {
+    width: 20px; /* ancho inactivo */
+    height: 2px;
+    padding: 0;
+    background-color: rgba(255, 255, 255, 0.4);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0;
+    line-height: 0;
+  }
 
-        .seasonal-dots li button:hover {
-          background-color: rgba(255, 255, 255, 0.7);
-        }
+  .seasonal-dots li button:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
 
-        .seasonal-dots li.slick-active button {
-          width: 48px;
-          background-color: rgba(255, 255, 255, 1);
-        }
+  .seasonal-dots li.slick-active button {
+    width: 40px; /* ancho activo */
+    background-color: #ffffff;
+  }
 
-        .seasonal-dots li button:before {
-          display: none;
-        }
-      `}</style>
+  .seasonal-dots li button:before {
+    display: none;
+  }
+`}</style>
+
     </div>
   );
 }

@@ -9,10 +9,10 @@ import { usePathname, useRouter } from 'next/navigation';
 // IMPORTANTE: Verificar que estas colecciones existan en Shopify con estos handles exactos
 // Ajustar los handles según las colecciones reales en tu tienda Shopify
 const navLinks = [
-  { href: "/search", text: "Nueva Colección", highlight: false },
-  { href: "/search/hombre", text: "Hombre", highlight: false },
-  { href: "/search/accesorios", text: "Accesorios", highlight: false },
-  { href: "/search/sale", text: "Sale", highlight: true },
+  { href: "/search", text: "Tienda", highlight: false },
+  { href: "/search/camisetas", text: "Camisetas", highlight: false },
+  { href: "/search/billeteras-tarjeteros", text: "Accesorios", highlight: false },
+  { href: "/search", text: "Sale", highlight: true },
 ];
 
 export default function NavbarIntegrated({ variant = 'transparent' }) {
@@ -175,9 +175,9 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
                   )}
                 </div>
 
-                <button className={`p-2 transition-colors ${isScrolled || isSolidVariant ? 'hover:bg-gray-100' : 'hover:bg-white/20'}`}>
+                <Link href="https://shopify.com/authentication/59494367369/login?client_id=097058ae-b274-42f4-8e44-49fe52eff767&locale=es&redirect_uri=%2Fauthentication%2F59494367369%2Foauth%2Fauthorize%3Fclient_id%3D097058ae-b274-42f4-8e44-49fe52eff767%26locale%3Des%26nonce%3Da62e5c3c-5312-4f47-bf22-1f47b89dfef6%26redirect_uri%3Dhttps%253A%252F%252Fshopify.com%252F59494367369%252Faccount%252Fcallback%253Fsource%253Dcore%26region_country%3DPL%26response_type%3Dcode%26scope%3Dopenid%2Bemail%2Bcustomer-account-api%253Afull%26state%3DhWN4z09e8w0whRY276X8oWiA&region_country=PL" className={`p-2 rounded-full transition-colors ${isScrolled || isSolidVariant ? 'hover:bg-gray-100' : 'hover:bg-white/20'}`} aria-label="Mi cuenta">
                   <User className={`h-5 w-5 ${isScrolled || isSolidVariant ? 'text-black' : 'text-white'}`} />
-                </button>
+                </Link>
                 {/* Integrar carrito de Shopify */}
                 <div className={`${isScrolled || isSolidVariant ? '[&_svg]:text-black' : '[&_svg]:text-white [&_svg]:hover:text-gray-200'}`}>
                   <Suspense fallback={null}>

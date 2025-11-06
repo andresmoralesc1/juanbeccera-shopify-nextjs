@@ -68,10 +68,10 @@ export type Page = {
   updatedAt: string;
 };
 
-export type Product = Omit<ShopifyProduct, 'variants' | 'images'> & {
+export type Product = Omit<ShopifyProduct, 'variants' | 'images' | 'collections'> & {
   variants: ProductVariant[];
   images: Image[];
-  collections: Connection<ShopifyCollection>; // Añadir esta línea
+  collections: ShopifyCollection[];
 };
 
 export type ProductOption = {
@@ -135,6 +135,7 @@ export type ShopifyProduct = {
   seo: SEO;
   tags: string[];
   updatedAt: string;
+  collections: Connection<ShopifyCollection>;
 };
 
 export type ShopifyCartOperation = {

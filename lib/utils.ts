@@ -1,9 +1,5 @@
 import { ReadonlyURLSearchParams } from 'next/navigation';
 
-export const baseUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
-  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-  : 'http://localhost:3000';
-
 export const createUrl = (
   pathname: string,
   params: URLSearchParams | ReadonlyURLSearchParams
@@ -18,6 +14,13 @@ export const ensureStartsWith = (stringToCheck: string, startsWith: string) =>
   stringToCheck.startsWith(startsWith)
     ? stringToCheck
     : `${startsWith}${stringToCheck}`;
+
+export const getBaseUrl = () => {
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  return 'http://localhost:3000';
+};
+
+export const baseUrl = getBaseUrl();
 
 export const validateEnvironmentVariables = () => {
   const requiredEnvironmentVariables = [

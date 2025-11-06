@@ -188,10 +188,11 @@ const reshapeProduct = (
     return undefined;
   }
 
-  const { images, variants, ...rest } = product;
+  const { images, variants, collections, ...rest } = product;
 
   return {
     ...rest,
+    collections: collections ? removeEdgesAndNodes(collections) : [],
     images: reshapeImages(images, product.title),
     variants: removeEdgesAndNodes(variants)
   };

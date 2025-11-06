@@ -30,35 +30,47 @@ const productFragment = /* GraphQL */ `
           id
           title
           availableForSale
-          selectedOptions {
-            name
-            value
-          }
           price {
             amount
             currencyCode
+          }
+          selectedOptions {
+            name
+            value
           }
         }
       }
     }
     featuredImage {
-      ...image
+      url
+      altText
+      width
+      height
     }
     images(first: 20) {
       edges {
         node {
-          ...image
+          url
+          altText
+          width
+          height
         }
       }
     }
     seo {
-      ...seo
+      title
+      description
     }
     tags
     updatedAt
+    collections(first: 10) {
+      edges {
+        node {
+          handle
+        }
+      }
+    }
   }
-  ${imageFragment}
-  ${seoFragment}
 `;
 
 export default productFragment;

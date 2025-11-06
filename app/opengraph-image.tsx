@@ -1,15 +1,20 @@
 import OpengraphImage from 'components/opengraph-image';
-import { getBaseUrl } from 'lib/utils';
-import { Inter } from 'next/font/google';
+import { readFile } from 'fs/promises';
+import { join } from 'path';
 
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap'
-});
+export const runtime = 'edge';
+export const contentType = 'image/png';
 
 export default async function Image() {
-  const font = await fetch(new URL(`${getBaseUrl()}/${inter.style.fontFamily}.woff2`)).then((res) =>
-    res.arrayBuffer()
-  );
-  return await OpengraphImage({ font });
+  try {
+    // Read font file from the filesystem
+    const fontBuffer = await readFile(join(process.cwd(), 'fonts', 'Inter-Bold.ttf'));
+    // Convert Buffer to ArrayBuffer
+    const font = new Uint8Array(fontBuffer).buffer;
+    
+    return await OpengraphImage({ font });
+  } catch (error) {
+    console.error('Error generating OpenGraph image:', error);
+    throw error;
+  }
 }

@@ -1,13 +1,27 @@
 import OpengraphImage from 'components/opengraph-image';
 import { getCollection } from 'lib/shopify';
+import { readFile } from 'fs/promises';
+import { join } from 'path';
 
-export default async function Image({
-  params
-}: {
-  params: { collection: string };
-}) {
-  const collection = await getCollection(params.collection);
-  const title = collection?.seo?.title || collection?.title;
+export const runtime = 'edge';
+export const contentType = 'image/png';
 
-  return await OpengraphImage({ title });
+export default async function Image({ params }: { params: { collection: string } }) {
+  try {
+    const collection = await getCollection(params.collection);
+    const title = collection?.seo?.title || collection?.title || '';
+
+    // Read font file from the filesystem
+    const fontBuffer = await readFile(join(process.cwd(), 'fonts', 'Inter-Bold.ttf'));
+    // Convert Buffer to ArrayBuffer
+    const font = new Uint8Array(fontBuffer).buffer;
+
+    return await OpengraphImage({ 
+      title, 
+      font 
+    });
+  } catch (error) {
+    console.error('Error generating OpenGraph image:', error);
+    throw error;
+  }
 }

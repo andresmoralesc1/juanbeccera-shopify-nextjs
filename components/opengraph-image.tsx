@@ -1,24 +1,20 @@
 import { ImageResponse } from 'next/og';
 import LogoIcon from './icons/logo';
-import { join } from 'path';
-import { readFile } from 'fs/promises';
 
 export type Props = {
   title?: string;
+  font: ArrayBuffer;
 };
 
 export default async function OpengraphImage(
-  props?: Props
+  props: Props
 ): Promise<ImageResponse> {
-  const { title } = {
+  const { title, font } = {
     ...{
       title: process.env.SITE_NAME
     },
     ...props
   };
-
-  const file = await readFile(join(process.cwd(), './fonts/Inter-Bold.ttf'));
-  const font = Uint8Array.from(file).buffer;
 
   return new ImageResponse(
     (

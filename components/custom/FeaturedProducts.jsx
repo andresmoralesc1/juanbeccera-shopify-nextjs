@@ -157,7 +157,7 @@ export default function FeaturedProducts({ products, title = "Productos Destacad
                     className="snap-start shrink-0 w-full sm:w-[calc(50%-8px)] lg:w-[calc(33.333%-11px)]"
                   >
                     <a
-                      href={`/product/${product.slug}`}
+                      href={`/products/${product.slug}`}
                       className="group relative block active:scale-[0.98] transition-transform duration-150"
                     >
                       <div className="relative h-[320px] sm:h-[400px] lg:h-[500px] w-full overflow-hidden bg-gray-200 rounded-sm">

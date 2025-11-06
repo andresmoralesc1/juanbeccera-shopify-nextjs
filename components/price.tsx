@@ -3,7 +3,7 @@ import clsx from 'clsx';
 const Price = ({
   amount,
   className,
-  currencyCode = 'USD',
+  currencyCode = 'COP',
   currencyCodeClassName
 }: {
   amount: string;
@@ -15,9 +15,10 @@ const Price = ({
     {`${new Intl.NumberFormat(undefined, {
       style: 'currency',
       currency: currencyCode,
-      currencyDisplay: 'narrowSymbol'
+      currencyDisplay: 'narrowSymbol',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
     }).format(parseFloat(amount))}`}
-    <span className={clsx('ml-1 inline', currencyCodeClassName)}>{`${currencyCode}`}</span>
   </p>
 );
 

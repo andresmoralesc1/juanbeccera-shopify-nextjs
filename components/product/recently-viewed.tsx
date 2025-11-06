@@ -51,8 +51,8 @@ export function RecentlyViewed({ currentProductId }: { currentProductId?: string
                   {product.title}
                 </h3>
                 <p className="font-moderat text-sm font-semibold text-gray-900">
-                  ${parseFloat(product.priceRange.maxVariantPrice.amount).toLocaleString('es-CO')}{' '}
-                  COP
+                  $
+                  {parseFloat(product.priceRange.maxVariantPrice.amount).toLocaleString('es-CO', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                 </p>
               </div>
             </Link>

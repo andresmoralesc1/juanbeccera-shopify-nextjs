@@ -29,8 +29,8 @@ Todos los componentes del diseño original fueron integrados:
 
 ### 3. ✅ Páginas Personalizadas
 - [x] **Home (/)** - Página principal completamente personalizada
-- [x] **Productos (/product/[handle])** - Páginas de producto con diseño elegante
-- [x] **Colecciones (/search/[collection])** - Páginas de categorías personalizadas
+- [x] **Productos (/products/[handle])** - Páginas de producto con diseño elegante
+- [x] **Colecciones (/collections/[collection])** - Páginas de categorías personalizadas
 - [x] **Búsqueda (/search)** - Sistema de búsqueda integrado
 
 ### 4. ✅ Integración con Shopify
@@ -92,9 +92,9 @@ npm run test             # Verificar formato
 juan-becerra-integrated/
 ├── ✅ app/
 │   ├── page.tsx                     # Home personalizada
-│   ├── layout.tsx                   # Layout con navbar integrado
-│   ├── product/[handle]/page.tsx    # Productos personalizados
-│   ├── search/[collection]/page.tsx # Colecciones personalizadas
+│   ├── layout.tsx                   # Layout con navbar integrado y AnnouncementBar
+│   ├── products/[handle]/page.tsx   # Productos personalizados
+│   ├── collections/[collection]/page.tsx # Colecciones personalizadas
 │   └── globals.css                  # Estilos globales + marca
 ├── ✅ components/
 │   ├── custom/                      # 10 componentes personalizados
@@ -180,7 +180,7 @@ SHOPIFY_STORE_DOMAIN="juan-becerra.myshopify.com"
 10. Footer personalizado
 
 ### Páginas de Producto
-- Breadcrumb navigation
+- Navegación Breadcrumb
 - Galería de imágenes
 - Descripción y variantes
 - Botón "Agregar al carrito"
@@ -188,7 +188,7 @@ SHOPIFY_STORE_DOMAIN="juan-becerra.myshopify.com"
 
 ### Páginas de Colección
 - Header personalizado con breadcrumb
-- Descripción de colección
+- Descripción de la colección
 - Grid de productos
 - Contador de productos
 - Diseño elegante con paleta de marca

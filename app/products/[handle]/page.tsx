@@ -165,7 +165,7 @@ async function RelatedProducts({ id }: { id: string }) {
           {relatedProducts.map((product) => (
             <Link
               key={product.handle}
-              href={`/product/${product.handle}`}
+              href={`/products/${product.handle}`}
               className="group relative block product-card"
               prefetch={true}
             >
@@ -187,7 +187,7 @@ async function RelatedProducts({ id }: { id: string }) {
                   {product.title}
                 </h3>
                 <p className="font-moderat text-sm font-semibold text-gray-900">
-                  ${parseFloat(product.priceRange.maxVariantPrice.amount).toLocaleString('es-CO')} COP
+                  ${parseFloat(product.priceRange.maxVariantPrice.amount).toLocaleString('es-CO', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                 </p>
               </div>
             </Link>

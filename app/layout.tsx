@@ -21,13 +21,13 @@ const moderat = localFont({
   variable: '--font-moderat',
 });
 
-const { SITE_NAME } = process.env;
+const siteName = process.env.SITE_NAME || 'Juan Becerra | Elegancia sin limites'; // Aseguramos un valor por defecto
 
 export const metadata = {
   metadataBase: new URL(baseUrl),
-  title: {
-    default: SITE_NAME!,
-    template: `%s | ${SITE_NAME}`
+  title: { // Usamos la variable siteName segura
+    default: siteName,
+    template: `%s | ${siteName}`
   },
   robots: {
     follow: true,

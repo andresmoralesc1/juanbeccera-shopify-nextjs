@@ -1,5 +1,7 @@
 import { ImageResponse } from 'next/og';
 import LogoIcon from './icons/logo';
+import { readFile } from 'fs/promises';
+import { join } from 'path';
 
 export type Props = {
   title?: string;
@@ -9,12 +11,7 @@ export type Props = {
 export default async function OpengraphImage(
   props: Props
 ): Promise<ImageResponse> {
-  const { title, font } = {
-    ...{
-      title: process.env.SITE_NAME
-    },
-    ...props
-  };
+  const { title, font } = props;
 
   return new ImageResponse(
     (
@@ -30,7 +27,7 @@ export default async function OpengraphImage(
       height: 630,
       fonts: [
         {
-          name: 'Inter',
+          name: 'Moderat',
           data: font,
           style: 'normal',
           weight: 700

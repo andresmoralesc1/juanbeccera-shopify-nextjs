@@ -2,6 +2,7 @@ import Script from 'next/script';
 import { CartProvider } from 'components/cart/cart-context';
 import NavbarIntegrated from '@/components/custom/NavbarIntegrated';
 import { WelcomeToast } from 'components/welcome-toast';
+import N8nChatWidget from '@/components/N8nChatWidget';
 import { PageProgress } from '@/components/ui/page-progress';
 import { GeistSans } from 'geist/font/sans';
 import { getCart } from 'lib/shopify';
@@ -68,6 +69,7 @@ export default async function RootLayout({
             {children}
             <Toaster closeButton />
             <WelcomeToast />
+            <N8nChatWidget />
           </main>
         </CartProvider>
       </body>

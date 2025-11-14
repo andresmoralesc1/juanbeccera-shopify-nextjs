@@ -83,7 +83,7 @@ export default function CategorySection() {
   };
 
   return (
-    <div className="bg-pink-500 py-12 sm:py-16 lg:py-24 overflow-hidden">
+    <div className="bg-pink-500 py-8 sm:py-10 lg:py-12 overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center">
 
@@ -116,7 +116,7 @@ export default function CategorySection() {
                       href={category.href}
                       className="group relative block active:scale-[0.98] transition-transform duration-150"
                     >
-                      <div className="relative h-[320px] sm:h-[400px] lg:h-[500px] w-full overflow-hidden bg-gray-200 rounded-sm">
+                      <div className="relative h-[400px] sm:h-[500px] lg:h-[600px] w-full overflow-hidden bg-gray-200 rounded-sm">
                         <img
                           src={category.imageSrc}
                           alt={`Categoría ${category.name}`}
@@ -155,49 +155,6 @@ export default function CategorySection() {
               >
                 <ChevronRight className="h-6 w-6 text-gray-900" />
               </button>
-
-              {/* DEBUG INFO */}
-              <div className="bg-red-500 text-white p-4 rounded text-center mt-6">
-                <p className="text-lg font-bold">DEBUG MODE</p>
-                <p>Active Index: {activeIndex}</p>
-                <p>Total Categories: {categories.length}</p>
-              </div>
-
-              <div className="flex justify-center items-center gap-6 mt-8 bg-yellow-400 p-4">
-                {categories.map((category, index) => {
-                  const isActive = activeIndex === index;
-                  return (
-                    <div key={category.id} className="flex flex-col items-center gap-2">
-                      <button
-                        onClick={() => {
-                          console.log('Clicked dot', index);
-                          scrollToCard(index);
-                        }}
-                        className="flex items-center justify-center"
-                        style={{ 
-                          minHeight: '44px', 
-                          minWidth: '60px', 
-                          padding: '10px',
-                          border: isActive ? '3px solid red' : '3px solid blue',
-                          background: isActive ? 'green' : 'gray', 
-                          cursor: 'pointer'
-                        }}
-                      >
-                        <div 
-                          style={{
-                            width: isActive ? '40px' : '20px',
-                            height: isActive ? '10px' : '4px',
-                            backgroundColor: isActive ? '#ff0000' : '#000000'
-                          }}
-                        />
-                      </button>
-                      <span className="text-xs text-black font-bold">
-                        {index} - {isActive ? 'ACTIVO' : 'inactivo'}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
 
               <div className="block sm:hidden text-center mt-4 text-white/60 text-xs animate-pulse">
                 ← Desliza para ver más →

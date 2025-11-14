@@ -28,15 +28,17 @@ export async function generateMetadata(props: {
   };
 }
 
-export default async function CategoryPage(props: {
+export default async function CategoryPage({
+  params: promiseParams,
+  searchParams: promiseSearchParams
+}: {
   params: Promise<{ collection: string }>;
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const searchParams = await props.searchParams;
-  const { sort } = searchParams as { [key: string]: string };
+  const { sort } = ((await promiseSearchParams) || {}) as { [key: string]: string };
   const { sortKey, reverse } = sorting.find((item) => item.slug === sort) || defaultSort;
 
-  const params = await props.params;
+  const params = await promiseParams;
   const collection = await getCollection(params.collection);
 
   if (!collection) return notFound();
@@ -55,7 +57,7 @@ export default async function CategoryPage(props: {
         {products.length === 0 ? (
           <p className="py-3 text-lg">No hay productos disponibles en esta categoría.</p>
         ) : (
-          <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <ProductGridItems products={products} />
           </Grid>
         )}

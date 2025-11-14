@@ -25,7 +25,7 @@ export function RecentlyViewed({ currentProductId }: { currentProductId?: string
         <h2 className="font-belleza text-2xl lg:text-3xl font-light tracking-wide mb-10 text-gray-900 text-center">
           Vistos Recientemente
         </h2>
-        <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-3">
           {displayProducts.slice(0, 4).map((product) => (
             <Link
               key={product.id}

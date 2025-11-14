@@ -1,5 +1,6 @@
 import Grid from 'components/grid';
 import { GridTileImage } from 'components/grid/tile';
+import Price from 'components/price';
 import { Product } from 'lib/shopify/types';
 import Link from 'next/link';
 
@@ -7,23 +8,24 @@ export default function ProductGridItems({ products }: { products: Product[] }) 
   return (
     <>
       {products.map((product) => (
-        <Grid.Item key={product.handle} className="animate-fadeIn">
+        <Grid.Item key={product.handle} className="animate-fadeIn group">
           <Link
-            className="relative inline-block h-full w-full"
+            className="flex h-full w-full flex-col"
             href={`/products/${product.handle}`}
             prefetch={true}
           >
-            <GridTileImage
-              alt={product.title}
-              label={{
-                title: product.title,
-                amount: product.priceRange.maxVariantPrice.amount,
-                currencyCode: product.priceRange.maxVariantPrice.currencyCode
-              }}
-              src={product.featuredImage?.url}
-              fill
-              sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
-            />
+            <div className="relative h-full w-full">
+              <GridTileImage
+                alt={product.title}
+                src={product.featuredImage?.url}
+                fill
+                sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
+              />
+            </div>
+            <div className="mt-4 flex flex-col items-start gap-1">
+              <h3 className="font-belleza text-lg text-black">{product.title}</h3>
+              <Price amount={product.priceRange.maxVariantPrice.amount} currencyCode={product.priceRange.maxVariantPrice.currencyCode} className="text-sm text-gray-700" />
+            </div>
           </Link>
         </Grid.Item>
       ))}

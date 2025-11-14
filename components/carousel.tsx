@@ -1,6 +1,7 @@
 import { getCollectionProducts } from 'lib/shopify';
 import Link from 'next/link';
 import { GridTileImage } from './grid/tile';
+import Price from './price';
 
 export async function Carousel() {
   // Collections that start with `hidden-*` are hidden from the search page.
@@ -17,20 +18,25 @@ export async function Carousel() {
         {carouselProducts.map((product, i) => (
           <li
             key={`${product.handle}${i}`}
-            className="relative aspect-square h-[30vh] max-h-[275px] w-2/3 max-w-[475px] flex-none md:w-1/3"
+            className="w-2/3 max-w-[475px] flex-none md:w-1/3"
           >
-            <Link href={`/product/${product.handle}`} className="relative h-full w-full">
-              <GridTileImage
-                alt={product.title}
-                label={{
-                  title: product.title,
-                  amount: product.priceRange.maxVariantPrice.amount,
-                  currencyCode: product.priceRange.maxVariantPrice.currencyCode
-                }}
-                src={product.featuredImage?.url}
-                fill
-                sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
-              />
+            <Link
+              href={`/products/${product.handle}`}
+              className="flex h-full w-full flex-col"
+              prefetch={true}
+            >
+              <div className="relative aspect-square h-full w-full">
+                <GridTileImage
+                  alt={product.title}
+                  src={product.featuredImage?.url}
+                  fill
+                  sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
+                />
+              </div>
+              <div className="mt-4 flex flex-col items-start gap-1">
+                <h3 className="font-belleza text-lg text-black">{product.title}</h3>
+                <Price amount={product.priceRange.maxVariantPrice.amount} currencyCode={product.priceRange.maxVariantPrice.currencyCode} className="text-sm text-gray-700" />
+              </div>
             </Link>
           </li>
         ))}

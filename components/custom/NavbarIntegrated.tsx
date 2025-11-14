@@ -9,10 +9,10 @@ import { usePathname, useRouter } from 'next/navigation';
 // IMPORTANTE: Verificar que estas colecciones existan en Shopify con estos handles exactos
 // Ajustar los handles según las colecciones reales en tu tienda Shopify
 const navLinks = [
-  { href: "/search", text: "Tienda", highlight: false },
-  { href: "/collections/camisetas", text: "Camisetas", highlight: false },
-  { href: "/collections/billeteras-tarjeteros", text: "Accesorios", highlight: false },
-  { href: "/search", text: "Sale", highlight: true },
+  { href: "/search/todos", text: "Tienda", highlight: false },
+  { href: "/search/camisetas", text: "Camisetas", highlight: false },
+  { href: "/search/billeteras-tarjeteros", text: "Accesorios", highlight: false },
+  { href: "/search/todos", text: "Sale", highlight: true },
 ];
 
 export default function NavbarIntegrated({ variant = 'transparent' }) {

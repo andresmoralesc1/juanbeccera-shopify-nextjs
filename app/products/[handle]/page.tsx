@@ -161,7 +161,7 @@ async function RelatedProducts({ id }: { id: string }) {
         <h2 className="font-belleza text-2xl lg:text-3xl font-light tracking-wide mb-10 text-gray-900 text-center">
           También podría gustarte
         </h2>
-        <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-3">
           {relatedProducts.map((product) => (
             <Link
               key={product.handle}

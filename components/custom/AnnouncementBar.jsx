@@ -14,10 +14,6 @@ const AnnouncementBar = () => {
           <span className="font-belleza inline sm:hidden">
             ENVÍO GRATIS DESDE $150.000 COP
           </span>
-          <a href="/search/sale" className="font-semibold underline hover:text-white/80 transition-colors duration-300 inline-flex items-center gap-1 whitespace-nowrap">
-            Ver detalles
-            <ArrowRight size={14} />
-          </a>
         </div>
       </div>
     </div>

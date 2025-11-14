@@ -87,7 +87,7 @@ export default async function CategoryPage(props: {
       </div>
 
       {/* Products Grid */}
-      <section className="bg-white py-8">
+      <section className="bg-white py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {products.length === 0 ? (
             <div className="text-center py-12">
@@ -100,7 +100,7 @@ export default async function CategoryPage(props: {
               </Link>
             </div>
           ) : (
-            <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-6">
+            <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12 py-12">
               <ProductGridItems products={products} />
             </Grid>
           )}

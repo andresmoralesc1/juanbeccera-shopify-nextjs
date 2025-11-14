@@ -182,12 +182,12 @@ export default function CategorySectionDynamic({ collections }: CategorySectionD
   };
 
   return (
-    <div className="bg-[#364e41] py-12 sm:py-16 lg:py-24 overflow-hidden">
+    <div className="bg-[#364e41] py-8 sm:py-10 lg:py-12 overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-10 gap-6 sm:gap-8 lg:gap-12 items-center">
 
           {/* Caption - Izquierda */}
-          <div className="lg:col-span-3 space-y-6">
+          <div className="lg:col-span-2 space-y-6">
             <h2 className="font-belleza text-2xl sm:text-3xl lg:text-5xl font-light tracking-wide mb-4 sm:mb-6 lg:mb-8 leading-tight text-white text-center lg:text-left">
               Explora más
             </h2>
@@ -200,7 +200,7 @@ export default function CategorySectionDynamic({ collections }: CategorySectionD
           </div>
 
           {/* Slider - Derecha */}
-          <div className="lg:col-span-9">
+          <div className="lg:col-span-8">
             <div className="relative">
 
               {/* Scroll Container */}
@@ -221,7 +221,7 @@ export default function CategorySectionDynamic({ collections }: CategorySectionD
                         href={category.path}
                         className="group relative block active:scale-[0.98] transition-transform duration-150"
                       >
-                        <div className="relative h-[320px] sm:h-[400px] lg:h-[500px] w-full overflow-hidden bg-gray-200 rounded-sm">
+                      <div className="relative h-[500px] sm:h-[600px] lg:h-[700px] w-full overflow-hidden bg-gray-200 rounded-sm">
                           <img
                             src={category.imageSrc}
                             alt={category.title}

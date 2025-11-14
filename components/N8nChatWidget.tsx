@@ -28,7 +28,7 @@ export default function N8nChatWidget() {
         style={{
           position: "fixed",
           bottom: "20px",
-          right: "20px",
+          left: "20px",
           backgroundColor: "#000",
           color: "#34efc2",
           border: "none",

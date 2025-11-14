@@ -3,8 +3,24 @@
 import { useRef, useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-export default function FeaturedProducts({ products, title = "Productos Destacados" }) {
-  const scrollContainerRef = useRef(null);
+interface FeaturedProduct {
+  id: string;
+  name: string;
+  slug: string;
+  price: string;
+  category: string;
+  categorySlug: string;
+  imageSrc: string;
+  description: string;
+}
+
+interface FeaturedProductsProps {
+  products: FeaturedProduct[];
+  title?: string;
+}
+
+export default function FeaturedProducts({ products, title = "Productos Destacados" }: FeaturedProductsProps) {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
   if (!products || products.length === 0) {
@@ -41,7 +57,7 @@ export default function FeaturedProducts({ products, title = "Productos Destacad
     if (!scrollContainerRef.current) return;
 
     const container = scrollContainerRef.current;
-    const cards = Array.from(container.children);
+    const cards = Array.from(container.children) as HTMLElement[];
     
     if (cards.length === 0) return;
 
@@ -93,10 +109,10 @@ export default function FeaturedProducts({ products, title = "Productos Destacad
   }, []);
 
   // Navegar a un producto específico
-  const scrollToCard = (index) => {
+  const scrollToCard = (index: number) => {
     if (!scrollContainerRef.current) return;
     const container = scrollContainerRef.current;
-    const cards = Array.from(container.children);
+    const cards = Array.from(container.children) as HTMLElement[];
     
     if (cards[index]) {
       const card = cards[index];
@@ -113,7 +129,7 @@ export default function FeaturedProducts({ products, title = "Productos Destacad
   };
 
   // Navegar a una página específica
-  const scrollToPage = (pageIndex) => {
+  const scrollToPage = (pageIndex: number) => {
     const cardIndex = pageIndex * visibleCards;
     scrollToCard(Math.min(cardIndex, products.length - 1));
   };

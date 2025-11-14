@@ -1,52 +1,52 @@
-import { getCollections, getPages, getProducts } from 'lib/shopify';
-import { baseUrl, validateEnvironmentVariables } from 'lib/utils';
 import { MetadataRoute } from 'next';
-
-type Route = {
-  url: string;
-  lastModified: string;
-};
-
-export const dynamic = 'force-dynamic';
+import { getCollections, getProducts } from 'lib/shopify';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  validateEnvironmentVariables();
+  const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
+    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+    : 'http://localhost:3000';
 
-  const routesMap = [''].map((route) => ({
-    url: `${baseUrl}${route}`,
-    lastModified: new Date().toISOString()
+  // Páginas estáticas
+  const routes = [
+    {
+      url: baseUrl,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 1
+    },
+    {
+      url: `${baseUrl}/search`,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 0.8
+    },
+    {
+      url: `${baseUrl}/tienda/categoria`,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 0.8
+    }
+  ];
+
+  // Obtener productos dinámicos
+  const products = await getProducts({});
+  const productUrls = products.map((product) => ({
+    url: `${baseUrl}/products/${product.handle}`,
+    lastModified: new Date(product.updatedAt),
+    changeFrequency: 'weekly' as const,
+    priority: 0.7
   }));
 
-  const collectionsPromise = getCollections().then((collections) =>
-    collections.map((collection) => ({
-      url: `${baseUrl}${collection.path}`,
-      lastModified: collection.updatedAt
-    }))
-  );
+  // Obtener colecciones dinámicas
+  const collections = await getCollections();
+  const collectionUrls = collections
+    .filter((collection) => collection.handle)
+    .map((collection) => ({
+      url: `${baseUrl}/search/${collection.handle}`,
+      lastModified: new Date(collection.updatedAt),
+      changeFrequency: 'weekly' as const,
+      priority: 0.6
+    }));
 
-  const productsPromise = getProducts({}).then((products) =>
-    products.map((product) => ({
-      url: `${baseUrl}/product/${product.handle}`,
-      lastModified: product.updatedAt
-    }))
-  );
-
-  const pagesPromise = getPages().then((pages) =>
-    pages.map((page) => ({
-      url: `${baseUrl}/${page.handle}`,
-      lastModified: page.updatedAt
-    }))
-  );
-
-  let fetchedRoutes: Route[] = [];
-
-  try {
-    fetchedRoutes = (
-      await Promise.all([collectionsPromise, productsPromise, pagesPromise])
-    ).flat();
-  } catch (error) {
-    throw JSON.stringify(error, null, 2);
-  }
-
-  return [...routesMap, ...fetchedRoutes];
+  return [...routes, ...productUrls, ...collectionUrls];
 }

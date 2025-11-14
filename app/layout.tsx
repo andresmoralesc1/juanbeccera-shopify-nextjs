@@ -4,10 +4,11 @@ import NavbarIntegrated from '@/components/custom/NavbarIntegrated';
 import { WelcomeToast } from 'components/welcome-toast';
 import N8nChatWidget from '@/components/N8nChatWidget';
 import { PageProgress } from '@/components/ui/page-progress';
+import { WebVitals } from '@/components/web-vitals';
 import { GeistSans } from 'geist/font/sans';
 import { getCart } from 'lib/shopify';
 import type { ReactNode } from 'react';
-import { Toaster } from 'sonner'; // Asumo que 'sonner' es correcto, si no, podría ser 'react-hot-toast'
+import { Toaster } from 'sonner';
 import './globals.css';
 import { baseUrl } from 'lib/utils';
 import localFont from 'next/font/local';
@@ -63,6 +64,7 @@ export default async function RootLayout({
             height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}></iframe>
         </noscript>
         <CartProvider cartPromise={cart}>
+          <WebVitals />
           <PageProgress />
           <NavbarIntegrated />
           <main>

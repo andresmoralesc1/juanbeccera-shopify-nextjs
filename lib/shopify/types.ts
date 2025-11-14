@@ -273,3 +273,41 @@ export type ShopifyProductsOperation = {
     sortKey?: string;
   };
 };
+
+export type PredictiveSearchQuery = {
+  text: string;
+  styledText: string;
+};
+
+export type PredictiveSearchProduct = {
+  id: string;
+  title: string;
+  handle: string;
+  availableForSale: boolean;
+  priceRange: {
+    minVariantPrice: Money;
+  };
+  featuredImage: Image;
+};
+
+export type PredictiveSearchCollection = {
+  id: string;
+  title: string;
+  handle: string;
+};
+
+export type PredictiveSearchResult = {
+  queries: PredictiveSearchQuery[];
+  products: PredictiveSearchProduct[];
+  collections: PredictiveSearchCollection[];
+};
+
+export type ShopifyPredictiveSearchOperation = {
+  data: {
+    predictiveSearch: PredictiveSearchResult;
+  };
+  variables: {
+    query: string;
+    limit?: number;
+  };
+};

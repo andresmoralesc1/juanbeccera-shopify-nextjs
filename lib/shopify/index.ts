@@ -31,6 +31,7 @@ import {
   getProductRecommendationsQuery,
   getProductsQuery
 } from './queries/product';
+import { getPredictiveSearchQuery } from './queries/search';
 import {
   Cart,
   Collection,
@@ -38,6 +39,7 @@ import {
   Image,
   Menu,
   Page,
+  PredictiveSearchResult,
   Product,
   ShopifyAddToCartOperation,
   ShopifyCart,
@@ -50,6 +52,7 @@ import {
   ShopifyMenuOperation,
   ShopifyPageOperation,
   ShopifyPagesOperation,
+  ShopifyPredictiveSearchOperation,
   ShopifyProduct,
   ShopifyProductOperation,
   ShopifyProductRecommendationsOperation,
@@ -461,6 +464,20 @@ export async function getProducts({
   });
 
   return reshapeProducts(removeEdgesAndNodes(res.body.data.products));
+}
+
+export async function getPredictiveSearch(
+  searchQuery: string
+): Promise<PredictiveSearchResult> {
+  const res = await shopifyFetch<ShopifyPredictiveSearchOperation>({
+    query: getPredictiveSearchQuery,
+    variables: {
+      query: searchQuery,
+      limit: 10
+    }
+  });
+
+  return res.body.data.predictiveSearch;
 }
 
 // This is called from `app/api/revalidate.ts` so providers can control revalidation logic.

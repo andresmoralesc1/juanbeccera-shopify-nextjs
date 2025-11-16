@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 interface FeaturedProduct {
   id: string;
@@ -172,35 +173,23 @@ export default function FeaturedProducts({ products, title = "Productos Destacad
                     key={`${product.slug}-${index}`}
                     className="snap-start shrink-0 w-full sm:w-[calc(50%-8px)] lg:w-[calc(33.333%-11px)]"
                   >
-                    <a
+                    <Link
                       href={`/products/${product.slug}`}
-                      className="group relative block active:scale-[0.98] transition-transform duration-150"
+                      className="group flex h-full w-full flex-col"
                     >
-                      <div className="relative h-[320px] sm:h-[400px] lg:h-[500px] w-full overflow-hidden bg-gray-200 rounded-sm">
+                      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-sm bg-gray-200">
                         <img
                           src={product.imageSrc}
                           alt={product.name}
                           className="h-full w-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
                           loading="lazy"
                         />
-
-                        {/* Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent group-hover:from-black/90 group-active:from-black/95 transition-all duration-300"></div>
-
-                        {/* Contenido de texto */}
-                        <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-8 lg:p-10">
-                          <h3 className="text-xl sm:text-2xl font-semibold text-white tracking-wider transform group-hover:scale-105 transition-transform duration-300">
-                            {product.name}
-                          </h3>
-                          <p className="text-white text-xl sm:text-2xl font-bold mt-2">
-                            {product.price}
-                          </p>
-                          <p className="text-white text-sm sm:text-base mt-2 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300">
-                            Ver Detalles →
-                          </p>
-                        </div>
                       </div>
-                    </a>
+                      <div className="mt-4 flex flex-col items-start gap-1 text-white">
+                        <h3 className="font-belleza text-lg">{product.name}</h3>
+                        <p className="font-moderat text-sm font-semibold">{product.price}</p>
+                      </div>
+                    </Link>
                   </div>
                 ))}
               </div>

@@ -149,18 +149,27 @@ export default function FeaturedProducts({ products, title = "" }: FeaturedProdu
   }
 
   return (
-    <div className="bg-[#364e41] py-12 sm:py-16 lg:py-24 overflow-hidden">
+    <div className="bg-[#364e41] py-12 sm:py-16 lg:py-20 overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-6 items-center">
 
-          {/* Slider - Izquierda */}
+          {/* Slider con flechas - Izquierda */}
           <div className="lg:col-span-9 order-2 lg:order-1">
-            <div className="relative">
+            <div className="relative flex items-center">
+
+              {/* Botón izquierdo */}
+              <button
+                onClick={scrollPrev}
+                className="hidden sm:flex shrink-0 w-10 h-10 items-center justify-center bg-white rounded-full shadow-md transition-all duration-300 hover:scale-110 mr-3 z-10"
+                aria-label="Anterior"
+              >
+                <ChevronLeft className="h-5 w-5 text-gray-700" />
+              </button>
 
               {/* Scroll Container */}
               <div
                 ref={scrollContainerRef}
-                className="scroll-container flex gap-3 sm:gap-4 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory hide-scrollbar"
+                className="scroll-container flex gap-4 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory hide-scrollbar flex-1"
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               >
                 {[...products, ...products].map((product, index) => (
@@ -170,94 +179,78 @@ export default function FeaturedProducts({ products, title = "" }: FeaturedProdu
                   >
                     <a
                       href={`/products/${product.slug}`}
-                      className="group relative block active:scale-[0.98] transition-transform duration-150"
+                      className="group block"
                     >
-                      <div className="relative h-[320px] sm:h-[400px] lg:h-[500px] w-full overflow-hidden bg-gray-200 rounded-sm">
+                      {/* Card con fondo blanco */}
+                      <div className="relative aspect-square w-full overflow-hidden bg-white rounded-sm">
                         <img
                           src={product.imageSrc}
                           alt={product.name}
-                          className="h-full w-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
+                          className="h-full w-full object-contain object-center group-hover:scale-105 transition-transform duration-500"
                           loading="lazy"
                         />
-
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent group-hover:from-black/90 group-active:from-black/95 transition-all duration-300"></div>
-
-                        <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-8 lg:p-10">
-                          <h3 className="text-xl sm:text-2xl font-semibold text-white tracking-wider transform group-hover:scale-105 transition-transform duration-300">
-                            {product.name}
-                          </h3>
-                          <p className="text-white text-xl sm:text-2xl font-bold mt-2">
-                            {product.price}
-                          </p>
-                          <p className="text-white text-sm sm:text-base mt-2 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300">
-                            Ver Detalles →
-                          </p>
-                        </div>
+                      </div>
+                      {/* Nombre y precio debajo */}
+                      <div className="mt-3 text-white">
+                        <h3 className="font-moderat text-sm sm:text-base font-normal">
+                          {product.name}
+                        </h3>
+                        <p className="font-moderat text-sm sm:text-base mt-1">
+                          {product.price}
+                        </p>
                       </div>
                     </a>
                   </div>
                 ))}
               </div>
 
-              {/* Botones de navegación */}
-              <button
-                onClick={scrollPrev}
-                className="hidden lg:flex absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg transition-all duration-300 z-30 hover:scale-110 min-w-[44px] min-h-[44px] items-center justify-center"
-                aria-label="Anterior"
-              >
-                <ChevronLeft className="h-6 w-6 text-gray-900" />
-              </button>
-
+              {/* Botón derecho */}
               <button
                 onClick={scrollNext}
-                className="hidden lg:flex absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg transition-all duration-300 z-30 hover:scale-110 min-w-[44px] min-h-[44px] items-center justify-center"
+                className="hidden sm:flex shrink-0 w-10 h-10 items-center justify-center bg-white rounded-full shadow-md transition-all duration-300 hover:scale-110 ml-3 z-10"
                 aria-label="Siguiente"
               >
-                <ChevronRight className="h-6 w-6 text-gray-900" />
+                <ChevronRight className="h-5 w-5 text-gray-700" />
               </button>
 
-              {/* Dots de navegación */}
-              <div className="flex justify-center items-center gap-1 mt-8">
-                {Array.from({ length: totalPages }).map((_, pageIndex) => {
-                  const isActive = activePage === pageIndex;
-                  return (
-                    <button
-                      key={pageIndex}
-                      onClick={() => scrollToPage(pageIndex)}
-                      className="flex items-center justify-center p-0 border-none bg-transparent cursor-pointer"
-                      aria-label={`Ir a página ${pageIndex + 1}`}
-                    >
-                      <div
-                        className={`h-0.5 transition-all duration-300 ${isActive ? 'w-10 bg-white' : 'w-5 bg-white/50'}`}
-                      />
-                    </button>
-                  );
-                })}
-              </div>
+            </div>
 
-              {/* Indicador de swipe solo en mobile */}
-              <div className="block sm:hidden text-center mt-4 text-white/60 text-xs animate-pulse">
-                ← Desliza para ver más →
-              </div>
+            {/* Dots de navegación */}
+            <div className="flex justify-center items-center gap-1 mt-6">
+              {Array.from({ length: totalPages }).map((_, pageIndex) => {
+                const isActive = activePage === pageIndex;
+                return (
+                  <button
+                    key={pageIndex}
+                    onClick={() => scrollToPage(pageIndex)}
+                    className="flex items-center justify-center p-0 border-none bg-transparent cursor-pointer"
+                    aria-label={`Ir a página ${pageIndex + 1}`}
+                  >
+                    <div
+                      className={`h-0.5 transition-all duration-300 ${isActive ? 'w-8 bg-white' : 'w-4 bg-white/50'}`}
+                    />
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Indicador de swipe solo en mobile */}
+            <div className="block sm:hidden text-center mt-4 text-white/60 text-xs animate-pulse">
+              ← Desliza para ver más →
             </div>
           </div>
 
           {/* Caption - Derecha */}
-          <div className="lg:col-span-3 space-y-6 order-1 lg:order-2">
-            <h2 className="font-belleza text-2xl sm:text-3xl lg:text-5xl font-light tracking-wide mb-4 sm:mb-6 lg:mb-8 leading-tight text-white text-center lg:text-left">
-              {title}
-            </h2>
-            <p className="font-moderat text-base md:text-lg leading-relaxed text-white/90 text-center lg:text-left">
+          <div className="lg:col-span-3 order-1 lg:order-2 flex flex-col justify-center items-center lg:items-start h-full">
+            <p className="font-moderat text-base md:text-lg leading-relaxed text-white text-center lg:text-left mb-6">
               Descubre nuestros artículos más populares y exclusivos. Cada pieza ha sido cuidadosamente seleccionada para ofrecerte la mejor calidad y estilo.
             </p>
-            <div className="flex justify-center lg:justify-start">
-              <a
-                href="/search"
-                className="inline-flex items-center gap-3 font-moderat bg-[#620c0b] text-white text-sm sm:text-base tracking-[0.15em] uppercase font-medium px-8 py-3 hover:bg-[#4a0908] transition-all duration-300"
-              >
-                Ver Todos
-              </a>
-            </div>
+            <a
+              href="/search"
+              className="inline-flex items-center justify-center font-moderat bg-[#620c0b] text-white text-sm tracking-[0.15em] uppercase font-medium px-8 py-3 hover:bg-[#4a0908] transition-all duration-300"
+            >
+              Ver Todos
+            </a>
           </div>
 
         </div>

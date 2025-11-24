@@ -1,5 +1,5 @@
 'use client'
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from 'next/link';
 
@@ -15,13 +15,12 @@ interface Collection {
 
 interface CategorySectionMinimalProps {
   collections: Collection[];
-  title?: string;
 }
 
-export default function CategorySectionMinimal({ collections, title = "Explora nuestras categorías" }: CategorySectionMinimalProps) {
+export default function CategorySectionMinimal({ collections }: CategorySectionMinimalProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [isScrolling, setIsScrolling] = useState(false);
 
-  // Mapeo de imágenes estáticas por categoría
   const getCategoryImage = (handle: string): string => {
     const handleLower = handle.toLowerCase();
     if (handleLower.includes('cinturon')) return '/cinturones.webp';
@@ -35,7 +34,6 @@ export default function CategorySectionMinimal({ collections, title = "Explora n
     return '/sacos.webp';
   };
 
-  // Filtrar colecciones válidas
   const validCollections = collections
     .filter(c =>
       c.handle !== '' &&
@@ -46,6 +44,54 @@ export default function CategorySectionMinimal({ collections, title = "Explora n
       ...c,
       imageSrc: c.image?.url || getCategoryImage(c.handle)
     }));
+
+  // Duplicar colecciones para scroll infinito
+  const infiniteCollections = [...validCollections, ...validCollections, ...validCollections];
+
+  // Inicializar en el medio para permitir scroll en ambas direcciones
+  useEffect(() => {
+    if (scrollContainerRef.current && validCollections.length > 0) {
+      const container = scrollContainerRef.current;
+      const cardWidth = 143; // 140px + 3px gap aproximado
+      const initialScroll = cardWidth * validCollections.length;
+      container.scrollLeft = initialScroll;
+    }
+  }, [validCollections.length]);
+
+  // Manejar el loop infinito
+  const handleScroll = () => {
+    if (!scrollContainerRef.current || isScrolling) return;
+
+    const container = scrollContainerRef.current;
+    const cardWidth = 143;
+    const totalOriginalWidth = cardWidth * validCollections.length;
+
+    // Si llegamos muy al inicio, saltar al medio
+    if (container.scrollLeft < cardWidth) {
+      setIsScrolling(true);
+      container.style.scrollBehavior = 'auto';
+      container.scrollLeft = container.scrollLeft + totalOriginalWidth;
+      container.style.scrollBehavior = 'smooth';
+      setTimeout(() => setIsScrolling(false), 50);
+    }
+
+    // Si llegamos muy al final, saltar al medio
+    if (container.scrollLeft > totalOriginalWidth * 2 - container.clientWidth) {
+      setIsScrolling(true);
+      container.style.scrollBehavior = 'auto';
+      container.scrollLeft = container.scrollLeft - totalOriginalWidth;
+      container.style.scrollBehavior = 'smooth';
+      setTimeout(() => setIsScrolling(false), 50);
+    }
+  };
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (container) {
+      container.addEventListener('scroll', handleScroll);
+      return () => container.removeEventListener('scroll', handleScroll);
+    }
+  }, [isScrolling, validCollections.length]);
 
   if (validCollections.length === 0) {
     return null;
@@ -61,68 +107,55 @@ export default function CategorySectionMinimal({ collections, title = "Explora n
   };
 
   return (
-    <div className="bg-white py-4 sm:py-6">
+    <div className="bg-white py-4">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="relative">
 
-        {/* Navegación */}
-        <div className="flex items-center justify-end mb-4">
-          <div className="flex gap-2">
-            <button
-              onClick={() => scroll('left')}
-              className="p-2 border border-gray-300 hover:border-gray-900 hover:bg-gray-900 hover:text-white transition-all duration-300"
-              aria-label="Anterior"
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </button>
-            <button
-              onClick={() => scroll('right')}
-              className="p-2 border border-gray-300 hover:border-gray-900 hover:bg-gray-900 hover:text-white transition-all duration-300"
-              aria-label="Siguiente"
-            >
-              <ChevronRight className="h-4 w-4" />
-            </button>
-          </div>
-        </div>
-
-        {/* Scroll Container */}
-        <div
-          ref={scrollContainerRef}
-          className="flex gap-3 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2"
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-        >
-          {validCollections.map((category) => (
-            <Link
-              key={category.handle}
-              href={category.path}
-              className="group snap-start shrink-0 w-[140px] sm:w-[160px] lg:w-[180px]"
-            >
-              {/* Imagen cuadrada */}
-              <div className="relative aspect-square w-full overflow-hidden bg-gray-200 mb-3">
-                <img
-                  src={category.imageSrc}
-                  alt={category.title}
-                  className="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300"></div>
-              </div>
-
-              {/* Título */}
-              <h3 className="font-moderat text-sm text-center text-gray-900 group-hover:text-[#620c0b] transition-colors duration-300">
-                {category.title}
-              </h3>
-            </Link>
-          ))}
-        </div>
-
-        {/* Ver todas */}
-        <div className="text-center mt-6">
-          <Link
-            href="/search"
-            className="inline-block font-moderat text-sm text-gray-600 hover:text-gray-900 border-b border-gray-400 hover:border-gray-900 pb-0.5 transition-all duration-300"
+          {/* Botón izquierdo */}
+          <button
+            onClick={() => scroll('left')}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-9 h-9 flex items-center justify-center bg-gray-100 text-gray-700 shadow-md rounded-full border border-gray-300 transition-all duration-300 hover:bg-gray-900 hover:text-white hover:border-gray-900 cursor-pointer"
+            aria-label="Anterior"
           >
-            Ver todas las categorías
-          </Link>
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+
+          {/* Botón derecho */}
+          <button
+            onClick={() => scroll('right')}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-9 h-9 flex items-center justify-center bg-gray-100 text-gray-700 shadow-md rounded-full border border-gray-300 transition-all duration-300 hover:bg-gray-900 hover:text-white hover:border-gray-900 cursor-pointer"
+            aria-label="Siguiente"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+
+          {/* Scroll Container */}
+          <div
+            ref={scrollContainerRef}
+            className="flex gap-3 overflow-x-auto scroll-smooth px-6"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
+          >
+            {infiniteCollections.map((category, index) => (
+              <Link
+                key={`${category.handle}-${index}`}
+                href={category.path}
+                className="group shrink-0 w-[120px] sm:w-[140px]"
+              >
+                <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-gray-100 mb-2">
+                  <img
+                    src={category.imageSrc}
+                    alt={category.title}
+                    className="h-full w-full object-cover object-center group-hover:scale-110 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 rounded-lg" />
+                </div>
+                <p className="text-xs sm:text-sm text-center text-gray-700 group-hover:text-[#620c0b] transition-colors duration-300">
+                  {category.title}
+                </p>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
 

@@ -4,7 +4,7 @@ import { FadeIn } from '@/components/ui/fade-in';
 
 export default function BrandPhilosophy() {
   return (
-    <div className="bg-white">
+    <div>
 
       {/* Split Editorial Content */}
       <div className="grid grid-cols-1 lg:grid-cols-2">
@@ -39,7 +39,7 @@ export default function BrandPhilosophy() {
       </div>
 
       {/* Quote Section - Full Width */}
-      <div className="bg-white py-20 sm:py-28 lg:py-36">
+      <div className="bg-white py-12 sm:py-16 lg:py-20">
         <div className="max-w-4xl mx-auto px-8 sm:px-12 text-center">
           <FadeIn delay={0.3} direction="none">
             <div className="space-y-8">

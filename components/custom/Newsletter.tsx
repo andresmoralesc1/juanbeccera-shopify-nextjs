@@ -41,7 +41,7 @@ export default function Newsletter() {
   };
 
   return (
-    <div className="bg-white py-16 sm:py-24">
+    <div className="bg-white py-10 sm:py-14">
       {toast && (
         <Toast
           message={toast.message}

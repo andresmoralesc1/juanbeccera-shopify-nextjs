@@ -221,7 +221,7 @@ export default function CategorySectionDynamic({ collections }: CategorySectionD
                         href={category.path}
                         className="group relative block active:scale-[0.98] transition-transform duration-150"
                       >
-                      <div className="relative h-[500px] sm:h-[600px] lg:h-[700px] w-full overflow-hidden bg-gray-200 rounded-sm">
+                      <div className="relative aspect-[4/6] w-full overflow-hidden bg-gray-200 rounded-sm">
                           <img
                             src={category.imageSrc}
                             alt={category.title}

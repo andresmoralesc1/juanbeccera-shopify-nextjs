@@ -1,12 +1,14 @@
-import { getCollection, getCollectionProducts } from 'lib/shopify';
+import { getCollection, getCollectionProducts, getCollections } from 'lib/shopify';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
+import { Suspense } from 'react';
 
 import Grid from 'components/grid';
 import ProductGridItems from 'components/layout/product-grid-items';
 import { defaultSort, sorting } from 'lib/constants';
 import AnnouncementBar from '@/components/custom/AnnouncementBar';
+import CategorySectionMinimal from '@/components/custom/CategorySectionMinimal';
+import FooterCustom from '@/components/custom/FooterCustom';
 
 export async function generateMetadata(props: {
   params: Promise<{ collection: string }>;
@@ -43,25 +45,36 @@ export default async function CategoryPage({
 
   if (!collection) return notFound();
 
-  const products = await getCollectionProducts({ collection: params.collection, sortKey, reverse });
+  const [products, collections] = await Promise.all([
+    getCollectionProducts({ collection: params.collection, sortKey, reverse }),
+    getCollections()
+  ]);
 
   return (
     <section>
       <AnnouncementBar />
-      <div className="mx-auto max-w-screen-2xl px-4">
-        <div className="flex items-center justify-between">
-          <div className="flex w-full items-center justify-between">
-            <h1 className="text-3xl font-bold mb-6">{collection.title}</h1>
-          </div>
-        </div>
+
+      {/* Categorías minimalistas */}
+      <div className="bg-white">
+        <CategorySectionMinimal collections={collections} title="Categorías" />
+      </div>
+
+      {/* Contenido principal */}
+      <div className="mx-auto max-w-screen-2xl px-4 py-12">
+        <h1 className="font-belleza text-2xl sm:text-3xl lg:text-4xl font-light tracking-wide mb-8 text-gray-900">
+          {collection.title}
+        </h1>
+
         {products.length === 0 ? (
-          <p className="py-3 text-lg">No hay productos disponibles en esta categoría.</p>
+          <p className="py-3 text-lg text-gray-600">No hay productos disponibles en esta categoría.</p>
         ) : (
           <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <ProductGridItems products={products} />
           </Grid>
         )}
       </div>
+
+      <FooterCustom />
     </section>
   );
 }

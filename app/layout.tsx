@@ -67,7 +67,7 @@ export default async function RootLayout({
           <WebVitals />
           <PageProgress />
           <NavbarIntegrated />
-          <main>
+          <main className="pt-[118px]">
             {children}
             <Toaster closeButton />
             <WelcomeToast />

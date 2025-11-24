@@ -2,13 +2,12 @@ import ChildrenWrapper from './children-wrapper';
 import { Suspense } from 'react';
 import FooterCustom from '@/components/custom/FooterCustom';
 import AnnouncementBar from '@/components/custom/AnnouncementBar';
-import CategorySectionDynamic from '@/components/custom/CategorySectionDynamic';
+import CategorySectionMinimal from '@/components/custom/CategorySectionMinimal';
 import { getCollections } from 'lib/shopify';
-import { CategorySliderSkeleton } from '@/components/ui/skeleton';
 
 async function CategorySectionWrapper() {
   const collections = await getCollections();
-  return <CategorySectionDynamic collections={collections} />;
+  return <CategorySectionMinimal collections={collections} title="Categorías" />;
 }
 
 export default function SearchLayout({ 
@@ -22,7 +21,7 @@ export default function SearchLayout({
 
       {/* Main container with padding-top for fixed navbar */}
       <div className="bg-white">
-        <Suspense fallback={<CategorySliderSkeleton />}>
+        <Suspense fallback={<div className="h-40 bg-[#f8f7f4]" />}>
           <CategorySectionWrapper />
         </Suspense>
 

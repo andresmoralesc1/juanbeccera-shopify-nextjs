@@ -45,7 +45,7 @@ async function CategorySectionWrapper() {
 
 export default function HomePage() {
   return (
-    <main>
+    <main className="-mt-[118px]">
       <AnnouncementBar />
       <HeroSection />
       <Suspense fallback={<CategorySliderSkeleton />}>

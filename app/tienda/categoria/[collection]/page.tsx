@@ -56,7 +56,7 @@ export default async function CategoryPage({
 
       {/* Categorías minimalistas */}
       <div className="bg-white">
-        <CategorySectionMinimal collections={collections} title="Categorías" />
+        <CategorySectionMinimal collections={collections} />
       </div>
 
       {/* Contenido principal */}

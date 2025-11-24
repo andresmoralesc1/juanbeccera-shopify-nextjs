@@ -7,7 +7,7 @@ import { getCollections } from 'lib/shopify';
 
 async function CategorySectionWrapper() {
   const collections = await getCollections();
-  return <CategorySectionMinimal collections={collections} title="Categorías" />;
+  return <CategorySectionMinimal collections={collections} />;
 }
 
 export default function SearchLayout({ 

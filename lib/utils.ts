@@ -16,8 +16,18 @@ export const ensureStartsWith = (stringToCheck: string, startsWith: string) =>
     : `${startsWith}${stringToCheck}`;
 
 export const getBaseUrl = () => {
+  // Usar SITE_URL si está configurado
   if (process.env.SITE_URL) return process.env.SITE_URL;
+
+  // Si estamos en Vercel y es producción, usar el dominio personalizado
+  if (process.env.VERCEL_ENV === 'production') {
+    return 'https://www.juanbecerra.co';
+  }
+
+  // Para preview y development en Vercel
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+
+  // Local development
   return 'http://localhost:3000';
 };
 

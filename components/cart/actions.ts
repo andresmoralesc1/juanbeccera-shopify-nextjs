@@ -97,22 +97,20 @@ export async function updateItemQuantity(
   }
 }
 
-export async function redirectToCheckout() {
+export async function getCheckoutUrl(): Promise<string | null> {
   const cart = await getCart();
 
   if (!cart) {
     console.error('No cart found');
-    return 'Error: No se encontró el carrito';
+    return null;
   }
 
   if (!cart.checkoutUrl || cart.checkoutUrl === '') {
     console.error('Invalid checkout URL:', cart.checkoutUrl);
-    return 'Error: URL de checkout inválida';
+    return null;
   }
 
-  // redirect() throws a NEXT_REDIRECT error which is caught by Next.js
-  // Don't wrap it in try/catch as it needs to propagate
-  redirect(cart.checkoutUrl);
+  return cart.checkoutUrl;
 }
 
 export async function createCartAndSetCookie() {

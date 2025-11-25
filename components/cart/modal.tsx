@@ -10,8 +10,7 @@ import { createUrl } from 'lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Fragment, useEffect, useRef, useState } from 'react';
-import { useFormStatus, useFormState } from 'react-dom';
-import { createCartAndSetCookie, redirectToCheckout } from './actions';
+import { createCartAndSetCookie, getCheckoutUrl } from './actions';
 import { useCart } from './cart-context';
 import { DeleteItemButton } from './delete-item-button';
 import { EditItemQuantityButton } from './edit-item-quantity-button';
@@ -26,7 +25,6 @@ export default function CartModal() {
   const { cart, updateCartItem } = useCart();
   const [isOpen, setIsOpen] = useState(false);
   const quantityRef = useRef(cart?.totalQuantity);
-  const [checkoutError, checkoutAction] = useFormState(redirectToCheckout, null);
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
 
@@ -35,12 +33,6 @@ export default function CartModal() {
       createCartAndSetCookie();
     }
   }, [cart]);
-
-  useEffect(() => {
-    if (checkoutError) {
-      toast.error(checkoutError);
-    }
-  }, [checkoutError]);
 
   useEffect(() => {
     if (
@@ -223,9 +215,7 @@ export default function CartModal() {
                       />
                     </div>
                   </div>
-                  <form action={checkoutAction}>
-                    <CheckoutButton />
-                  </form>
+                  <CheckoutButton />
                 </div>
               )}
             </Dialog.Panel>
@@ -250,15 +240,35 @@ function CloseCart({ className }: { className?: string }) {
 }
 
 function CheckoutButton() {
-  const { pending } = useFormStatus();
+  const [isPending, setIsPending] = useState(false);
+
+  const handleCheckout = async () => {
+    setIsPending(true);
+    try {
+      const checkoutUrl = await getCheckoutUrl();
+
+      if (!checkoutUrl) {
+        toast.error('Error: No se pudo obtener la URL de checkout');
+        setIsPending(false);
+        return;
+      }
+
+      // Redirect to Shopify checkout
+      window.location.href = checkoutUrl;
+    } catch (error) {
+      console.error('Error during checkout:', error);
+      toast.error('Error al proceder al checkout');
+      setIsPending(false);
+    }
+  };
 
   return (
     <button
-      className="font-moderat block w-full bg-[#620c0b] p-3 text-center text-sm font-medium text-white hover:bg-[#4a0908] transition-colors duration-300 tracking-wide uppercase"
-      type="submit"
-      disabled={pending}
+      className="font-moderat block w-full bg-[#620c0b] p-3 text-center text-sm font-medium text-white hover:bg-[#4a0908] transition-colors duration-300 tracking-wide uppercase disabled:opacity-50"
+      onClick={handleCheckout}
+      disabled={isPending}
     >
-      {pending ? <LoadingDots className="bg-white" /> : 'Proceder al Pago'}
+      {isPending ? <LoadingDots className="bg-white" /> : 'Proceder al Pago'}
     </button>
   );
 }

@@ -1,5 +1,6 @@
 import { GridTileImage } from 'components/grid/tile';
 import Price from 'components/price';
+import { ProductBadge } from 'components/product-badge';
 import { getCollectionProducts } from 'lib/shopify';
 import type { Product } from 'lib/shopify/types';
 import Link from 'next/link';
@@ -13,6 +14,9 @@ function ThreeItemGridItem({
   size: 'full' | 'half';
   priority?: boolean;
 }) {
+  const hasDiscount = item.variants[0]?.compareAtPrice?.amount &&
+    parseFloat(item.variants[0].compareAtPrice.amount) > parseFloat(item.priceRange.maxVariantPrice.amount);
+
   return (
     <div
       className={size === 'full' ? 'md:col-span-4 md:row-span-2' : 'md:col-span-2 md:row-span-1'}
@@ -23,6 +27,7 @@ function ThreeItemGridItem({
         prefetch={true}
       >
         <div className="relative h-full w-full">
+          {hasDiscount && <ProductBadge />}
           <GridTileImage
             src={item.featuredImage.url}
             fill
@@ -39,6 +44,7 @@ function ThreeItemGridItem({
           <Price
             amount={item.priceRange.maxVariantPrice.amount}
             currencyCode={item.priceRange.maxVariantPrice.currencyCode}
+            compareAtAmount={item.variants[0]?.compareAtPrice?.amount}
             className="text-sm text-gray-700"
           />
         </div>

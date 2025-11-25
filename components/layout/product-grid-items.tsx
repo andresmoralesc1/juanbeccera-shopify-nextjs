@@ -1,34 +1,46 @@
 import Grid from 'components/grid';
 import { GridTileImage } from 'components/grid/tile';
 import Price from 'components/price';
+import { ProductBadge } from 'components/product-badge';
 import { Product } from 'lib/shopify/types';
 import Link from 'next/link';
 
 export default function ProductGridItems({ products }: { products: Product[] }) {
   return (
     <>
-      {products.map((product) => (
-        <Grid.Item key={product.handle} className="animate-fadeIn group">
-          <Link
-            className="flex h-full w-full flex-col"
-            href={`/products/${product.handle}`}
-            prefetch={true}
-          >
-            <div className="relative h-full w-full">
-              <GridTileImage
-                alt={product.title}
-                src={product.featuredImage?.url}
-                fill
-                sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
-              />
-            </div>
+      {products.map((product) => {
+        const hasDiscount = product.variants[0]?.compareAtPrice?.amount &&
+          parseFloat(product.variants[0].compareAtPrice.amount) > parseFloat(product.priceRange.maxVariantPrice.amount);
+
+        return (
+          <Grid.Item key={product.handle} className="animate-fadeIn group">
+            <Link
+              className="flex h-full w-full flex-col"
+              href={`/products/${product.handle}`}
+              prefetch={true}
+            >
+              <div className="relative h-full w-full">
+                {hasDiscount && <ProductBadge />}
+                <GridTileImage
+                  alt={product.title}
+                  src={product.featuredImage?.url}
+                  fill
+                  sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
+                />
+              </div>
             <div className="mt-4 flex flex-col items-start gap-1">
               <h3 className="font-belleza text-lg text-black">{product.title}</h3>
-              <Price amount={product.priceRange.maxVariantPrice.amount} currencyCode={product.priceRange.maxVariantPrice.currencyCode} className="text-sm text-gray-700" />
+              <Price
+                amount={product.priceRange.maxVariantPrice.amount}
+                currencyCode={product.priceRange.maxVariantPrice.currencyCode}
+                compareAtAmount={product.variants[0]?.compareAtPrice?.amount}
+                className="text-sm text-gray-700"
+              />
             </div>
           </Link>
         </Grid.Item>
-      ))}
+        );
+      })}
     </>
   );
 }

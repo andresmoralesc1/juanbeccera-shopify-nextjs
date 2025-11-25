@@ -98,6 +98,7 @@ export function ProductDescriptionCustom({ product }: { product: Product }) {
           <Price
             amount={product.priceRange.maxVariantPrice.amount}
             currencyCode={product.priceRange.maxVariantPrice.currencyCode}
+            compareAtAmount={product.variants[0]?.compareAtPrice?.amount}
           />
         </span>
       </div>

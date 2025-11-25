@@ -32,6 +32,7 @@ import {
   getProductsQuery
 } from './queries/product';
 import { getPredictiveSearchQuery } from './queries/search';
+import { getMetaobjectQuery, getMetaobjectsQuery } from './queries/metaobject';
 import {
   Cart,
   Collection,
@@ -58,7 +59,16 @@ import {
   ShopifyProductRecommendationsOperation,
   ShopifyProductsOperation,
   ShopifyRemoveFromCartOperation,
-  ShopifyUpdateCartOperation
+  ShopifyUpdateCartOperation,
+  Metaobject,
+  MetaobjectField,
+  ShopifyMetaobjectOperation,
+  ShopifyMetaobjectsOperation,
+  HomeHero,
+  HomeSlide,
+  HomeBrandSection,
+  HomeNewsletter,
+  HomeAnnouncement
 } from './types';
 
 const domain = process.env.SHOPIFY_STORE_DOMAIN
@@ -478,6 +488,127 @@ export async function getPredictiveSearch(
   });
 
   return res.body.data.predictiveSearch;
+}
+
+// Metaobject helper functions
+function getMetaobjectFieldValue(fields: MetaobjectField[], key: string): string {
+  const field = fields.find(f => f.key === key);
+  return field?.value || '';
+}
+
+function getMetaobjectImageUrl(fields: MetaobjectField[], key: string): string {
+  const field = fields.find(f => f.key === key);
+  return field?.reference?.image?.url || '';
+}
+
+export async function getMetaobject(handle: string, type: string): Promise<Metaobject | null> {
+  try {
+    const res = await shopifyFetch<ShopifyMetaobjectOperation>({
+      query: getMetaobjectQuery,
+      variables: { handle, type }
+    });
+
+    return res.body.data.metaobject;
+  } catch (error) {
+    console.error(`Error fetching metaobject ${handle}:`, error);
+    return null;
+  }
+}
+
+export async function getMetaobjects(type: string, first: number = 10): Promise<Metaobject[]> {
+  try {
+    const res = await shopifyFetch<ShopifyMetaobjectsOperation>({
+      query: getMetaobjectsQuery,
+      variables: { type, first }
+    });
+
+    return removeEdgesAndNodes(res.body.data.metaobjects);
+  } catch (error) {
+    console.error(`Error fetching metaobjects of type ${type}:`, error);
+    return [];
+  }
+}
+
+// Funciones específicas para obtener contenido del home
+export async function getHomeHero(): Promise<HomeHero | null> {
+  const metaobject = await getMetaobject('home-hero', 'home_hero');
+
+  if (!metaobject) {
+    return null;
+  }
+
+  const fields = metaobject.fields;
+
+  return {
+    title: getMetaobjectFieldValue(fields, 'title'),
+    description: getMetaobjectFieldValue(fields, 'description'),
+    image: getMetaobjectImageUrl(fields, 'image'),
+    buttonText: getMetaobjectFieldValue(fields, 'button_text'),
+    buttonText2: getMetaobjectFieldValue(fields, 'button_text_2')
+  };
+}
+
+export async function getHomeSlides(): Promise<HomeSlide[]> {
+  const metaobjects = await getMetaobjects('home_slide', 20);
+
+  return metaobjects.map((meta, index) => ({
+    id: meta.id,
+    image: getMetaobjectImageUrl(meta.fields, 'image'),
+    tag: getMetaobjectFieldValue(meta.fields, 'tag'),
+    title: getMetaobjectFieldValue(meta.fields, 'title'),
+    subtitle: getMetaobjectFieldValue(meta.fields, 'subtitle'),
+    buttonText: getMetaobjectFieldValue(meta.fields, 'button_text'),
+    href: getMetaobjectFieldValue(meta.fields, 'href')
+  }));
+}
+
+export async function getHomeBrandSection(): Promise<HomeBrandSection | null> {
+  const metaobject = await getMetaobject('brand-philosophy', 'home_brand_section');
+
+  if (!metaobject) {
+    return null;
+  }
+
+  const fields = metaobject.fields;
+
+  return {
+    title: getMetaobjectFieldValue(fields, 'title'),
+    description: getMetaobjectFieldValue(fields, 'description'),
+    quote: getMetaobjectFieldValue(fields, 'quote'),
+    image1: getMetaobjectImageUrl(fields, 'image_1'),
+    image2: getMetaobjectImageUrl(fields, 'image_2')
+  };
+}
+
+export async function getHomeNewsletter(): Promise<HomeNewsletter | null> {
+  const metaobject = await getMetaobject('newsletter', 'home_newsletter');
+
+  if (!metaobject) {
+    return null;
+  }
+
+  const fields = metaobject.fields;
+
+  return {
+    title: getMetaobjectFieldValue(fields, 'title'),
+    description: getMetaobjectFieldValue(fields, 'description')
+  };
+}
+
+export async function getHomeAnnouncement(): Promise<HomeAnnouncement | null> {
+  const metaobject = await getMetaobject('announcement', 'home_announcement');
+
+  if (!metaobject) {
+    return null;
+  }
+
+  const fields = metaobject.fields;
+  const enabled = getMetaobjectFieldValue(fields, 'enabled');
+
+  return {
+    text: getMetaobjectFieldValue(fields, 'text'),
+    enabled: enabled === 'true' || enabled === '1'
+  };
 }
 
 // This is called from `app/api/revalidate.ts` so providers can control revalidation logic.

@@ -312,3 +312,76 @@ export type ShopifyPredictiveSearchOperation = {
     limit?: number;
   };
 };
+
+// Metaobject types para contenido editable del home
+export type MetaobjectField = {
+  key: string;
+  value: string;
+  reference?: {
+    image?: Image;
+  };
+};
+
+export type Metaobject = {
+  id: string;
+  type: string;
+  handle: string;
+  fields: MetaobjectField[];
+};
+
+export type ShopifyMetaobjectOperation = {
+  data: {
+    metaobject: Metaobject;
+  };
+  variables: {
+    handle: string;
+    type: string;
+  };
+};
+
+export type ShopifyMetaobjectsOperation = {
+  data: {
+    metaobjects: Connection<Metaobject>;
+  };
+  variables: {
+    type: string;
+    first?: number;
+  };
+};
+
+// Tipos específicos para el contenido del home
+export type HomeHero = {
+  title: string;
+  description: string;
+  image: string;
+  buttonText: string;
+  buttonText2: string;
+};
+
+export type HomeSlide = {
+  id: string;
+  image: string;
+  tag: string;
+  title: string;
+  subtitle: string;
+  buttonText: string;
+  href: string;
+};
+
+export type HomeBrandSection = {
+  title: string;
+  description: string;
+  quote: string;
+  image1: string;
+  image2: string;
+};
+
+export type HomeNewsletter = {
+  title: string;
+  description: string;
+};
+
+export type HomeAnnouncement = {
+  text: string;
+  enabled: boolean;
+};

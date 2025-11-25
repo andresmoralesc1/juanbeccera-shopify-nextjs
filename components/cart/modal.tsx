@@ -10,12 +10,13 @@ import { createUrl } from 'lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Fragment, useEffect, useRef, useState } from 'react';
-import { useFormStatus } from 'react-dom';
+import { useFormStatus, useFormState } from 'react-dom';
 import { createCartAndSetCookie, redirectToCheckout } from './actions';
 import { useCart } from './cart-context';
 import { DeleteItemButton } from './delete-item-button';
 import { EditItemQuantityButton } from './edit-item-quantity-button';
 import OpenCart from './open-cart';
+import { toast } from 'sonner';
 
 type MerchandiseSearchParams = {
   [key: string]: string;
@@ -25,6 +26,7 @@ export default function CartModal() {
   const { cart, updateCartItem } = useCart();
   const [isOpen, setIsOpen] = useState(false);
   const quantityRef = useRef(cart?.totalQuantity);
+  const [checkoutError, checkoutAction] = useFormState(redirectToCheckout, null);
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
 
@@ -33,6 +35,12 @@ export default function CartModal() {
       createCartAndSetCookie();
     }
   }, [cart]);
+
+  useEffect(() => {
+    if (checkoutError) {
+      toast.error(checkoutError);
+    }
+  }, [checkoutError]);
 
   useEffect(() => {
     if (
@@ -215,7 +223,7 @@ export default function CartModal() {
                       />
                     </div>
                   </div>
-                  <form action={redirectToCheckout}>
+                  <form action={checkoutAction}>
                     <CheckoutButton />
                   </form>
                 </div>

@@ -1,11 +1,8 @@
 import { MetadataRoute } from 'next';
 import { getCollections, getProducts } from 'lib/shopify';
+import { baseUrl } from 'lib/utils';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
-    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-    : 'http://localhost:3000';
-
   // Páginas estáticas
   const routes = [
     {
@@ -25,6 +22,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 0.8
+    },
+    {
+      url: `${baseUrl}/terminos-del-servicio`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.3
     }
   ];
 
@@ -41,12 +44,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const collections = await getCollections();
   const collectionUrls = collections
     .filter((collection) => collection.handle)
-    .map((collection) => ({
-      url: `${baseUrl}/search/${collection.handle}`,
-      lastModified: new Date(collection.updatedAt),
-      changeFrequency: 'weekly' as const,
-      priority: 0.6
-    }));
+    .flatMap((collection) => [
+      // URL de búsqueda por colección
+      {
+        url: `${baseUrl}/search/${collection.handle}`,
+        lastModified: new Date(collection.updatedAt),
+        changeFrequency: 'weekly' as const,
+        priority: 0.6
+      },
+      // URL de categoría de tienda
+      {
+        url: `${baseUrl}/tienda/categoria/${collection.handle}`,
+        lastModified: new Date(collection.updatedAt),
+        changeFrequency: 'weekly' as const,
+        priority: 0.7
+      }
+    ]);
 
   return [...routes, ...productUrls, ...collectionUrls];
 }

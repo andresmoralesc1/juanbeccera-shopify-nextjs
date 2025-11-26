@@ -21,9 +21,9 @@ export default function BrandPhilosophy() {
         <div className="bg-[#f8f7f4] flex items-center justify-center p-8 sm:p-12 lg:p-16 xl:p-24">
           <FadeIn delay={0.2} direction="left">
             <div className="max-w-lg space-y-6">
-              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-light text-gray-900 leading-tight mb-8">
+              <p className="text-[#620c0b] text-xs tracking-[0.3em] uppercase font-medium mb-6">
                 Nuestro Manifiesto
-              </h3>
+              </p>
               <p className="text-gray-700 text-base sm:text-lg leading-relaxed font-light">
                 Nos inspiramos en la elegancia de siempre,<br />
                 pero la adaptamos a la vida de hoy.

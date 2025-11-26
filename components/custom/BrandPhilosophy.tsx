@@ -94,8 +94,8 @@ export default function BrandPhilosophy() {
         {/* Imagen Derecha */}
         <div className="relative h-[500px] lg:h-[700px] order-1 lg:order-2">
           <img
-            src="/tarjeteros.webp"
-            alt="Premium Materials"
+            src="/billeteras-materiales.png"
+            alt="Materiales excepcionales - Billeteras"
             className="absolute inset-0 w-full h-full object-cover"
           />
         </div>

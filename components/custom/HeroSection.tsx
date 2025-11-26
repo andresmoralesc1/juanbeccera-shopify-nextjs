@@ -12,11 +12,11 @@ type HeroSectionProps = {
 };
 
 export default function HeroSection({
-  title = 'Nueva Colección',
-  description = 'Descubre las últimas tendencias en moda premium. Elegancia y sofisticación en cada pieza.',
+  title = 'BLACK DAYS JUAN BECERRA',
+  description = 'Hasta 50% OFF. Es el momento para llevarte tus favoritos.\nVÁLIDO DEL 28 NOV HASTA EL 1 DIC',
   image = '/banner-home-juan-becerra.jpg',
-  buttonText = 'Explorar Colección',
-  buttonText2 = 'Ver Lookbook'
+  buttonText = 'Explorar productos',
+  buttonText2 = 'Ver descuentos'
 }: HeroSectionProps) {
   const [scrollY, setScrollY] = useState(0);
 
@@ -66,7 +66,7 @@ export default function HeroSection({
           {title}
         </h1>
 
-        <p className="font-light text-base sm:text-lg lg:text-xl mb-10 sm:mb-12 max-w-2xl mx-auto opacity-90 leading-relaxed">
+        <p className="font-light text-base sm:text-lg lg:text-xl mb-10 sm:mb-12 max-w-2xl mx-auto opacity-90 leading-relaxed whitespace-pre-line">
           {description}
         </p>
 
@@ -74,7 +74,7 @@ export default function HeroSection({
         <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
           {/* Botón primario - Underline style */}
           <a
-            href="#seasonal"
+            href="/search/todos"
             className="group inline-flex items-center gap-3 text-white text-sm sm:text-base tracking-[0.2em] uppercase font-medium border-b-2 border-white pb-2 hover:border-white/60 transition-all duration-300"
           >
             {buttonText}
@@ -96,7 +96,7 @@ export default function HeroSection({
 
           {/* Botón secundario - Minimal outline */}
           <a
-            href="#seasonal"
+            href="/search/todos"
             className="inline-flex items-center gap-3 text-white text-sm sm:text-base tracking-[0.15em] uppercase font-light border border-white/50 px-8 py-3 hover:bg-white hover:text-black transition-all duration-300"
           >
             {buttonText2}

@@ -21,12 +21,12 @@ type SeasonalBannerProps = {
 const defaultSlides: Slide[] = [
   {
     id: '1',
-    image: '/sacos.webp',
-    tag: 'Nueva Temporada',
-    title: 'Colección Otoño/Invierno 2025',
-    subtitle: 'Descubre las piezas que definirán tu estilo esta temporada.',
-    buttonText: 'Ver la Colección',
-    href: '/search',
+    image: '/nueva-coleccion-banner.jpg',
+    tag: 'Descubre lo nuevo',
+    title: 'NUEVA COLECCIÓN',
+    subtitle: 'Nos inspiramos en la elegancia de siempre, pero la adaptamos a la vida de hoy.',
+    buttonText: 'Descubre la colección',
+    href: '/search/new',
   },
   {
     id: '2',

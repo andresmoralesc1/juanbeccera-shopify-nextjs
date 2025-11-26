@@ -3,27 +3,20 @@
 import { useState } from 'react';
 import { Mail } from 'lucide-react';
 import { Toast } from '@/components/ui/toast';
+import { newsletterSchema } from '@/lib/validations/forms';
 
 export default function Newsletter() {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
 
-  const validateEmail = (email: string): boolean => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-  };
-
   const handleSubmit = () => {
-    // Validación de email
-    if (!email.trim()) {
-      setToast({ message: 'Por favor ingresa tu email', type: 'error' });
-      setTimeout(() => setToast(null), 3000);
-      return;
-    }
+    // Validación con Zod
+    const result = newsletterSchema.safeParse({ email });
 
-    if (!validateEmail(email)) {
-      setToast({ message: 'Por favor ingresa un email válido', type: 'error' });
+    if (!result.success) {
+      const errorMessage = result.error.errors[0]?.message || 'Error de validación';
+      setToast({ message: errorMessage, type: 'error' });
       setTimeout(() => setToast(null), 3000);
       return;
     }

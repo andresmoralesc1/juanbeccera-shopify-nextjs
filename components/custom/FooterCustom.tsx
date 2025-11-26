@@ -1,6 +1,36 @@
+'use client';
+
+import { useState } from 'react';
 import { Facebook, Instagram, Linkedin, Mail, Phone } from "lucide-react";
+import { newsletterSchema } from '@/lib/validations/forms';
+import { toast } from 'sonner';
 
 export default function Footer() {
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleNewsletterSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Validación con Zod
+    const result = newsletterSchema.safeParse({ email });
+
+    if (!result.success) {
+      const errorMessage = result.error.errors[0]?.message || 'Error de validación';
+      toast.error(errorMessage);
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    // TODO: Integrar con servicio de email marketing
+    setTimeout(() => {
+      setIsSubmitting(false);
+      toast.success('¡Gracias por suscribirte!');
+      setEmail('');
+    }, 1200);
+  };
+
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -57,13 +87,25 @@ export default function Footer() {
             <p className="text-gray-400 mb-4">
               Suscríbete y obtén noticias y regalos en todos nuestros productos.
             </p>
-            <div className="mb-6">
-              <input
-                type="email"
-                placeholder="Su e-mail"
-                className="w-full px-4 py-2 bg-gray-800 text-white rounded focus:outline-none focus:ring-2 focus:ring-white"
-              />
-            </div>
+            <form onSubmit={handleNewsletterSubmit} className="mb-6">
+              <div className="flex gap-2">
+                <input
+                  type="email"
+                  placeholder="Su e-mail"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={isSubmitting}
+                  className="flex-1 px-4 py-2 bg-gray-800 text-white rounded focus:outline-none focus:ring-2 focus:ring-white disabled:opacity-50"
+                />
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="px-4 py-2 bg-white text-gray-900 rounded hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? '...' : 'Suscribir'}
+                </button>
+              </div>
+            </form>
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 text-gray-400 flex-shrink-0" />

@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import { GridTileImage } from 'components/grid/tile';
 import FooterCustom from '@/components/custom/FooterCustom';
 import AnnouncementBar from '@/components/custom/AnnouncementBar';
 import { GalleryCustom } from 'components/product/gallery-custom';

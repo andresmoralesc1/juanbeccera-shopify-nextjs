@@ -18,7 +18,6 @@ async function AllProductsGrid({
   const { sortKey, reverse } = sorting.find((item) => item.slug === sort) || defaultSort;
 
   const products = await getProducts({ sortKey, reverse, query: searchValue });
-  const resultsText = products.length === 1 ? 'producto' : 'productos';
 
   return products.length > 0 ? (
     <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">

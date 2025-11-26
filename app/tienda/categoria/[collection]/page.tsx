@@ -1,7 +1,6 @@
 import { getCollection, getCollectionProducts, getCollections } from 'lib/shopify';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Suspense } from 'react';
 
 import Grid from 'components/grid';
 import ProductGridItems from 'components/layout/product-grid-items';

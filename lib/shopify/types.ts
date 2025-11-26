@@ -351,37 +351,37 @@ export type ShopifyMetaobjectsOperation = {
 
 // Tipos específicos para el contenido del home
 export type HomeHero = {
-  title: string;
-  description: string;
-  image: string;
-  buttonText: string;
-  buttonText2: string;
+  title?: string;
+  description?: string;
+  image?: string;
+  buttonText?: string;
+  buttonText2?: string;
 };
 
 export type HomeSlide = {
   id: string;
-  image: string;
-  tag: string;
-  title: string;
-  subtitle: string;
-  buttonText: string;
-  href: string;
+  image?: string;
+  tag?: string;
+  title?: string;
+  subtitle?: string;
+  buttonText?: string;
+  href?: string;
 };
 
 export type HomeBrandSection = {
-  title: string;
-  description: string;
-  quote: string;
-  image1: string;
-  image2: string;
+  title?: string;
+  description?: string;
+  quote?: string;
+  image1?: string;
+  image2?: string;
 };
 
 export type HomeNewsletter = {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
 };
 
 export type HomeAnnouncement = {
-  text: string;
-  enabled: boolean;
+  text?: string;
+  enabled?: boolean;
 };

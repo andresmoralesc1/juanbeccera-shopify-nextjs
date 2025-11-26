@@ -490,14 +490,14 @@ export async function getPredictiveSearch(
 }
 
 // Metaobject helper functions
-function getMetaobjectFieldValue(fields: MetaobjectField[], key: string): string {
+function getMetaobjectFieldValue(fields: MetaobjectField[], key: string): string | undefined {
   const field = fields.find(f => f.key === key);
-  return field?.value || '';
+  return field?.value || undefined;
 }
 
-function getMetaobjectImageUrl(fields: MetaobjectField[], key: string): string {
+function getMetaobjectImageUrl(fields: MetaobjectField[], key: string): string | undefined {
   const field = fields.find(f => f.key === key);
-  return field?.reference?.image?.url || '';
+  return field?.reference?.image?.url || undefined;
 }
 
 export async function getMetaobject(handle: string, type: string): Promise<Metaobject | null> {

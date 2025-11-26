@@ -51,23 +51,29 @@ async function CategorySectionWrapper() {
 
 async function AnnouncementBarWrapper() {
   const announcement = await getHomeAnnouncement();
+  if (!announcement) {
+    return <AnnouncementBar />;
+  }
   return (
     <AnnouncementBar
-      text={announcement?.text}
-      enabled={announcement?.enabled}
+      text={announcement.text || undefined}
+      enabled={announcement.enabled}
     />
   );
 }
 
 async function HeroSectionWrapper() {
   const hero = await getHomeHero();
+  if (!hero) {
+    return <HeroSection />;
+  }
   return (
     <HeroSection
-      title={hero?.title}
-      description={hero?.description}
-      image={hero?.image}
-      buttonText={hero?.buttonText}
-      buttonText2={hero?.buttonText2}
+      title={hero.title || undefined}
+      description={hero.description || undefined}
+      image={hero.image || undefined}
+      buttonText={hero.buttonText || undefined}
+      buttonText2={hero.buttonText2 || undefined}
     />
   );
 }

@@ -6,12 +6,12 @@ import "slick-carousel/slick/slick-theme.css";
 
 type Slide = {
   id: string;
-  image: string;
-  tag: string;
-  title: string;
-  subtitle: string;
-  buttonText: string;
-  href: string;
+  image?: string;
+  tag?: string;
+  title?: string;
+  subtitle?: string;
+  buttonText?: string;
+  href?: string;
 };
 
 type SeasonalBannerProps = {
@@ -61,44 +61,54 @@ export default function SeasonalBanner({ slides = defaultSlides }: SeasonalBanne
         {slides.map((slide) => (
           <div key={slide.id} className="relative">
             <div className="h-[65vh] sm:h-[75vh] lg:h-[85vh] w-full relative">
-              <img
-                src={slide.image}
-                alt={slide.title}
-                className="w-full h-full object-cover"
-              />
+              {slide.image && (
+                <img
+                  src={slide.image}
+                  alt={slide.title || 'Banner'}
+                  className="w-full h-full object-cover"
+                />
+              )}
               {/* Overlay más oscuro para mejor legibilidad */}
               <div className="absolute inset-0 bg-black/60"></div>
-              
+
               {/* Contenido - Centrado */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-white max-w-3xl px-6 sm:px-12 text-center">
                   {/* Tag pequeño */}
-                  <div className="mb-6">
-                    <span className="inline-block text-xs tracking-[0.3em] uppercase font-medium border border-white/70 px-4 py-2">
-                      {slide.tag}
-                    </span>
-                  </div>
-                  
+                  {slide.tag && (
+                    <div className="mb-6">
+                      <span className="inline-block text-xs tracking-[0.3em] uppercase font-medium border border-white/70 px-4 py-2">
+                        {slide.tag}
+                      </span>
+                    </div>
+                  )}
+
                   {/* Título */}
-            <h2 className="font-belleza text-2xl sm:text-3xl lg:text-5xl font-light tracking-wide mb-6 sm:mb-8 leading-tight text-white text-center lg:text-left">
-                    {slide.title}
-                  </h2>
-                  
+                  {slide.title && (
+                    <h2 className="font-belleza text-2xl sm:text-3xl lg:text-5xl font-light tracking-wide mb-6 sm:mb-8 leading-tight text-white text-center lg:text-left">
+                      {slide.title}
+                    </h2>
+                  )}
+
                   {/* Subtítulo */}
-                  <p className="font-moderat text-lg sm:text-xl lg:text-2xl mb-8 font-normal leading-relaxed">
-                    {slide.subtitle}
-                  </p>
-                  
+                  {slide.subtitle && (
+                    <p className="font-moderat text-lg sm:text-xl lg:text-2xl mb-8 font-normal leading-relaxed">
+                      {slide.subtitle}
+                    </p>
+                  )}
+
                   {/* Botón elegante pero legible */}
-                  <a
-                    href={slide.href}
-                    className="group inline-flex items-center gap-3 font-moderat bg-[#620c0b] text-white px-8 py-4 text-sm sm:text-base tracking-[0.15em] uppercase font-semibold hover:bg-[#4a0908] transition-all duration-300"
-                  >
-                    {slide.buttonText}
-                    <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </a>
+                  {slide.buttonText && slide.href && (
+                    <a
+                      href={slide.href}
+                      className="group inline-flex items-center gap-3 font-moderat bg-[#620c0b] text-white px-8 py-4 text-sm sm:text-base tracking-[0.15em] uppercase font-semibold hover:bg-[#4a0908] transition-all duration-300"
+                    >
+                      {slide.buttonText}
+                      <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </a>
+                  )}
                 </div>
               </div>
             </div>

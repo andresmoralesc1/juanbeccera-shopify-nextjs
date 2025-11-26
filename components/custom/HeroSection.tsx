@@ -14,7 +14,7 @@ type HeroSectionProps = {
 export default function HeroSection({
   title = 'BLACK DAYS JUAN BECERRA',
   description = 'Hasta 50% OFF. Es el momento para llevarte tus favoritos.\nVÁLIDO DEL 28 NOV HASTA EL 1 DIC',
-  image = '/banner-home-juan-becerra.jpg',
+  image = '/black-days-banner.jpg',
   buttonText = 'Explorar productos',
   buttonText2 = 'Ver descuentos'
 }: HeroSectionProps) {

@@ -73,11 +73,11 @@ export default function SeasonalBanner({ slides = defaultSlides }: SeasonalBanne
 
               {/* Contenido - Centrado */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-white max-w-3xl px-6 sm:px-12 text-center">
+                <div className="text-white max-w-4xl px-6 sm:px-12 text-center">
                   {/* Tag pequeño */}
                   {slide.tag && (
-                    <div className="mb-6">
-                      <span className="inline-block text-xs tracking-[0.3em] uppercase font-medium border border-white/70 px-4 py-2">
+                    <div className="mb-6 sm:mb-8">
+                      <span className="inline-block text-xs sm:text-sm tracking-[0.3em] uppercase font-medium border border-white/70 px-4 sm:px-6 py-2 sm:py-3">
                         {slide.tag}
                       </span>
                     </div>
@@ -85,14 +85,14 @@ export default function SeasonalBanner({ slides = defaultSlides }: SeasonalBanne
 
                   {/* Título */}
                   {slide.title && (
-                    <h2 className="font-belleza text-2xl sm:text-3xl lg:text-5xl font-light tracking-wide mb-6 sm:mb-8 leading-tight text-white text-center lg:text-left">
+                    <h2 className="font-belleza text-3xl sm:text-4xl lg:text-6xl font-light tracking-wide mb-6 sm:mb-8 leading-tight text-white text-center">
                       {slide.title}
                     </h2>
                   )}
 
                   {/* Subtítulo */}
                   {slide.subtitle && (
-                    <p className="font-moderat text-lg sm:text-xl lg:text-2xl mb-8 font-normal leading-relaxed">
+                    <p className="font-moderat text-base sm:text-lg lg:text-xl mb-8 sm:mb-10 font-light leading-relaxed max-w-2xl mx-auto">
                       {slide.subtitle}
                     </p>
                   )}
@@ -101,7 +101,7 @@ export default function SeasonalBanner({ slides = defaultSlides }: SeasonalBanne
                   {slide.buttonText && slide.href && (
                     <a
                       href={slide.href}
-                      className="group inline-flex items-center gap-3 font-moderat bg-[#620c0b] text-white px-8 py-4 text-sm sm:text-base tracking-[0.15em] uppercase font-semibold hover:bg-[#4a0908] transition-all duration-300"
+                      className="group inline-flex items-center justify-center gap-3 font-moderat bg-[#620c0b] text-white px-8 sm:px-10 py-4 text-sm sm:text-base tracking-[0.15em] uppercase font-semibold hover:bg-[#4a0908] transition-all duration-300 shadow-lg"
                     >
                       {slide.buttonText}
                       <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">

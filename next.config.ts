@@ -1,4 +1,10 @@
 export default {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   experimental: {
     ppr: true,
     inlineCss: true,

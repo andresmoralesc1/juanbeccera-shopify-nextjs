@@ -8,7 +8,13 @@ import BrandPhilosophy from '@/components/custom/BrandPhilosophy';
 import Newsletter from '@/components/custom/Newsletter';
 import InstagramFeed from '@/components/custom/InstagramFeed';
 import FooterCustom from '@/components/custom/FooterCustom';
-import { getProducts, getCollections } from 'lib/shopify';
+import {
+  getProducts,
+  getCollections,
+  getHomeHero,
+  getHomeSlides,
+  getHomeAnnouncement
+} from 'lib/shopify';
 import { CategorySliderSkeleton, ProductGridSkeleton } from '@/components/ui/skeleton';
 
 export const metadata = {
@@ -43,15 +49,49 @@ async function CategorySectionWrapper() {
   return <CategorySectionDynamic collections={collections} />;
 }
 
+async function AnnouncementBarWrapper() {
+  const announcement = await getHomeAnnouncement();
+  return (
+    <AnnouncementBar
+      text={announcement?.text}
+      enabled={announcement?.enabled}
+    />
+  );
+}
+
+async function HeroSectionWrapper() {
+  const hero = await getHomeHero();
+  return (
+    <HeroSection
+      title={hero?.title}
+      description={hero?.description}
+      image={hero?.image}
+      buttonText={hero?.buttonText}
+      buttonText2={hero?.buttonText2}
+    />
+  );
+}
+
+async function SeasonalBannerWrapper() {
+  const slides = await getHomeSlides();
+  return <SeasonalBanner slides={slides.length > 0 ? slides : undefined} />;
+}
+
 export default function HomePage() {
   return (
     <main className="-mt-[118px]">
-      <AnnouncementBar />
-      <HeroSection />
+      <Suspense fallback={<AnnouncementBar />}>
+        <AnnouncementBarWrapper />
+      </Suspense>
+      <Suspense fallback={<HeroSection />}>
+        <HeroSectionWrapper />
+      </Suspense>
       <Suspense fallback={<CategorySliderSkeleton />}>
         <CategorySectionWrapper />
       </Suspense>
-      <SeasonalBanner />
+      <Suspense fallback={<SeasonalBanner />}>
+        <SeasonalBannerWrapper />
+      </Suspense>
       <Suspense fallback={
         <div className="bg-[#364e41] py-16 sm:py-24">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

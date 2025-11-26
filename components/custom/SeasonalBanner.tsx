@@ -1,12 +1,26 @@
 'use client';
 
 import Slider from 'react-slick';
-import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const slides = [
+type Slide = {
+  id: string;
+  image: string;
+  tag: string;
+  title: string;
+  subtitle: string;
+  buttonText: string;
+  href: string;
+};
+
+type SeasonalBannerProps = {
+  slides?: Slide[];
+};
+
+const defaultSlides: Slide[] = [
   {
-    id: 1,
+    id: '1',
     image: '/sacos.webp',
     tag: 'Nueva Temporada',
     title: 'Colección Otoño/Invierno 2025',
@@ -15,7 +29,7 @@ const slides = [
     href: '/search',
   },
   {
-    id: 2,
+    id: '2',
     image: '/cinturones.webp',
     tag: 'Accesorios Premium',
     title: 'Accesorios que Dejan Huella',
@@ -25,7 +39,7 @@ const slides = [
   },
 ];
 
-export default function SeasonalBanner() {
+export default function SeasonalBanner({ slides = defaultSlides }: SeasonalBannerProps) {
   const settings = {
     dots: true,
     infinite: true,

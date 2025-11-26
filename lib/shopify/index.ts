@@ -5,6 +5,7 @@ import {
 } from 'lib/constants';
 import { isShopifyError } from 'lib/type-guards';
 import { ensureStartsWith } from 'lib/utils';
+import { logError, logWarning } from 'lib/utils/logger';
 import {
   revalidateTag,
   unstable_cacheTag as cacheTag,
@@ -337,9 +338,7 @@ export async function getCollectionProducts({
   });
 
   if (!res.body.data.collection) {
-    if (process.env.NODE_ENV === 'development') {
-      console.log(`No collection found for \`${collection}\``);
-    }
+    logWarning(`No collection found for '${collection}'`);
     return [];
   }
 
@@ -510,7 +509,10 @@ export async function getMetaobject(handle: string, type: string): Promise<Metao
 
     return res.body.data.metaobject;
   } catch (error) {
-    console.error(`Error fetching metaobject ${handle}:`, error);
+    logError(`Failed to fetch metaobject '${handle}' of type '${type}'`, error, {
+      handle,
+      type
+    });
     return null;
   }
 }
@@ -524,7 +526,10 @@ export async function getMetaobjects(type: string, first: number = 10): Promise<
 
     return removeEdgesAndNodes(res.body.data.metaobjects);
   } catch (error) {
-    console.error(`Error fetching metaobjects of type ${type}:`, error);
+    logError(`Failed to fetch metaobjects of type '${type}'`, error, {
+      type,
+      first
+    });
     return [];
   }
 }
@@ -631,9 +636,10 @@ export async function revalidate(req: NextRequest): Promise<NextResponse> {
   const isProductUpdate = productWebhooks.includes(topic);
 
   if (!secret || secret !== process.env.SHOPIFY_REVALIDATION_SECRET) {
-    if (process.env.NODE_ENV === 'development') {
-      console.error('Invalid revalidation secret.');
-    }
+    logError('Invalid revalidation secret attempt', undefined, {
+      topic,
+      hasSecret: !!secret
+    });
     return NextResponse.json({ status: 401 });
   }
 

@@ -9,8 +9,11 @@ export function TrackRecentlyViewed({ product }: { product: Product }) {
 
   useEffect(() => {
     // Add product to recently viewed when component mounts
-    addRecentlyViewed(product);
-  }, [product.id]); // Only run when product changes
+    if (product) {
+      addRecentlyViewed(product);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product.id]); // Only run when product ID changes
 
   return null; // This component doesn't render anything
 }

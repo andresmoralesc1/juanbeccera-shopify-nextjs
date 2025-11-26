@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Product } from 'lib/shopify/types';
 
 const STORAGE_KEY = 'juan-becerra-recently-viewed';
@@ -40,7 +40,7 @@ export function useRecentlyViewed() {
     }
   }, []);
 
-  const addRecentlyViewed = (product: Product) => {
+  const addRecentlyViewed = useCallback((product: Product) => {
     const recentProduct: RecentlyViewedProduct = {
       id: product.id,
       handle: product.handle,
@@ -59,7 +59,7 @@ export function useRecentlyViewed() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
       return updated;
     });
-  };
+  }, []);
 
   const clearRecentlyViewed = () => {
     setRecentProducts([]);

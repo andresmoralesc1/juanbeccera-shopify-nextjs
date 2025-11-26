@@ -29,7 +29,7 @@ export function RecentlyViewed({ currentProductId }: { currentProductId?: string
           {displayProducts.slice(0, 4).map((product) => (
             <Link
               key={product.id}
-              href={`/product/${product.handle}`}
+              href={`/products/${product.handle}`}
               className="group relative block product-card"
               prefetch={true}
             >

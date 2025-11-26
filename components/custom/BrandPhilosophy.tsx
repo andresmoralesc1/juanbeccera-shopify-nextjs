@@ -11,8 +11,8 @@ export default function BrandPhilosophy() {
         {/* Imagen Izquierda */}
         <div className="relative h-[500px] lg:h-[700px]">
           <img
-            src="/cinturones.webp"
-            alt="Craftsmanship"
+            src="/banner-manifiesto.png"
+            alt="Manifiesto Juan Becerra"
             className="absolute inset-0 w-full h-full object-cover"
           />
         </div>
@@ -24,14 +24,27 @@ export default function BrandPhilosophy() {
               <p className="text-[#620c0b] text-xs tracking-[0.3em] uppercase font-medium">
                 Nuestra Filosofía
               </p>
-              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-light text-gray-900 leading-tight">
-                Artesanía que trasciende
+              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-light text-gray-900 leading-tight mb-8">
+                Nuestro Manifiesto
               </h3>
-              <p className="text-gray-600 text-base sm:text-lg leading-relaxed font-light">
-                En Juan Becerra, creemos que la verdadera elegancia no grita, susurra. Cada pieza es cuidadosamente seleccionada para el hombre que entiende que el estilo no es una tendencia, es una filosofía de vida.
+              <p className="text-gray-700 text-base sm:text-lg leading-relaxed font-light">
+                Nos inspiramos en la elegancia de siempre,<br />
+                pero la adaptamos a la vida de hoy.
               </p>
-              <p className="text-gray-600 text-base sm:text-lg leading-relaxed font-light">
-                Desde 2017, hemos dedicado nuestra pasión a ofrecer accesorios premium que definen carácter y distinción en cada detalle.
+              <p className="text-gray-700 text-base sm:text-lg leading-relaxed font-light">
+                Creemos en un estilo que nunca pasa de moda,<br />
+                que evoluciona contigo y te hace auténtico en cada movimiento.
+              </p>
+              <p className="text-gray-700 text-base sm:text-lg leading-relaxed font-light">
+                La elegancia no es apariencia, no debe ser distante, es cercanía, es naturalidad, es la forma en que eliges contarte al mundo.
+              </p>
+              <p className="text-gray-700 text-base sm:text-lg leading-relaxed font-light">
+                Cada prenda es un relato de tu esencia,<br />
+                un reflejo de quién eres y de quién decides ser.
+              </p>
+              <p className="text-gray-700 text-base sm:text-lg leading-relaxed font-light">
+                Más que moda, es herencia viva.<br />
+                Una elegancia atemporal que se reinventa desde el orgullo colombiano.
               </p>
             </div>
           </FadeIn>
@@ -47,7 +60,7 @@ export default function BrandPhilosophy() {
                 <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
               </svg>
               <blockquote className="text-2xl sm:text-3xl lg:text-4xl font-light text-gray-900 leading-relaxed italic">
-                La moda pasa, el estilo permanece
+                Hecho para siempre, pensado para hoy
               </blockquote>
               <p className="text-gray-500 text-sm tracking-[0.2em] uppercase font-medium">
                 — Juan Becerra

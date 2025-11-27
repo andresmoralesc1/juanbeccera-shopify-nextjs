@@ -56,5 +56,17 @@ export default {
         ]
       }
     ];
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/checkouts/:path*',
+        destination: 'https://checkout.juanbecerra.co/checkouts/:path*',
+      },
+      {
+        source: '/payments/:path*',
+        destination: 'https://checkout.juanbecerra.co/payments/:path*',
+      },
+    ];
   }
 };

@@ -110,7 +110,12 @@ export async function getCheckoutUrl(): Promise<string | null> {
     return null;
   }
 
-  return cart.checkoutUrl;
+  // Add return_to parameter for "Continue Shopping" link in Shopify checkout
+  const siteUrl = process.env.SITE_URL || 'https://www.juanbecerra.co';
+  const url = new URL(cart.checkoutUrl);
+  url.searchParams.set('return_to', siteUrl);
+
+  return url.toString();
 }
 
 export async function createCartAndSetCookie() {

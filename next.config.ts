@@ -67,6 +67,10 @@ export default {
         source: '/payments/:path*',
         destination: 'https://checkout.juanbecerra.co/payments/:path*',
       },
+      {
+        source: '/cart/:path*',
+        destination: 'https://checkout.juanbecerra.co/cart/:path*',
+      },
     ];
   }
 };

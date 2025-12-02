@@ -169,24 +169,26 @@ export default function NavbarIntegrated({ variant = 'transparent', collections 
 
               <div className="flex items-center space-x-1 sm:space-x-2 lg:space-x-3">
                 {/* Search Component con búsqueda predictiva */}
-                <div className="hidden lg:block">
-                  <Suspense fallback={
-                    <div className="w-80">
-                      <div className="h-10 bg-gray-100 rounded-lg animate-pulse" />
-                    </div>
-                  }>
+                {/* <div className="hidden lg:block">
+                  <Suspense
+                    fallback={
+                      <div className="w-80">
+                        <div className="h-10 bg-gray-100 rounded-lg animate-pulse" />
+                      </div>
+                    }
+                  >
                     <SearchComponent />
                   </Suspense>
-                </div>
+                </div> */}
 
                 {/* Search Button - Mobile */}
-                <button
+                {/* <button
                   onClick={() => setIsSearchOpen(!isSearchOpen)}
                   className={`lg:hidden p-2 transition-colors ${isScrolled || isSolidVariant ? 'hover:bg-gray-100' : 'hover:bg-white/20'}`}
                   aria-label="Abrir búsqueda"
                 >
                   <Search className={`h-5 w-5 ${isScrolled || isSolidVariant ? 'text-black' : 'text-white'}`} />
-                </button>
+                </button> */}
 
                 {/* Search Dropdown - Solo Mobile */}
                 {isSearchOpen && (
@@ -195,10 +197,8 @@ export default function NavbarIntegrated({ variant = 'transparent', collections 
                       className="absolute top-[156px] left-0 right-0 bg-white shadow-2xl p-4 animate-slideDownFade"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <Suspense fallback={
-                        <div className="h-10 bg-gray-100 rounded-lg animate-pulse" />
-                      }>
-                        <SearchComponent />
+                      <Suspense fallback={<div className="h-10 bg-gray-100 rounded-lg animate-pulse" />}>
+                        {/* <SearchComponent /> */}
                       </Suspense>
                     </div>
                   </div>
@@ -308,7 +308,7 @@ export default function NavbarIntegrated({ variant = 'transparent', collections 
         </nav>
 
         <div className="p-6 border-t space-y-4">
-          <button
+          {/* <button
             onClick={() => {
               setIsMobileMenuOpen(false);
               setIsSearchOpen(true);
@@ -317,7 +317,7 @@ export default function NavbarIntegrated({ variant = 'transparent', collections 
           >
             <Search className="h-5 w-5 text-gray-900" />
             <span className="text-gray-900">Buscar</span>
-          </button>
+          </button> */}
           <button className="w-full flex items-center gap-3 p-3 hover:bg-gray-100 transition-colors">
             <User className="h-5 w-5 text-gray-900" />
             <span className="text-gray-900">Mi Cuenta</span>

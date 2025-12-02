@@ -37,16 +37,14 @@ export function ProductProvider({ children }: { children: React.ReactNode }) {
   );
 
   const updateOption = useCallback((name: string, value: string) => {
-    const newState = { [name]: value };
-    setOptimisticState(newState);
-    return { ...state, ...newState };
-  }, [setOptimisticState, state]);
+    setOptimisticState({ [name]: value });
+    return { ...getInitialState(), [name]: value };
+  }, [setOptimisticState, getInitialState]);
 
   const updateImage = useCallback((index: string) => {
-    const newState = { image: index };
-    setOptimisticState(newState);
-    return { ...state, ...newState };
-  }, [setOptimisticState, state]);
+    setOptimisticState({ image: index });
+    return { ...getInitialState(), image: index };
+  }, [setOptimisticState, getInitialState]);
 
   const value = useMemo(
     () => ({

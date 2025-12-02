@@ -6,7 +6,7 @@ export function WebVitals() {
   useReportWebVitals((metric) => {
     // Log to console in development
     if (process.env.NODE_ENV === 'development') {
-      console.log('[Web Vitals]', metric);
+      // console.log('[Web Vitals]', metric); // Deshabilitado para limpiar la consola
     }
 
     // Send to analytics in production
@@ -38,7 +38,7 @@ export function WebVitals() {
 // Declaraciones globales para TypeScript
 declare global {
   interface Window {
-    gtag?: (...args: any[]) => void;
-    dataLayer?: any[];
+    gtag?: (...args: unknown[]) => void;
+    dataLayer?: unknown[];
   }
 }

@@ -6,6 +6,7 @@ import type {
   Product,
   ProductVariant
 } from 'lib/shopify/types';
+import { useCallback } from 'react';
 import React, {
   createContext,
   use,
@@ -218,16 +219,16 @@ export function useCart() {
     cartReducer
   );
 
-  const updateCartItem = (merchandiseId: string, updateType: UpdateType) => {
+  const updateCartItem = useCallback((merchandiseId: string, updateType: UpdateType) => {
     updateOptimisticCart({
       type: 'UPDATE_ITEM',
       payload: { merchandiseId, updateType }
     });
-  };
+  }, [updateOptimisticCart]);
 
-  const addCartItem = (variant: ProductVariant, product: Product, quantity: number = 1) => {
+  const addCartItem = useCallback((variant: ProductVariant, product: Product, quantity: number = 1) => {
     updateOptimisticCart({ type: 'ADD_ITEM', payload: { variant, product, quantity } });
-  };
+  }, [updateOptimisticCart]);
 
   return useMemo(
     () => ({
@@ -235,6 +236,6 @@ export function useCart() {
       updateCartItem,
       addCartItem
     }),
-    [optimisticCart]
+    [optimisticCart, updateCartItem, addCartItem]
   );
 }

@@ -15,7 +15,7 @@ export default function Newsletter() {
     const result = newsletterSchema.safeParse({ email });
 
     if (!result.success) {
-      const errorMessage = result.error.errors[0]?.message || 'Error de validación';
+      const errorMessage = result.error.issues[0]?.message || 'Error de validación';
       setToast({ message: errorMessage, type: 'error' });
       setTimeout(() => setToast(null), 3000);
       return;

@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { useEffect, useState, useCallback } from 'react';
 import { X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut } from 'lucide-react';
 
 interface ImageZoomModalProps {
@@ -33,6 +34,18 @@ export function ImageZoomModal({ images, currentIndex, isOpen, onClose }: ImageZ
     };
   }, [isOpen]);
 
+  const handlePrevious = useCallback(() => {
+    setActiveIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+    setZoom(1);
+    setPosition({ x: 0, y: 0 });
+  }, [images.length]);
+
+  const handleNext = useCallback(() => {
+    setActiveIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    setZoom(1);
+    setPosition({ x: 0, y: 0 });
+  }, [images.length]);
+
   useEffect(() => {
     if (!isOpen) return;
 
@@ -44,19 +57,7 @@ export function ImageZoomModal({ images, currentIndex, isOpen, onClose }: ImageZ
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, activeIndex]);
-
-  const handlePrevious = () => {
-    setActiveIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-    setZoom(1);
-    setPosition({ x: 0, y: 0 });
-  };
-
-  const handleNext = () => {
-    setActiveIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-    setZoom(1);
-    setPosition({ x: 0, y: 0 });
-  };
+  }, [isOpen, onClose, handlePrevious, handleNext]);
 
   const handleZoomIn = () => {
     setZoom((prev) => Math.min(prev + 0.5, 3));
@@ -126,10 +127,12 @@ export function ImageZoomModal({ images, currentIndex, isOpen, onClose }: ImageZ
           onMouseMove={handleMouseMove}
         >
           {images[activeIndex] && (
-            <img
+            <Image
               src={images[activeIndex].src}
               alt={images[activeIndex].altText}
-              className="max-w-full max-h-full object-contain transition-transform duration-300"
+              fill
+              sizes="100vw"
+              className="object-contain transition-transform duration-300"
               style={{
                 transform: `scale(${zoom})`,
                 transformOrigin: zoom > 1 ? `${position.x}% ${position.y}%` : 'center'
@@ -177,10 +180,12 @@ export function ImageZoomModal({ images, currentIndex, isOpen, onClose }: ImageZ
                     : 'opacity-50 hover:opacity-100'
                 }`}
               >
-                <img
+                <Image
                   src={image.src}
                   alt={image.altText}
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="64px"
+                  className="object-cover"
                 />
               </button>
             ))}

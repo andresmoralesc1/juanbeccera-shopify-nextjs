@@ -1,6 +1,7 @@
 'use client'
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Image from 'next/image';
 import Link from 'next/link';
 
 interface Collection {
@@ -52,10 +53,6 @@ export default function CategorySectionDynamic({ collections }: CategorySectionD
       imageSrc: c.image?.url || getCategoryImage(c.handle)
     }));
 
-  if (validCollections.length === 0) {
-    return null;
-  }
-
   // Calcular cuántas cards se ven a la vez según el viewport
   const getVisibleCards = () => {
     if (typeof window === 'undefined') return 3;
@@ -65,7 +62,7 @@ export default function CategorySectionDynamic({ collections }: CategorySectionD
     return 3; // desktop: 3 cards
   };
 
-  const [visibleCards, setVisibleCards] = useState(3);
+  const [visibleCards, setVisibleCards] = useState(getVisibleCards());
 
   useEffect(() => {
     const updateVisibleCards = () => {
@@ -82,7 +79,7 @@ export default function CategorySectionDynamic({ collections }: CategorySectionD
   const activePage = Math.floor(activeIndex / visibleCards);
 
   // Detectar posición del scroll
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     if (!scrollContainerRef.current) return;
 
     const container = scrollContainerRef.current;
@@ -126,16 +123,19 @@ export default function CategorySectionDynamic({ collections }: CategorySectionD
         delete container.dataset.isLooping;
       }, 100);
     }
-  };
+  }, [validCollections.length]);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (container) {
       container.addEventListener('scroll', handleScroll);
-      handleScroll();
       return () => container.removeEventListener('scroll', handleScroll);
     }
-  }, []);
+  }, [handleScroll]);
+
+  if (validCollections.length === 0) {
+    return null;
+  }
 
   // Navegar a una card específica
   const scrollToCard = (index: number) => {
@@ -191,10 +191,12 @@ export default function CategorySectionDynamic({ collections }: CategorySectionD
             <h2 className="font-belleza text-2xl sm:text-3xl lg:text-5xl font-light tracking-wide mb-4 sm:mb-6 lg:mb-8 leading-tight text-white text-center lg:text-left">
               Explora más
             </h2>
-            <img
+            <Image
               src="/toro-juan-becerra.png"
               alt="Logo Toro Juan Becerra"
-              className="h-40 w-auto mb-4 filter brightness-0 invert mx-auto lg:mx-0"
+              width={160}
+              height={160}
+              className="w-auto mb-4 filter brightness-0 invert mx-auto lg:mx-0"
               loading="lazy"
             />
           </div>
@@ -211,7 +213,6 @@ export default function CategorySectionDynamic({ collections }: CategorySectionD
               >
                 {/* Renderizar las cards dos veces para efecto infinito */}
                 {[...validCollections, ...validCollections].map((category, index) => {
-                  const originalIndex = index % validCollections.length;
                   return (
                     <div
                       key={`${category.handle}-${index}`}
@@ -222,10 +223,12 @@ export default function CategorySectionDynamic({ collections }: CategorySectionD
                         className="group relative block active:scale-[0.98] transition-transform duration-150"
                       >
                       <div className="relative aspect-[4/6] w-full overflow-hidden bg-gray-200 rounded-sm">
-                          <img
+                          <Image
                             src={category.imageSrc}
                             alt={category.title}
-                            className="h-full w-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
+                            fill
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            className="object-cover object-center group-hover:scale-110 transition-transform duration-700"
                             loading="lazy"
                           />
 

@@ -5,18 +5,16 @@ import { AddToCartCustom } from 'components/cart/add-to-cart-custom';
 import Price from 'components/price';
 import { Product } from 'lib/shopify/types';
 import { VariantSelector } from './variant-selector';
-import { Minus, Plus, ShoppingBag, ChevronDown, ChevronUp, Truck, RefreshCcw, Shield } from 'lucide-react';
-import Link from 'next/link';
+import { Minus, Plus, Truck, RefreshCcw, Shield } from 'lucide-react';
 
 interface AccordionItemProps {
   title: string;
   content: string | React.ReactNode;
-  icon?: React.ReactNode;
   isOpen: boolean;
   onClick: () => void;
 }
 
-function AccordionItem({ title, content, icon, isOpen, onClick }: AccordionItemProps) {
+function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) {
   return (
     <div className="border-b border-gray-200">
       <button

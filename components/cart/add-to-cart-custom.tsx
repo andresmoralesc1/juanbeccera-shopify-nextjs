@@ -10,12 +10,10 @@ import { ShoppingBag } from 'lucide-react';
 
 function SubmitButton({
   availableForSale,
-  selectedVariantId,
-  quantity
+  selectedVariantId
 }: {
   availableForSale: boolean;
   selectedVariantId: string | undefined;
-  quantity: number;
 }) {
   const baseClasses =
     'font-moderat w-full flex items-center justify-center gap-3 px-8 py-4 text-sm tracking-[0.15em] uppercase font-medium transition-all duration-300';
@@ -94,7 +92,6 @@ export function AddToCartCustom({
       <SubmitButton
         availableForSale={availableForSale}
         selectedVariantId={selectedVariantId}
-        quantity={quantity}
       />
       <p aria-live="polite" className="sr-only" role="status">
         {message}

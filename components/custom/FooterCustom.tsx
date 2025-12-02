@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useState } from 'react';
 import { Facebook, Instagram, Linkedin, Mail, Phone } from "lucide-react";
 import { newsletterSchema } from '@/lib/validations/forms';
@@ -16,7 +17,7 @@ export default function Footer() {
     const result = newsletterSchema.safeParse({ email });
 
     if (!result.success) {
-      const errorMessage = result.error.errors[0]?.message || 'Error de validación';
+      const errorMessage = result.error.issues[0]?.message || 'Error de validación';
       toast.error(errorMessage);
       return;
     }
@@ -38,10 +39,12 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Brand & Description */}
           <div className="lg:col-span-1">
-            <img 
+            <Image
               src="/toro-juan-becerra.png" 
               alt="Juan Becerra" 
-              className="h-42 w-auto mb-4 filter brightness-0 invert"
+              width={168}
+              height={168}
+              className="w-auto mb-4 filter brightness-0 invert"
             />
             <p className="text-gray-400 mb-6 leading-relaxed">
               Todos nuestros productos son diseñados y creados 100% en Colombia.

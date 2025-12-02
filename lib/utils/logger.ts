@@ -14,6 +14,7 @@ interface LogContext {
  */
 export function logInfo(message: string, context?: LogContext): void {
   if (isDevelopment) {
+    // eslint-disable-next-line no-console
     console.log(`[INFO] ${message}`, context || '');
   }
 }
@@ -23,26 +24,23 @@ export function logInfo(message: string, context?: LogContext): void {
  */
 export function logWarning(message: string, context?: LogContext): void {
   if (isDevelopment) {
-    console.warn(`[WARN] ${message}`, context || '');
+    // eslint-disable-next-line no-console
+    console.warn(`[WARNING] ${message}`, context || '');
   }
 }
 
 /**
  * Log de error - En desarrollo muestra todo, en producción solo mensajes generales
  */
-export function logError(
-  message: string,
-  error?: unknown,
-  context?: LogContext
-): void {
+export function logError(message: string, error?: unknown, context?: LogContext): void {
   if (isDevelopment) {
-    console.error(`[ERROR] ${message}`, {
+    console.error(`[ERROR] ${message}:`, {
       error,
       ...context
     });
   } else {
     // En producción, solo loguear el mensaje sin detalles sensibles
-    console.error(`[ERROR] ${message}`);
+    // console.error(`[ERROR] ${message}`);
   }
 }
 

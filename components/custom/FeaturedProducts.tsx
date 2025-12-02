@@ -1,6 +1,7 @@
 'use client';
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
+import Image from 'next/image';
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface FeaturedProduct {
@@ -19,7 +20,7 @@ interface FeaturedProductsProps {
   title?: string;
 }
 
-export default function FeaturedProducts({ products, title = "" }: FeaturedProductsProps) {
+export default function FeaturedProducts({ products }: FeaturedProductsProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [visibleCards, setVisibleCards] = useState(3);
@@ -44,7 +45,7 @@ export default function FeaturedProducts({ products, title = "" }: FeaturedProdu
   }, []);
 
   // Detectar posición del scroll
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     if (!scrollContainerRef.current) return;
 
     const container = scrollContainerRef.current;
@@ -85,16 +86,15 @@ export default function FeaturedProducts({ products, title = "" }: FeaturedProdu
         delete container.dataset.isLooping;
       }, 100);
     }
-  };
+  }, [products.length]);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (container) {
       container.addEventListener('scroll', handleScroll);
-      handleScroll();
       return () => container.removeEventListener('scroll', handleScroll);
     }
-  }, [products.length]);
+  }, [handleScroll]);
 
   // Navegar a un producto específico
   const scrollToCard = (index: number) => {
@@ -183,10 +183,12 @@ export default function FeaturedProducts({ products, title = "" }: FeaturedProdu
                     >
                       {/* Card con fondo blanco */}
                       <div className="relative aspect-square w-full overflow-hidden bg-white rounded-sm">
-                        <img
+                        <Image
                           src={product.imageSrc}
                           alt={product.name}
-                          className="h-full w-full object-contain object-center group-hover:scale-105 transition-transform duration-500"
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          className="object-contain object-center group-hover:scale-105 transition-transform duration-500"
                           loading="lazy"
                         />
                       </div>

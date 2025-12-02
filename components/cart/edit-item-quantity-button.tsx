@@ -32,11 +32,11 @@ function SubmitButton({ type }: { type: 'plus' | 'minus' }) {
 export function EditItemQuantityButton({
   item,
   type,
-  optimisticUpdate
+  optimisticUpdate,
 }: {
   item: CartItem;
   type: 'plus' | 'minus';
-  optimisticUpdate: any;
+  optimisticUpdate: (merchandiseId: string, updateType: 'plus' | 'minus') => void;
 }) {
   const [message, formAction] = useActionState(updateItemQuantity, null);
   const payload = {

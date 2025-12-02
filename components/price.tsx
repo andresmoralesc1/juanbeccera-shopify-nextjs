@@ -4,13 +4,11 @@ const Price = ({
   amount,
   className,
   currencyCode = 'COP',
-  currencyCodeClassName,
   compareAtAmount
 }: {
   amount: string;
   className?: string;
   currencyCode: string;
-  currencyCodeClassName?: string;
   compareAtAmount?: string;
 } & React.ComponentProps<'p'>) => {
   const formatPrice = (value: string) => {

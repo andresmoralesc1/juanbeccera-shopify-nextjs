@@ -24,7 +24,6 @@ const Label = ({
           className="font-moderat flex-none bg-[#620c0b] p-2 text-white"
           amount={amount}
           currencyCode={currencyCode}
-          currencyCodeClassName="hidden @[275px]/label:inline"
         />
       </div>
     </div>

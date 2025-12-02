@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link';
+import Image from 'next/image';
 import { Search, User, Menu, X } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import CartModal from 'components/cart/modal';
@@ -99,10 +100,12 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
             {/* Logo - Center */}
             <div className="absolute left-1/2 -translate-x-1/2 pointer-events-none">
               <Link href="/" className="pointer-events-auto">
-                <img
+                <Image
                   src="/logo-juan-becerra.png"
                   alt="Juan Becerra"
-                  className={`h-16 sm:h-20 lg:h-32 w-auto transition-all duration-500 ${
+                  width={128}
+                  height={128}
+                  className={`h-16 sm:h-20 lg:h-32 w-auto transition-all duration-500 object-contain ${
                     isScrolled || isSolidVariant ? 'brightness-100' : 'brightness-0 invert'
                   }`}
                 />
@@ -213,10 +216,12 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
         }`}
       >
         <div className="flex items-center justify-between p-6 border-b">
-          <img
+          <Image
             src="/logo-juan-becerra.png"
             alt="Juan Becerra"
-            className="h-16 w-auto"
+            width={64}
+            height={64}
+            className="w-auto"
           />
           <button
             onClick={() => setIsMobileMenuOpen(false)}

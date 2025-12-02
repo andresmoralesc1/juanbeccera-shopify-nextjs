@@ -1,12 +1,6 @@
 export default {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   experimental: {
-    ppr: true,
+    // cacheComponents is now a top-level option
     inlineCss: true,
     useCache: true
   },
@@ -55,22 +49,6 @@ export default {
           }
         ]
       }
-    ];
-  },
-  async rewrites() {
-    return [
-      {
-        source: '/checkouts/:path*',
-        destination: 'https://checkout.juanbecerra.co/checkouts/:path*',
-      },
-      {
-        source: '/payments/:path*',
-        destination: 'https://checkout.juanbecerra.co/payments/:path*',
-      },
-      {
-        source: '/cart/:path*',
-        destination: 'https://checkout.juanbecerra.co/cart/:path*',
-      },
     ];
   }
 };

@@ -5,7 +5,6 @@ import {
 } from 'lib/constants';
 import { isShopifyError } from 'lib/type-guards';
 import { ensureStartsWith } from 'lib/utils';
-import { logError, logWarning } from 'lib/utils/logger';
 import {
   revalidateTag,
   unstable_cacheTag as cacheTag,
@@ -239,7 +238,19 @@ export async function createCart(): Promise<Cart> {
 export async function addToCart(
   lines: { merchandiseId: string; quantity: number }[]
 ): Promise<Cart> {
-  const cartId = (await cookies()).get('cartId')?.value!;
+  let cartId: string;
+  const existingCartId = (await cookies()).get('cartId')?.value;
+
+  if (!existingCartId) {
+    const newCart = await createCart();
+    if (!newCart.id) {
+      throw new Error('Failed to create cart');
+    }
+    cartId = newCart.id;
+  } else {
+    cartId = existingCartId;
+  }
+
   const res = await shopifyFetch<ShopifyAddToCartOperation>({
     query: addToCartMutation,
     variables: {
@@ -251,7 +262,12 @@ export async function addToCart(
 }
 
 export async function removeFromCart(lineIds: string[]): Promise<Cart> {
-  const cartId = (await cookies()).get('cartId')?.value!;
+  const cartId = (await cookies()).get('cartId')?.value;
+
+  if (!cartId) {
+    throw new Error('No cart found');
+  }
+
   const res = await shopifyFetch<ShopifyRemoveFromCartOperation>({
     query: removeFromCartMutation,
     variables: {
@@ -266,7 +282,12 @@ export async function removeFromCart(lineIds: string[]): Promise<Cart> {
 export async function updateCart(
   lines: { id: string; merchandiseId: string; quantity: number }[]
 ): Promise<Cart> {
-  const cartId = (await cookies()).get('cartId')?.value!;
+  const cartId = (await cookies()).get('cartId')?.value;
+
+  if (!cartId) {
+    throw new Error('No cart found');
+  }
+
   const res = await shopifyFetch<ShopifyUpdateCartOperation>({
     query: editCartItemsMutation,
     variables: {
@@ -338,7 +359,9 @@ export async function getCollectionProducts({
   });
 
   if (!res.body.data.collection) {
-    logWarning(`No collection found for '${collection}'`);
+    if (process.env.NODE_ENV === 'development') {
+      // console.log(`No collection found for \`${collection}\``);
+    }
     return [];
   }
 
@@ -366,7 +389,7 @@ export async function getCollections(): Promise<Collection[]> {
         description: 'All products'
       },
       path: '/search',
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date(0).toISOString()
     },
     // Filter out the `hidden` collections.
     // Collections that start with `hidden-*` need to be hidden on the search page.
@@ -490,14 +513,14 @@ export async function getPredictiveSearch(
 }
 
 // Metaobject helper functions
-function getMetaobjectFieldValue(fields: MetaobjectField[], key: string): string | undefined {
+function getMetaobjectFieldValue(fields: MetaobjectField[], key: string): string {
   const field = fields.find(f => f.key === key);
-  return field?.value || undefined;
+  return field?.value || '';
 }
 
-function getMetaobjectImageUrl(fields: MetaobjectField[], key: string): string | undefined {
+function getMetaobjectImageUrl(fields: MetaobjectField[], key: string): string {
   const field = fields.find(f => f.key === key);
-  return field?.reference?.image?.url || undefined;
+  return field?.reference?.image?.url || '';
 }
 
 export async function getMetaobject(handle: string, type: string): Promise<Metaobject | null> {
@@ -509,10 +532,7 @@ export async function getMetaobject(handle: string, type: string): Promise<Metao
 
     return res.body.data.metaobject;
   } catch (error) {
-    logError(`Failed to fetch metaobject '${handle}' of type '${type}'`, error, {
-      handle,
-      type
-    });
+    console.error(`Error fetching metaobject ${handle}:`, error);
     return null;
   }
 }
@@ -526,10 +546,7 @@ export async function getMetaobjects(type: string, first: number = 10): Promise<
 
     return removeEdgesAndNodes(res.body.data.metaobjects);
   } catch (error) {
-    logError(`Failed to fetch metaobjects of type '${type}'`, error, {
-      type,
-      first
-    });
+    console.error(`Error fetching metaobjects of type ${type}:`, error);
     return [];
   }
 }
@@ -547,16 +564,16 @@ export async function getHomeHero(): Promise<HomeHero | null> {
   return {
     title: getMetaobjectFieldValue(fields, 'title'),
     description: getMetaobjectFieldValue(fields, 'description'),
-    image: getMetaobjectImageUrl(fields, 'background_image'),
-    buttonText: getMetaobjectFieldValue(fields, 'primary_button_text'),
-    buttonText2: getMetaobjectFieldValue(fields, 'secondary_button_text')
+    image: getMetaobjectImageUrl(fields, 'image'),
+    buttonText: getMetaobjectFieldValue(fields, 'button_text'),
+    buttonText2: getMetaobjectFieldValue(fields, 'button_text_2')
   };
 }
 
 export async function getHomeSlides(): Promise<HomeSlide[]> {
   const metaobjects = await getMetaobjects('home_slide', 20);
 
-  return metaobjects.map((meta, index) => ({
+  return metaobjects.map((meta) => ({
     id: meta.id,
     image: getMetaobjectImageUrl(meta.fields, 'image'),
     tag: getMetaobjectFieldValue(meta.fields, 'tag'),
@@ -636,10 +653,9 @@ export async function revalidate(req: NextRequest): Promise<NextResponse> {
   const isProductUpdate = productWebhooks.includes(topic);
 
   if (!secret || secret !== process.env.SHOPIFY_REVALIDATION_SECRET) {
-    logError('Invalid revalidation secret attempt', undefined, {
-      topic,
-      hasSecret: !!secret
-    });
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Invalid revalidation secret.');
+    }
     return NextResponse.json({ status: 401 });
   }
 

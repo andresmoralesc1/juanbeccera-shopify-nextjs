@@ -4,8 +4,8 @@ import { ClockIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useSearchAnalytics } from 'hooks/useSearchAnalytics';
 import { highlightText } from 'lib/utils/highlight';
 import { PredictiveSearchResult } from 'lib/shopify/types';
+import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useRef } from 'react';
 
 interface SearchDropdownProps {
@@ -39,7 +39,6 @@ export function SearchDropdown({
   onRecentSearchClick,
   onRemoveRecentSearch
 }: SearchDropdownProps) {
-  const router = useRouter();
   const { trackClick, trackNoResults } = useSearchAnalytics();
   const selectedRef = useRef<HTMLAnchorElement>(null);
 
@@ -204,10 +203,12 @@ export function SearchDropdown({
                       }`}
                     >
                       {product.featuredImage && (
-                        <img
+                        <Image
                           src={product.featuredImage.url}
-                          alt={product.featuredImage.altText}
-                          className="h-12 w-12 rounded object-cover"
+                          alt={product.featuredImage.altText || product.title}
+                          width={48}
+                          height={48}
+                          className="rounded object-cover"
                         />
                       )}
                       <div className="flex-1">

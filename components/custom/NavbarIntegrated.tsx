@@ -1,25 +1,32 @@
 'use client'
 import Link from 'next/link';
 import Image from 'next/image';
-import { Search, User, Menu, X } from "lucide-react";
+import { Search, User, Menu, X, ChevronDown } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import CartModal from 'components/cart/modal';
 import { Suspense } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import type { Collection } from 'lib/shopify/types';
 
 // IMPORTANTE: Verificar que estas colecciones existan en Shopify con estos handles exactos
 // Ajustar los handles según las colecciones reales en tu tienda Shopify
 const navLinks = [
-  { href: "/search/todos", text: "Tienda", highlight: false },
-  { href: "/search/camisetas", text: "Camisetas", highlight: false },
-  { href: "/search/billeteras-tarjeteros", text: "Accesorios", highlight: false },
-  { href: "/search/todos", text: "Sale", highlight: true },
+  { href: "/search/todos", text: "Tienda", highlight: false, hasDropdown: false },
+  { href: "/search/camisetas", text: "Camisetas", highlight: false, hasDropdown: true },
+  { href: "/search/billeteras-tarjeteros", text: "Accesorios", highlight: false, hasDropdown: false },
+  { href: "/search/todos", text: "Sale", highlight: true, hasDropdown: false },
 ];
 
-export default function NavbarIntegrated({ variant = 'transparent' }) {
+interface NavbarIntegratedProps {
+  variant?: 'transparent' | 'solid';
+  collections?: Collection[];
+}
+
+export default function NavbarIntegrated({ variant = 'transparent', collections = [] }: NavbarIntegratedProps) {
   const pathname = usePathname();
   const router = useRouter();
   const searchRef = useRef<HTMLDivElement>(null);
+  const categoriesDropdownRef = useRef<HTMLDivElement>(null);
 
   // Si estamos en páginas de búsqueda/catálogo o producto, forzar variant solid
   const isSearchOrProductPage = pathname?.startsWith('/search') || pathname?.startsWith('/products');
@@ -29,6 +36,11 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
+  const [isMobileCategoriesOpen, setIsMobileCategoriesOpen] = useState(false);
+
+  // Filtrar colecciones visibles (excluir "All" y las ocultas)
+  const visibleCollections = collections.filter(c => c.handle !== '' && !c.handle.startsWith('hidden'));
 
   useEffect(() => {
     // Si la variante es sólida, no necesitamos el listener de scroll.
@@ -76,6 +88,29 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
     };
   }, [isSearchOpen]);
 
+  // Cerrar dropdown de categorías al hacer clic fuera
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (categoriesDropdownRef.current && !categoriesDropdownRef.current.contains(event.target as Node)) {
+        setIsCategoriesOpen(false);
+      }
+    }
+
+    if (isCategoriesOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isCategoriesOpen]);
+
+  // Cerrar dropdowns cuando cambia la ruta
+  useEffect(() => {
+    setIsCategoriesOpen(false);
+    setIsMobileCategoriesOpen(false);
+  }, [pathname]);
+
   return (
     <>
       <header
@@ -90,10 +125,44 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
 
             <nav className="hidden lg:flex items-center space-x-8">
               {navLinks.slice(0, 2).map((link) => (
-                <Link key={link.text} href={link.href} className={`font-belleza text-lg tracking-wider transition-colors duration-300 relative group ${isScrolled || isSolidVariant ? 'text-black hover:text-[#620c0b]' : 'text-white hover:text-gray-200'}`}>
-                  {link.text}
-                  <span className={`absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full ${isScrolled || isSolidVariant ? 'bg-[#620c0b]' : 'bg-white'}`}></span>
-                </Link>
+                link.hasDropdown ? (
+                  <div key={link.text} className="relative" ref={categoriesDropdownRef}>
+                    <button
+                      onClick={() => setIsCategoriesOpen(!isCategoriesOpen)}
+                      className={`font-belleza text-lg tracking-wider transition-colors duration-300 relative group flex items-center gap-1 ${isScrolled || isSolidVariant ? 'text-black hover:text-[#620c0b]' : 'text-white hover:text-gray-200'}`}
+                    >
+                      {link.text}
+                      <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${isCategoriesOpen ? 'rotate-180' : ''}`} />
+                      <span className={`absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full ${isScrolled || isSolidVariant ? 'bg-[#620c0b]' : 'bg-white'}`}></span>
+                    </button>
+
+                    {/* Dropdown de categorías */}
+                    {isCategoriesOpen && (
+                      <div className="absolute top-full left-0 mt-2 w-64 bg-white shadow-2xl border border-gray-200 rounded-lg overflow-hidden z-[100] animate-slideDownFade">
+                        <div className="p-4">
+                          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Categorías</p>
+                          <div className="space-y-2">
+                            {visibleCollections.map((collection) => (
+                              <Link
+                                key={collection.handle}
+                                href={`/search/${collection.handle}`}
+                                className="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#620c0b] rounded-md transition-colors"
+                                onClick={() => setIsCategoriesOpen(false)}
+                              >
+                                {collection.title}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <Link key={link.text} href={link.href} className={`font-belleza text-lg tracking-wider transition-colors duration-300 relative group ${isScrolled || isSolidVariant ? 'text-black hover:text-[#620c0b]' : 'text-white hover:text-gray-200'}`}>
+                    {link.text}
+                    <span className={`absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full ${isScrolled || isSolidVariant ? 'bg-[#620c0b]' : 'bg-white'}`}></span>
+                  </Link>
+                )
               ))}
             </nav>
 
@@ -233,17 +302,51 @@ export default function NavbarIntegrated({ variant = 'transparent' }) {
 
         <nav className="flex flex-col p-6 space-y-6">
           {navLinks.map((link, index) => (
-            <Link
-              key={link.text}
-              href={link.href}
-              className={`font-belleza text-xl tracking-wider hover:text-[#620c0b] transition-colors ${link.highlight ? 'font-semibold text-[#620c0b]' : 'font-medium text-gray-900'}`}
-              onClick={() => setIsMobileMenuOpen(false)}
-              style={{
-                animation: isMobileMenuOpen ? `fadeInStagger 0.4s ease-out ${index * 0.1}s both` : 'none'
-              }}
-            >
-              {link.text}
-            </Link>
+            link.hasDropdown ? (
+              <div key={link.text}>
+                <button
+                  onClick={() => setIsMobileCategoriesOpen(!isMobileCategoriesOpen)}
+                  className="w-full flex items-center justify-between font-belleza text-xl tracking-wider hover:text-[#620c0b] transition-colors font-medium text-gray-900"
+                  style={{
+                    animation: isMobileMenuOpen ? `fadeInStagger 0.4s ease-out ${index * 0.1}s both` : 'none'
+                  }}
+                >
+                  {link.text}
+                  <ChevronDown className={`h-5 w-5 transition-transform duration-300 ${isMobileCategoriesOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                {/* Submenu de categorías */}
+                {isMobileCategoriesOpen && (
+                  <div className="mt-3 ml-4 space-y-3 animate-slideDownFade">
+                    {visibleCollections.map((collection) => (
+                      <Link
+                        key={collection.handle}
+                        href={`/search/${collection.handle}`}
+                        className="block text-base text-gray-600 hover:text-[#620c0b] transition-colors"
+                        onClick={() => {
+                          setIsMobileMenuOpen(false);
+                          setIsMobileCategoriesOpen(false);
+                        }}
+                      >
+                        {collection.title}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link
+                key={link.text}
+                href={link.href}
+                className={`font-belleza text-xl tracking-wider hover:text-[#620c0b] transition-colors ${link.highlight ? 'font-semibold text-[#620c0b]' : 'font-medium text-gray-900'}`}
+                onClick={() => setIsMobileMenuOpen(false)}
+                style={{
+                  animation: isMobileMenuOpen ? `fadeInStagger 0.4s ease-out ${index * 0.1}s both` : 'none'
+                }}
+              >
+                {link.text}
+              </Link>
+            )
           ))}
         </nav>
 

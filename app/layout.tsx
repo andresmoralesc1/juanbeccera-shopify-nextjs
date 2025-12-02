@@ -6,7 +6,7 @@ import N8nChatWidget from '@/components/N8nChatWidget';
 import { PageProgress } from '@/components/ui/page-progress';
 import { WebVitals } from '@/components/web-vitals';
 import { GeistSans } from 'geist/font/sans';
-import { getCart } from 'lib/shopify';
+import { getCart, getCollections } from 'lib/shopify';
 import type { ReactNode } from 'react';
 import { Toaster } from 'sonner';
 import './globals.css';
@@ -48,6 +48,7 @@ export default async function RootLayout({
 }) {
   // Don't await the fetch, pass the Promise to the context provider
   const cart = getCart();
+  const collections = await getCollections();
 
   return (
     <html lang="es" className={`${GeistSans.variable} ${belleza.variable} ${moderat.variable}`}>
@@ -70,7 +71,7 @@ export default async function RootLayout({
         <CartProvider cartPromise={cart}>
           <WebVitals />
           <PageProgress />
-          <NavbarIntegrated />
+          <NavbarIntegrated collections={collections} />
           <main className="pt-[118px]">
             {children}
             <Toaster closeButton />

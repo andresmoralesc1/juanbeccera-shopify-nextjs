@@ -20,13 +20,13 @@ const ProductContext = createContext<ProductContextType | undefined>(undefined);
 export function ProductProvider({ children }: { children: React.ReactNode }) {
   const searchParams = useSearchParams();
 
-  const getInitialState = () => {
+  const getInitialState = useCallback(() => {
     const params: ProductState = {};
     for (const [key, value] of searchParams.entries()) {
       params[key] = value;
     }
     return params;
-  };
+  }, [searchParams]);
 
   const [state, setOptimisticState] = useOptimistic(
     getInitialState(),

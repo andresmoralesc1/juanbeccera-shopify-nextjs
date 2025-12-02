@@ -1,13 +1,12 @@
 'use client'
 import Link from 'next/link';
 import Image from 'next/image';
-import { Search, User, Menu, X, ChevronDown } from "lucide-react";
+import { User, Menu, X, ChevronDown } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import CartModal from 'components/cart/modal';
 import { Suspense } from 'react';
 import { usePathname } from 'next/navigation';
 import type { Collection } from 'lib/shopify/types';
-import SearchComponent from 'components/layout/navbar/search';
 
 // IMPORTANTE: Verificar que estas colecciones existan en Shopify con estos handles exactos
 // Ajustar los handles según las colecciones reales en tu tienda Shopify

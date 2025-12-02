@@ -109,19 +109,13 @@ export async function getCheckoutUrl(): Promise<string | null> {
     return null;
   }
 
-  // Reemplazar el dominio de Shopify por tu dominio personalizado
-  let finalUrl = cart.checkoutUrl.replace(
+  // Reemplazar el dominio de Shopify por el dominio de checkout personalizado
+  const finalUrl = cart.checkoutUrl.replace(
     'juan-becerra.myshopify.com',
-    'www.juanbecerra.co'
+    'checkout.juanbecerra.co'
   );
 
-  // También reemplazar checkout.juanbecerra.co si viene así
-  finalUrl = finalUrl.replace(
-    'checkout.juanbecerra.co',
-    'www.juanbecerra.co'
-  );
-
-  // Agregar parámetro return_to
+  // Agregar parámetro return_to para volver al sitio después del checkout
   const siteUrl = process.env.SITE_URL || 'https://www.juanbecerra.co';
   const url = new URL(finalUrl);
   url.searchParams.set('return_to', siteUrl);

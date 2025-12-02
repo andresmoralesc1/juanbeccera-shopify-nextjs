@@ -5,8 +5,9 @@ import { Search, User, Menu, X, ChevronDown } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import CartModal from 'components/cart/modal';
 import { Suspense } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import type { Collection } from 'lib/shopify/types';
+import SearchComponent from 'components/layout/navbar/search';
 
 // IMPORTANTE: Verificar que estas colecciones existan en Shopify con estos handles exactos
 // Ajustar los handles según las colecciones reales en tu tienda Shopify
@@ -24,8 +25,6 @@ interface NavbarIntegratedProps {
 
 export default function NavbarIntegrated({ variant = 'transparent', collections = [] }: NavbarIntegratedProps) {
   const pathname = usePathname();
-  const router = useRouter();
-  const searchRef = useRef<HTMLDivElement>(null);
   const categoriesDropdownRef = useRef<HTMLDivElement>(null);
 
   // Si estamos en páginas de búsqueda/catálogo o producto, forzar variant solid
@@ -35,7 +34,6 @@ export default function NavbarIntegrated({ variant = 'transparent', collections 
   const [isScrolled, setIsScrolled] = useState(isSolidVariant);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const [isMobileCategoriesOpen, setIsMobileCategoriesOpen] = useState(false);
 
@@ -64,29 +62,6 @@ export default function NavbarIntegrated({ variant = 'transparent', collections 
     }
   }, [isMobileMenuOpen]);
 
-  // Cerrar búsqueda cuando cambia la ruta
-  useEffect(() => {
-    setIsSearchOpen(false);
-    setSearchQuery('');
-  }, [pathname]);
-
-  // Cerrar búsqueda al hacer clic fuera
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
-        setIsSearchOpen(false);
-        setSearchQuery('');
-      }
-    }
-
-    if (isSearchOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isSearchOpen]);
 
   // Cerrar dropdown de categorías al hacer clic fuera
   useEffect(() => {
@@ -193,59 +168,41 @@ export default function NavbarIntegrated({ variant = 'transparent', collections 
               </nav>
 
               <div className="flex items-center space-x-1 sm:space-x-2 lg:space-x-3">
-                {/* Search Dropdown - Desktop y Mobile */}
-                <div className="relative" ref={searchRef}>
-                  <button
-                    onClick={() => setIsSearchOpen(!isSearchOpen)}
-                    className={`p-2 transition-colors ${isScrolled || isSolidVariant ? 'hover:bg-gray-100' : 'hover:bg-white/20'}`}
-                    aria-label="Abrir búsqueda"
-                  >
-                    <Search className={`h-5 w-5 ${isScrolled || isSolidVariant ? 'text-black' : 'text-white'}`} />
-                  </button>
-
-                  {/* Dropdown minimalista */}
-                  {isSearchOpen && (
-                    <div
-                      className="absolute right-0 top-full mt-2 w-80 max-w-[calc(100vw-2rem)] bg-white shadow-2xl border border-gray-200 rounded-lg overflow-hidden z-[100] animate-slideDownFade"
-                      style={{
-                        animation: 'slideDownFade 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
-                      }}
-                    >
-                      <form
-                        onSubmit={(e) => {
-                          e.preventDefault();
-                          if (searchQuery.trim()) {
-                            // Cerrar el dropdown inmediatamente
-                            setIsSearchOpen(false);
-                            // Navegar a la página de búsqueda
-                            const searchUrl = `/search?q=${encodeURIComponent(searchQuery)}`;
-                            router.push(searchUrl);
-                            // Limpiar el query después de un pequeño delay
-                            setTimeout(() => {
-                              setSearchQuery('');
-                            }, 100);
-                          }
-                        }}
-                        className="p-4"
-                      >
-                        <div className="relative">
-                          <input
-                            type="text"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            placeholder="Buscar productos..."
-                            className="w-full border-b border-gray-300 focus:border-[#620c0b] outline-none pb-2 text-sm text-gray-900 placeholder:text-gray-400 transition-colors"
-                            autoFocus
-                          />
-                          <Search className="absolute right-0 bottom-2 h-4 w-4 text-gray-400 pointer-events-none" />
-                        </div>
-                        <p className="mt-2 text-xs text-gray-500">
-                          Presiona Enter para buscar
-                        </p>
-                      </form>
+                {/* Search Component con búsqueda predictiva */}
+                <div className="hidden lg:block">
+                  <Suspense fallback={
+                    <div className="w-80">
+                      <div className="h-10 bg-gray-100 rounded-lg animate-pulse" />
                     </div>
-                  )}
+                  }>
+                    <SearchComponent />
+                  </Suspense>
                 </div>
+
+                {/* Search Button - Mobile */}
+                <button
+                  onClick={() => setIsSearchOpen(!isSearchOpen)}
+                  className={`lg:hidden p-2 transition-colors ${isScrolled || isSolidVariant ? 'hover:bg-gray-100' : 'hover:bg-white/20'}`}
+                  aria-label="Abrir búsqueda"
+                >
+                  <Search className={`h-5 w-5 ${isScrolled || isSolidVariant ? 'text-black' : 'text-white'}`} />
+                </button>
+
+                {/* Search Dropdown - Solo Mobile */}
+                {isSearchOpen && (
+                  <div className="lg:hidden fixed inset-0 z-[100] bg-black/50" onClick={() => setIsSearchOpen(false)}>
+                    <div
+                      className="absolute top-[156px] left-0 right-0 bg-white shadow-2xl p-4 animate-slideDownFade"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <Suspense fallback={
+                        <div className="h-10 bg-gray-100 rounded-lg animate-pulse" />
+                      }>
+                        <SearchComponent />
+                      </Suspense>
+                    </div>
+                  </div>
+                )}
 
                 <Link href="/account" className={`p-2 rounded-full transition-colors ${isScrolled || isSolidVariant ? 'hover:bg-gray-100' : 'hover:bg-white/20'}`} aria-label="Mi cuenta">
                   <User className={`h-5 w-5 ${isScrolled || isSolidVariant ? 'text-black' : 'text-white'}`} />

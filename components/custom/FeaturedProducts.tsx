@@ -181,8 +181,8 @@ export default function FeaturedProducts({ products }: FeaturedProductsProps) {
                       href={`/products/${product.slug}`}
                       className="group block"
                     >
-                      {/* Card con fondo blanco */}
-                      <div className="relative aspect-square w-full overflow-hidden bg-white rounded-sm">
+                      {/* Card con fondo blanco - formato vertical tipo Instagram */}
+                      <div className="relative aspect-[3/4] w-full overflow-hidden bg-white rounded-sm">
                         <Image
                           src={product.imageSrc}
                           alt={product.name}

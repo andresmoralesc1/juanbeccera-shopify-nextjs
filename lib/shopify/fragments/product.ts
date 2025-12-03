@@ -27,6 +27,7 @@ const productFragment = /* GraphQL */ `
           id
           title
           availableForSale
+          quantityAvailable
           price {
             amount
             currencyCode

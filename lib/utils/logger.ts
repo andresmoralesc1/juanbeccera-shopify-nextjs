@@ -22,11 +22,9 @@ export function logInfo(message: string, context?: LogContext): void {
 /**
  * Log de advertencia - Solo en desarrollo
  */
-export function logWarning(message: string, context?: LogContext): void {
-  if (isDevelopment) {
-    // eslint-disable-next-line no-console
-    console.warn(`[WARNING] ${message}`, context || '');
-  }
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function logWarning(_message: string, _context?: LogContext): void {
+  // Esta función se mantiene para posible uso futuro, pero actualmente está vacía.
 }
 
 /**

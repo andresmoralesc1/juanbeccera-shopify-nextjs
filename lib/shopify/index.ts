@@ -5,6 +5,7 @@ import {
 } from 'lib/constants';
 import { isShopifyError } from 'lib/type-guards';
 import { ensureStartsWith } from 'lib/utils';
+import { logError } from 'lib/utils/logger';
 import {
   revalidateTag,
   unstable_cacheTag as cacheTag,
@@ -532,7 +533,7 @@ export async function getMetaobject(handle: string, type: string): Promise<Metao
 
     return res.body.data.metaobject;
   } catch (error) {
-    console.error(`Error fetching metaobject ${handle}:`, error);
+    logError(`Error fetching metaobject ${handle}`, error);
     return null;
   }
 }
@@ -546,7 +547,7 @@ export async function getMetaobjects(type: string, first: number = 10): Promise<
 
     return removeEdgesAndNodes(res.body.data.metaobjects);
   } catch (error) {
-    console.error(`Error fetching metaobjects of type ${type}:`, error);
+    logError(`Error fetching metaobjects of type ${type}`, error);
     return [];
   }
 }

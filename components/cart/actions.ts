@@ -13,14 +13,15 @@ import { cookies } from 'next/headers';
 
 export async function addItem(
   prevState: unknown,
-  selectedVariantId: string | undefined
+  selectedVariantId: string | undefined,
+  quantity: number = 1
 ) {
   if (!selectedVariantId) {
     return 'Error adding item to cart';
   }
 
   try {
-    await addToCart([{ merchandiseId: selectedVariantId, quantity: 1 }]);
+    await addToCart([{ merchandiseId: selectedVariantId, quantity }]);
     revalidateTag(TAGS.cart);
   } catch {
     return 'Error adding item to cart';

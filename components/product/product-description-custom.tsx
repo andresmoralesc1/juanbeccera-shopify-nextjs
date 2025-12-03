@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AddToCartCustom } from 'components/cart/add-to-cart-custom';
 import Price from 'components/price';
 import { Product } from 'lib/shopify/types';
 import { VariantSelector } from './variant-selector';
+import { useProduct } from './product-context';
 import { Minus, Plus, Truck, RefreshCcw, Shield } from 'lucide-react';
 
 interface AccordionItemProps {
@@ -44,11 +45,28 @@ function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) 
 export function ProductDescriptionCustom({ product }: { product: Product }) {
   const [quantity, setQuantity] = useState(1);
   const [openAccordion, setOpenAccordion] = useState<number | null>(0);
-  const MAX_QUANTITY = 99; // Límite máximo de cantidad
+
+  // Obtener la variante seleccionada para verificar inventario disponible
+  const { state } = useProduct();
+  const selectedVariant = product.variants.find((variant) =>
+    variant.selectedOptions.every(
+      (option) => option.value === state[option.name.toLowerCase()]
+    )
+  ) || product.variants[0];
+
+  // Usar el inventario disponible de la variante, con un máximo de 99
+  const MAX_QUANTITY = Math.min(selectedVariant?.quantityAvailable || 99, 99);
 
   const handleAccordionClick = (index: number) => {
     setOpenAccordion(openAccordion === index ? null : index);
   };
+
+  // Ajustar quantity si excede el inventario disponible de la nueva variante
+  useEffect(() => {
+    if (quantity > MAX_QUANTITY) {
+      setQuantity(MAX_QUANTITY);
+    }
+  }, [MAX_QUANTITY, quantity]);
 
   // Preparar detalles del producto para el acordeón
   const productDetails = [
@@ -134,7 +152,9 @@ export function ProductDescriptionCustom({ product }: { product: Product }) {
         </div>
         {quantity >= MAX_QUANTITY && (
           <p className="text-xs text-gray-500 mt-2">
-            Cantidad máxima alcanzada
+            {selectedVariant?.quantityAvailable && selectedVariant.quantityAvailable < 99
+              ? `Solo ${MAX_QUANTITY} unidades disponibles`
+              : 'Cantidad máxima alcanzada'}
           </p>
         )}
       </div>

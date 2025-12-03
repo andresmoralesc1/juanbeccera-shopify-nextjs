@@ -1,18 +1,19 @@
 'use client'
 import Link from 'next/link';
 import Image from 'next/image';
-import { User, Menu, X, ChevronDown } from "lucide-react";
+import { Search, User, Menu, X, ChevronDown } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import CartModal from 'components/cart/modal';
 import { Suspense } from 'react';
 import { usePathname } from 'next/navigation';
 import type { Collection } from 'lib/shopify/types';
+import SearchComponent from 'components/layout/navbar/search';
 
 // IMPORTANTE: Verificar que estas colecciones existan en Shopify con estos handles exactos
 // Ajustar los handles según las colecciones reales en tu tienda Shopify
 const navLinks = [
   { href: "/search/todos", text: "Tienda", highlight: false, hasDropdown: false },
-  { href: "/search/camisetas", text: "Camisetas", highlight: false, hasDropdown: true },
+  { href: "/search", text: "Categorías", highlight: false, hasDropdown: true },
   { href: "/search/billeteras-tarjeteros", text: "Accesorios", highlight: false, hasDropdown: false },
   { href: "/search/todos", text: "Sale", highlight: true, hasDropdown: false },
 ];
@@ -168,7 +169,7 @@ export default function NavbarIntegrated({ variant = 'transparent', collections 
 
               <div className="flex items-center space-x-1 sm:space-x-2 lg:space-x-3">
                 {/* Search Component con búsqueda predictiva */}
-                {/* <div className="hidden lg:block">
+                <div className="hidden lg:block">
                   <Suspense
                     fallback={
                       <div className="w-80">
@@ -178,16 +179,16 @@ export default function NavbarIntegrated({ variant = 'transparent', collections 
                   >
                     <SearchComponent />
                   </Suspense>
-                </div> */}
+                </div>
 
                 {/* Search Button - Mobile */}
-                {/* <button
+                <button
                   onClick={() => setIsSearchOpen(!isSearchOpen)}
                   className={`lg:hidden p-2 transition-colors ${isScrolled || isSolidVariant ? 'hover:bg-gray-100' : 'hover:bg-white/20'}`}
                   aria-label="Abrir búsqueda"
                 >
                   <Search className={`h-5 w-5 ${isScrolled || isSolidVariant ? 'text-black' : 'text-white'}`} />
-                </button> */}
+                </button>
 
                 {/* Search Dropdown - Solo Mobile */}
                 {isSearchOpen && (
@@ -197,7 +198,7 @@ export default function NavbarIntegrated({ variant = 'transparent', collections 
                       onClick={(e) => e.stopPropagation()}
                     >
                       <Suspense fallback={<div className="h-10 bg-gray-100 rounded-lg animate-pulse" />}>
-                        {/* <SearchComponent /> */}
+                        <SearchComponent />
                       </Suspense>
                     </div>
                   </div>

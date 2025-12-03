@@ -1,15 +1,8 @@
 'use client';
 
-import Script from 'next/script';
-import { useEffect } from 'react';
 import { Instagram } from 'lucide-react';
 
 export default function ElfsightInstagramFeed() {
-  useEffect(() => {
-    const timer = setTimeout(() => window.dispatchEvent(new Event('resize')), 1000);
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <div className="bg-gray-900 py-10 sm:py-14">
       {/* Título */}
@@ -24,15 +17,15 @@ export default function ElfsightInstagramFeed() {
           className="inline-flex items-center gap-2 font-moderat text-base sm:text-lg text-white/80 hover:text-white transition-colors duration-300"
         >
           <Instagram className="h-6 w-6" />
-          @juanbecera.co
+          @juanbecerra.co
         </a>
       </div>
 
-      {/* Widget Elfsight */}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      {/* Widget Elfsight - DESACTIVADO temporalmente por límite de plan */}
+      {/* <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Script src="https://elfsightcdn.com/platform.js" strategy="lazyOnload" async />
         <div className="elfsight-app-930ea585-25e0-4ea1-9e52-ee013d7df469" data-elfsight-app-lazy></div>
-      </div>
+      </div> */}
     </div>
   );
 }

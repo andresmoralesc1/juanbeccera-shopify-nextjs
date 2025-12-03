@@ -1,7 +1,6 @@
 import Grid from 'components/grid';
 import { GridTileImage } from 'components/grid/tile';
 import Price from 'components/price';
-import { ProductBadge } from 'components/product-badge';
 import { Product } from 'lib/shopify/types';
 import Link from 'next/link';
 
@@ -9,9 +8,6 @@ export default function ProductGridItems({ products }: { products: Product[] }) 
   return (
     <>
       {products.map((product) => {
-        const hasDiscount = product.variants[0]?.compareAtPrice?.amount &&
-          parseFloat(product.variants[0].compareAtPrice.amount) > parseFloat(product.priceRange.maxVariantPrice.amount);
-
         return (
           <Grid.Item key={product.handle} className="animate-fadeIn group">
             <Link
@@ -20,7 +16,6 @@ export default function ProductGridItems({ products }: { products: Product[] }) 
               prefetch={true}
             >
               <div className="relative h-full w-full">
-                {hasDiscount && <ProductBadge />}
                 <GridTileImage
                   alt={product.title}
                   src={product.featuredImage?.url}

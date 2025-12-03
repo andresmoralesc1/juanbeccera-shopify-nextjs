@@ -82,7 +82,8 @@ export default function Search() {
       }
       setSelectedIndex(-1);
     }
-  }, [debouncedSearchQuery, cache, trackSearch, searchQuery, recentSearches.length]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearchQuery, searchQuery, recentSearches.length]);
 
   // Manejar navegación con teclado
   const handleKeyDown = useCallback(

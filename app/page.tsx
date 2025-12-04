@@ -69,11 +69,11 @@ async function HeroSectionWrapper() {
   }
   return (
     <HeroSection
-      title={hero.title || undefined}
-      description={hero.description || undefined}
-      image={hero.image || undefined}
-      buttonText={hero.buttonText || undefined}
-      buttonText2={hero.buttonText2 || undefined}
+      title={hero.title ? hero.title : undefined}
+      description={hero.description ? hero.description : undefined}
+      image={hero.image ? hero.image : undefined}
+      buttonText={hero.buttonText ? hero.buttonText : undefined}
+      buttonText2={hero.buttonText2 ? hero.buttonText2 : undefined}
     />
   );
 }

@@ -179,6 +179,14 @@ async function RelatedProducts({ id }: { id: string }) {
                     className="h-full w-full object-cover object-center image-hover-zoom"
                   />
                 )}
+                {/* Badge de Agotado */}
+                {!product.availableForSale && (
+                  <div className="absolute top-3 right-3 z-10">
+                    <span className="inline-flex items-center px-3 py-1 text-xs font-medium tracking-wider uppercase bg-gray-900 text-white">
+                      Agotado
+                    </span>
+                  </div>
+                )}
                 {/* Overlay sutil en hover */}
                 <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-5 image-overlay" />
               </div>

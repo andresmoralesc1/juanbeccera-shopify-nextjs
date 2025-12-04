@@ -22,6 +22,14 @@ export default function ProductGridItems({ products }: { products: Product[] }) 
                   fill
                   sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
                 />
+                {/* Badge de Agotado */}
+                {!product.availableForSale && (
+                  <div className="absolute top-3 right-3 z-10">
+                    <span className="inline-flex items-center px-3 py-1 text-xs font-medium tracking-wider uppercase bg-gray-900 text-white">
+                      Agotado
+                    </span>
+                  </div>
+                )}
               </div>
             <div className="mt-4 flex flex-col items-start gap-1">
               <h3 className="font-belleza text-lg text-black">{product.title}</h3>

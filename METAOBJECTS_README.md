@@ -4,6 +4,51 @@ Bienvenido a la documentación completa para configurar y gestionar el contenido
 
 ## 📖 Guías Disponibles
 
+### 🔥 NUEVO: [Guía de Actualización](./METAOBJECTS_UPDATE_GUIDE.md)
+**Para quién**: Si YA tienes metaobjects pero los botones del Hero van siempre a /search/todos
+
+**Qué incluye**:
+- Cómo agregar campos de URL a Home Hero
+- Paso a paso para actualizar (5 minutos)
+- Configuración de URLs dinámicas
+- Ideas de configuración de botones
+
+**Tiempo estimado**: 5 minutos
+
+📄 [Abrir Guía de Actualización →](./METAOBJECTS_UPDATE_GUIDE.md)
+
+---
+
+### ✅ [Checklist de Revisión](./METAOBJECTS_CHECKLIST.md)
+**Para quién**: Para verificar que TODO está correctamente configurado
+
+**Qué incluye**:
+- Checklist completo de todas las definiciones
+- Verificación de campos obligatorios
+- Validación de entradas de contenido
+- Lista de campos actualizados (v2.0)
+
+**Tiempo estimado**: 10-15 minutos
+
+📄 [Abrir Checklist →](./METAOBJECTS_CHECKLIST.md)
+
+---
+
+### 🔍 [Guía de Inspección](./METAOBJECTS_INSPECTION_GUIDE.md)
+**Para quién**: Para revisar y diagnosticar problemas en metaobjects existentes
+
+**Qué incluye**:
+- Cómo verificar cada metaobject paso a paso
+- Inspección rápida (5 min) o detallada (15 min)
+- Solución de problemas comunes
+- Testing en el sitio web
+
+**Tiempo estimado**: 5-15 minutos
+
+📄 [Abrir Guía de Inspección →](./METAOBJECTS_INSPECTION_GUIDE.md)
+
+---
+
 ### 1. 🎓 [Tutorial Completo](./SHOPIFY_METAOBJECTS_TUTORIAL.md)
 **Para quién**: Personas que nunca han usado Metaobjects o necesitan instrucciones detalladas paso a paso.
 

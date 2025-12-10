@@ -74,6 +74,8 @@ async function HeroSectionWrapper() {
       image={hero.image ? hero.image : undefined}
       buttonText={hero.buttonText ? hero.buttonText : undefined}
       buttonText2={hero.buttonText2 ? hero.buttonText2 : undefined}
+      buttonUrl={hero.buttonUrl ? hero.buttonUrl : undefined}
+      buttonUrl2={hero.buttonUrl2 ? hero.buttonUrl2 : undefined}
     />
   );
 }

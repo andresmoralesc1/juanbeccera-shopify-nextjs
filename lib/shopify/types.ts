@@ -357,6 +357,8 @@ export type HomeHero = {
   image?: string;
   buttonText?: string;
   buttonText2?: string;
+  buttonUrl?: string;
+  buttonUrl2?: string;
 };
 
 export type HomeSlide = {

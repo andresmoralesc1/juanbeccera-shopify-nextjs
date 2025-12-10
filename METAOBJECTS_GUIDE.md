@@ -29,9 +29,11 @@ Necesitas crear las siguientes definiciones de metaobjects. Para cada una, haz c
 |-----------------|------|-----|-------------|
 | Título | Single line text | `title` | Ej: "Nueva Colección" |
 | Descripción | Multi-line text | `description` | Texto descriptivo |
-| Imagen | File | `image` | Imagen de fondo del hero |
-| Texto Botón 1 | Single line text | `button_text` | Ej: "Explorar Colección" |
-| Texto Botón 2 | Single line text | `button_text_2` | Ej: "Ver Lookbook" |
+| Imagen de fondo | File | `background_image` | Imagen de fondo del hero |
+| Texto Botón Primario | Single line text | `primary_button_text` | Ej: "Explorar Colección" |
+| URL Botón Primario | Single line text | `primary_button_url` | Ej: "/search/nuevos-productos" |
+| Texto Botón Secundario | Single line text | `secondary_button_text` | Ej: "Ver Lookbook" |
+| URL Botón Secundario | Single line text | `secondary_button_url` | Ej: "/search/lookbook" |
 
 ### 2. Slides del Banner Estacional
 
@@ -130,9 +132,11 @@ Una vez creadas las definiciones, necesitas crear las entradas de contenido:
 ```
 Título: Nueva Colección
 Descripción: Descubre las últimas tendencias en moda premium. Elegancia y sofisticación en cada pieza.
-Imagen: (Sube /banner-home-juan-becerra.jpg)
-Texto Botón 1: Explorar Colección
-Texto Botón 2: Ver Lookbook
+Imagen de fondo: (Sube /banner-home-juan-becerra.jpg)
+Texto Botón Primario: Explorar Colección
+URL Botón Primario: /search/nuevos-productos
+Texto Botón Secundario: Ver Lookbook
+URL Botón Secundario: /search/lookbook
 ```
 
 ### Home Slide 1 (handle: `slide-1`)

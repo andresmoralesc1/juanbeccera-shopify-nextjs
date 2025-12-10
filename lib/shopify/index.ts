@@ -567,7 +567,9 @@ export async function getHomeHero(): Promise<HomeHero | null> {
     description: getMetaobjectFieldValue(fields, 'description'),
     image: getMetaobjectImageUrl(fields, 'background_image'),
     buttonText: getMetaobjectFieldValue(fields, 'primary_button_text'),
-    buttonText2: getMetaobjectFieldValue(fields, 'secondary_button_text')
+    buttonText2: getMetaobjectFieldValue(fields, 'secondary_button_text'),
+    buttonUrl: getMetaobjectFieldValue(fields, 'primary_button_url'),
+    buttonUrl2: getMetaobjectFieldValue(fields, 'secondary_button_url')
   };
 }
 

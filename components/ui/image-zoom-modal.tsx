@@ -164,8 +164,8 @@ export function ImageZoomModal({ images, currentIndex, isOpen, onClose }: ImageZ
 
       {/* Thumbnails */}
       {images.length > 1 && (
-        <div className="absolute bottom-0 left-0 right-0 z-10 p-4 bg-gradient-to-t from-black/50 to-transparent">
-          <div className="flex gap-2 justify-center overflow-x-auto pb-2">
+        <div className="absolute bottom-0 left-0 right-0 z-10 pb-6 pt-8 px-4 bg-gradient-to-t from-black/80 via-black/60 to-transparent">
+          <div className="flex gap-2 md:gap-3 justify-start md:justify-center overflow-x-auto pb-3 px-2 scroll-smooth scrollbar-thin scrollbar-thumb-white/30 scrollbar-track-transparent hover:scrollbar-thumb-white/50">
             {images.map((image, index) => (
               <button
                 key={index}
@@ -174,19 +174,23 @@ export function ImageZoomModal({ images, currentIndex, isOpen, onClose }: ImageZ
                   setZoom(1);
                   setPosition({ x: 0, y: 0 });
                 }}
-                className={`flex-shrink-0 w-16 h-16 rounded-sm overflow-hidden transition-all ${
+                className={`relative flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-sm overflow-hidden transition-all duration-300 ${
                   index === activeIndex
-                    ? 'ring-2 ring-white scale-110'
-                    : 'opacity-50 hover:opacity-100'
+                    ? 'ring-2 md:ring-3 ring-white scale-110 shadow-lg'
+                    : 'opacity-60 hover:opacity-100 hover:scale-105 shadow-md'
                 }`}
               >
                 <Image
                   src={image.src}
                   alt={image.altText}
                   fill
-                  sizes="64px"
+                  sizes="80px"
                   className="object-cover"
                 />
+                {/* Indicador de imagen activa */}
+                {index === activeIndex && (
+                  <div className="absolute inset-0 border-2 border-white pointer-events-none" />
+                )}
               </button>
             ))}
           </div>

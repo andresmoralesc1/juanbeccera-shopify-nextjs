@@ -9,6 +9,8 @@ type HeroSectionProps = {
   image?: string;
   buttonText?: string;
   buttonText2?: string;
+  buttonUrl?: string;
+  buttonUrl2?: string;
 };
 
 export default function HeroSection({
@@ -16,7 +18,9 @@ export default function HeroSection({
   description = 'Hasta 50% OFF. Es el momento para llevarte tus favoritos.\nVÁLIDO DEL 28 NOV HASTA EL 1 DIC',
   image = '/black-days-banner.jpg',
   buttonText = 'Explorar productos',
-  buttonText2 = 'Ver descuentos'
+  buttonText2 = 'Ver descuentos',
+  buttonUrl = '/search/todos',
+  buttonUrl2 = '/search/todos'
 }: HeroSectionProps) {
   const [scrollY, setScrollY] = useState(0);
 
@@ -74,7 +78,7 @@ export default function HeroSection({
         <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
           {/* Botón primario - Underline style */}
           <a
-            href="/search/todos"
+            href={buttonUrl}
             className="group inline-flex items-center gap-3 text-white text-sm sm:text-base tracking-[0.2em] uppercase font-medium border-b-2 border-white pb-2 hover:border-white/60 transition-all duration-300"
           >
             {buttonText}
@@ -96,7 +100,7 @@ export default function HeroSection({
 
           {/* Botón secundario - Minimal outline */}
           <a
-            href="/search/todos"
+            href={buttonUrl2}
             className="inline-flex items-center gap-3 text-white text-sm sm:text-base tracking-[0.15em] uppercase font-light border border-white/50 px-8 py-3 hover:bg-white hover:text-black transition-all duration-300"
           >
             {buttonText2}

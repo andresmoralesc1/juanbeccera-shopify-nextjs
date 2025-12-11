@@ -7,7 +7,6 @@ import { useSearchAnalytics } from 'hooks/useSearchAnalytics';
 import { useSearchCache } from 'hooks/useSearchCache';
 import { searchPredictive } from 'lib/actions/search';
 import { PredictiveSearchResult } from 'lib/shopify/types';
-import Form from 'next/form';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from 'react';
 import { SearchDropdown } from './search-dropdown';
@@ -146,7 +145,7 @@ export default function Search() {
 
   return (
     <div ref={searchRef} className="w-max-[550px] relative w-full lg:w-80 xl:w-full">
-      <Form action="/search" onSubmit={handleSubmit} className="relative">
+      <form action="/search" onSubmit={handleSubmit} className="relative">
         <input
           ref={inputRef}
           type="text"
@@ -171,7 +170,7 @@ export default function Search() {
         <div className="absolute right-0 top-0 mr-3 flex h-full items-center">
           <MagnifyingGlassIcon className="h-4" />
         </div>
-      </Form>
+      </form>
 
       {isOpen && (
         <SearchDropdown

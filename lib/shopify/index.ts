@@ -562,29 +562,61 @@ export async function getHomeHero(): Promise<HomeHero | null> {
 
   const fields = metaobject.fields;
 
+  // Parsear los campos de link que vienen como JSON
+  const parseLinkField = (jsonString: string | undefined): string | undefined => {
+    if (!jsonString) return undefined;
+    try {
+      const parsed = JSON.parse(jsonString);
+      // Convertir URL absoluta a relativa si es necesario
+      if (parsed.url) {
+        const url = new URL(parsed.url);
+        return url.pathname + url.search;
+      }
+      return undefined;
+    } catch {
+      return undefined;
+    }
+  };
+
   return {
     title: getMetaobjectFieldValue(fields, 'title'),
     description: getMetaobjectFieldValue(fields, 'description'),
     image: getMetaobjectImageUrl(fields, 'background_image'),
     buttonText: getMetaobjectFieldValue(fields, 'primary_button_text'),
     buttonText2: getMetaobjectFieldValue(fields, 'secondary_button_text'),
-    buttonUrl: getMetaobjectFieldValue(fields, 'primary_button_url'),
-    buttonUrl2: getMetaobjectFieldValue(fields, 'secondary_button_url')
+    buttonUrl: parseLinkField(getMetaobjectFieldValue(fields, 'link_primary_button')),
+    buttonUrl2: parseLinkField(getMetaobjectFieldValue(fields, 'link_secondary_button'))
   };
 }
 
 export async function getHomeSlides(): Promise<HomeSlide[]> {
-  const metaobjects = await getMetaobjects('home_slide', 20);
+  const metaobjects = await getMetaobjects('seasonal_banner_slide', 20);
 
-  return metaobjects.map((meta) => ({
-    id: meta.id,
-    image: getMetaobjectImageUrl(meta.fields, 'image'),
-    tag: getMetaobjectFieldValue(meta.fields, 'tag'),
-    title: getMetaobjectFieldValue(meta.fields, 'title'),
-    subtitle: getMetaobjectFieldValue(meta.fields, 'subtitle'),
-    buttonText: getMetaobjectFieldValue(meta.fields, 'button_text'),
-    href: getMetaobjectFieldValue(meta.fields, 'href')
-  }));
+  return metaobjects.map((meta) => {
+    // Parsear button_link que puede venir como URL absoluta
+    const buttonLink = getMetaobjectFieldValue(meta.fields, 'button_link');
+    let href = buttonLink;
+
+    // Convertir URL absoluta a relativa si es necesario
+    if (buttonLink && buttonLink.startsWith('http')) {
+      try {
+        const url = new URL(buttonLink);
+        href = url.pathname + url.search;
+      } catch {
+        // Si falla el parseo, usar el valor original
+      }
+    }
+
+    return {
+      id: meta.id,
+      image: getMetaobjectImageUrl(meta.fields, 'image'),
+      tag: getMetaobjectFieldValue(meta.fields, 'tag'),
+      title: getMetaobjectFieldValue(meta.fields, 'title'),
+      subtitle: getMetaobjectFieldValue(meta.fields, 'subtitle'),
+      buttonText: getMetaobjectFieldValue(meta.fields, 'button_text'),
+      href
+    };
+  });
 }
 
 export async function getHomeBrandSection(): Promise<HomeBrandSection | null> {

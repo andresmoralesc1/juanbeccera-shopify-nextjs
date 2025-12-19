@@ -29,8 +29,6 @@ export async function Carousel() {
                 <GridTileImage
                   alt={product.title}
                   src={product.featuredImage?.url}
-                  fill
-                  sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
                 />
               </div>
               <div className="mt-4 flex flex-col items-start gap-1">

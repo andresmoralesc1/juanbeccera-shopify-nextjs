@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 type HeroSectionProps = {
@@ -44,14 +43,11 @@ export default function HeroSection({
             transition: 'transform 0.1s ease-out'
           }}
         >
-          <Image
+          <img
             src={image}
             alt={`Banner Juan Becerra - ${title}`}
-            fill
-            className="object-cover"
-            priority
-            sizes="100vw"
-            quality={85}
+            className="absolute inset-0 w-full h-full object-cover"
+            loading="eager"
           />
         </div>
         {/* Dark overlay */}

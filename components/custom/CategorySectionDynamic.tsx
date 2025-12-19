@@ -1,7 +1,7 @@
 'use client'
 import { useRef, useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import Image from 'next/image';
+
 import Link from 'next/link';
 
 interface Collection {
@@ -191,7 +191,7 @@ export default function CategorySectionDynamic({ collections }: CategorySectionD
             <h2 className="font-belleza text-2xl sm:text-3xl lg:text-5xl font-light tracking-wide mb-4 sm:mb-6 lg:mb-8 leading-tight text-white text-center lg:text-left">
               Explora más
             </h2>
-            <Image
+            <img
               src="/toro-juan-becerra.png"
               alt="Logo Toro Juan Becerra"
               width={160}
@@ -223,12 +223,10 @@ export default function CategorySectionDynamic({ collections }: CategorySectionD
                         className="group relative block active:scale-[0.98] transition-transform duration-150"
                       >
                       <div className="relative aspect-[4/6] w-full overflow-hidden bg-gray-200 rounded-sm">
-                          <Image
+                          <img
                             src={category.imageSrc}
                             alt={category.title}
-                            fill
-                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                            className="object-cover object-center group-hover:scale-110 transition-transform duration-700"
+                            className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
                             loading="lazy"
                           />
 

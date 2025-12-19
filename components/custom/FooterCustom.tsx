@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+
 import { useState } from 'react';
 import { Facebook, Instagram, Linkedin, Mail, Phone } from "lucide-react";
 import { newsletterSchema } from '@/lib/validations/forms';
@@ -39,12 +39,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Brand & Description */}
           <div className="lg:col-span-1">
-            <Image
-              src="/toro-juan-becerra.png" 
-              alt="Juan Becerra" 
+            <img
+              src="/toro-juan-becerra.png"
+              alt="Juan Becerra"
               width={168}
               height={168}
               className="w-auto mb-4 filter brightness-0 invert"
+              loading="lazy"
             />
             <p className="text-gray-400 mb-6 leading-relaxed">
               Todos nuestros productos son diseñados y creados 100% en Colombia.

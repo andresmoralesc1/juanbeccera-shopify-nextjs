@@ -28,15 +28,10 @@ function ThreeItemGridItem({
         href={`/products/${item.handle}`}
         prefetch={true}
       >
-        <div className="relative h-full w-full">
+        <div className="relative h-full w-full aspect-square">
           {hasDiscount && <ProductBadge />}
           <GridTileImage
             src={item.featuredImage.url}
-            fill
-            sizes={
-              size === 'full' ? '(min-width: 768px) 66vw, 100vw' : '(min-width: 768px) 33vw, 100vw'
-            }
-            priority={priority}
             alt={item.title}
           />
         </div>

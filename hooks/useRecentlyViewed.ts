@@ -34,7 +34,9 @@ export function useRecentlyViewed() {
         const products = JSON.parse(stored);
         setRecentProducts(products);
       } catch (e) {
-        console.error('Error loading recently viewed:', e);
+        if (process.env.NODE_ENV === 'development') {
+          console.error('Error loading recently viewed:', e);
+        }
         localStorage.removeItem(STORAGE_KEY);
       }
     }

@@ -18,7 +18,9 @@ export async function searchPredictive(
     const results = await getPredictiveSearch(query);
     return results;
   } catch (error) {
-    console.error('Error en búsqueda predictiva:', error);
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Error en búsqueda predictiva:', error);
+    }
     return {
       queries: [],
       products: [],

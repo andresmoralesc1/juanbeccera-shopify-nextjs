@@ -69,7 +69,7 @@ export function SearchDropdown({
         price: new Intl.NumberFormat('es-CO', {
           style: 'currency',
           currency: product.priceRange.minVariantPrice.currencyCode
-        }).format(parseFloat(product.priceRange.minVariantPrice.amount))
+        }).format(parseFloat(product.priceRange.minVariantPrice.amount) || 0)
       });
     });
 
@@ -219,7 +219,7 @@ export function SearchDropdown({
                           {new Intl.NumberFormat('es-CO', {
                             style: 'currency',
                             currency: product.priceRange.minVariantPrice.currencyCode
-                          }).format(parseFloat(product.priceRange.minVariantPrice.amount))}
+                          }).format(parseFloat(product.priceRange.minVariantPrice.amount) || 0)}
                         </div>
                       </div>
                     </Link>

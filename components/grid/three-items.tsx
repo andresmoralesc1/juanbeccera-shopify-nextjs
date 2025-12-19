@@ -14,8 +14,10 @@ function ThreeItemGridItem({
   size: 'full' | 'half';
   priority?: boolean;
 }) {
+  const compareAtPrice = parseFloat(item.variants[0]?.compareAtPrice?.amount || '0');
+  const currentPrice = parseFloat(item.priceRange.maxVariantPrice.amount);
   const hasDiscount = item.variants[0]?.compareAtPrice?.amount &&
-    parseFloat(item.variants[0].compareAtPrice.amount) > parseFloat(item.priceRange.maxVariantPrice.amount);
+    !isNaN(compareAtPrice) && !isNaN(currentPrice) && compareAtPrice > currentPrice;
 
   return (
     <div

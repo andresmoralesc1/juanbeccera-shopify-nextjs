@@ -12,16 +12,26 @@ const Price = ({
   compareAtAmount?: string;
 } & React.ComponentProps<'p'>) => {
   const formatPrice = (value: string) => {
+    const numValue = parseFloat(value);
+    if (isNaN(numValue)) {
+      return new Intl.NumberFormat(undefined, {
+        style: 'currency',
+        currency: currencyCode,
+        currencyDisplay: 'narrowSymbol',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      }).format(0);
+    }
     return new Intl.NumberFormat(undefined, {
       style: 'currency',
       currency: currencyCode,
       currencyDisplay: 'narrowSymbol',
       minimumFractionDigits: 0,
       maximumFractionDigits: 0
-    }).format(parseFloat(value));
+    }).format(numValue);
   };
 
-  const hasDiscount = compareAtAmount && parseFloat(compareAtAmount) > parseFloat(amount);
+  const hasDiscount = compareAtAmount && !isNaN(parseFloat(compareAtAmount)) && !isNaN(parseFloat(amount)) && parseFloat(compareAtAmount) > parseFloat(amount);
 
   return (
     <div suppressHydrationWarning={true} className={clsx('flex items-center gap-2', className)}>

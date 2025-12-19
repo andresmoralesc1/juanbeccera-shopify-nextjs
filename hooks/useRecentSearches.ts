@@ -15,7 +15,9 @@ export function useRecentSearches() {
         setRecentSearches(Array.isArray(parsed) ? parsed : []);
       }
     } catch (error) {
-      console.error('Error loading recent searches:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Error loading recent searches:', error);
+      }
     }
   }, []);
 
@@ -31,7 +33,9 @@ export function useRecentSearches() {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
       } catch (error) {
-        console.error('Error saving recent searches:', error);
+        if (process.env.NODE_ENV === 'development') {
+          console.error('Error saving recent searches:', error);
+        }
       }
 
       return updated;
@@ -45,7 +49,9 @@ export function useRecentSearches() {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
       } catch (error) {
-        console.error('Error removing search:', error);
+        if (process.env.NODE_ENV === 'development') {
+          console.error('Error removing search:', error);
+        }
       }
 
       return updated;
@@ -57,7 +63,9 @@ export function useRecentSearches() {
     try {
       localStorage.removeItem(STORAGE_KEY);
     } catch (error) {
-      console.error('Error clearing searches:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Error clearing searches:', error);
+      }
     }
   }, []);
 

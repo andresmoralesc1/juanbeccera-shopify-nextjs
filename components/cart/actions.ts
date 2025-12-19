@@ -101,12 +101,16 @@ export async function getCheckoutUrl(): Promise<string | null> {
   const cart = await getCart();
 
   if (!cart) {
-    console.error('No cart found');
+    if (process.env.NODE_ENV === 'development') {
+      console.error('No cart found');
+    }
     return null;
   }
 
   if (!cart.checkoutUrl || cart.checkoutUrl === '') {
-    console.error('Invalid checkout URL:', cart.checkoutUrl);
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Invalid checkout URL:', cart.checkoutUrl);
+    }
     return null;
   }
 

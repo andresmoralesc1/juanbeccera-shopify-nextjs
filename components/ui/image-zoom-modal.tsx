@@ -176,7 +176,7 @@ export function ImageZoomModal({ images, currentIndex, isOpen, onClose }: ImageZ
                 }}
                 className={`relative flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-sm overflow-hidden transition-all duration-300 ${
                   index === activeIndex
-                    ? 'ring-2 md:ring-3 ring-white scale-110 shadow-lg'
+                    ? 'ring-2 ring-white scale-110 shadow-lg'
                     : 'opacity-60 hover:opacity-100 hover:scale-105 shadow-md'
                 }`}
               >

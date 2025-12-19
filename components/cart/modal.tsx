@@ -256,7 +256,9 @@ function CheckoutButton() {
       // Redirect to Shopify checkout
       window.location.href = checkoutUrl;
     } catch (error) {
-      console.error('Error during checkout:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Error during checkout:', error);
+      }
       toast.error('Error al proceder al checkout');
       setIsPending(false);
     }

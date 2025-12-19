@@ -15,12 +15,10 @@ export default function ProductGridItems({ products }: { products: Product[] }) 
               href={`/products/${product.handle}`}
               prefetch={true}
             >
-              <div className="relative h-full w-full">
+              <div className="relative h-full w-full aspect-[4/5]">
                 <GridTileImage
                   alt={product.title}
                   src={product.featuredImage?.url}
-                  fill
-                  sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
                 />
                 {/* Badge de Agotado */}
                 {!product.availableForSale && (

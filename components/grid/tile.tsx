@@ -1,16 +1,22 @@
 import clsx from 'clsx';
-import Image from 'next/image';
 import { ComponentProps } from 'react';
 
 export function GridTileImage({
   isInteractive = true,
   active,
   alt,
+  src,
+  sizes,
+  fill,
   ...props
 }: {
   isInteractive?: boolean;
   active?: boolean;
-} & ComponentProps<typeof Image>) {
+  alt?: string;
+  src?: string;
+  sizes?: string;
+  fill?: boolean;
+} & ComponentProps<'img'>) {
   return (
     <div
       className={clsx(
@@ -21,10 +27,16 @@ export function GridTileImage({
         }
       )}
     >
-      {props.src ? (
-        <Image className={clsx('relative h-full w-full object-cover', {
+      {src ? (
+        <img
+          src={src}
+          alt={alt || ''}
+          className={clsx('relative h-full w-full object-cover', {
             'transition duration-300 ease-in-out group-hover:scale-105': isInteractive
-          })} alt={alt || ''} {...props} />
+          })}
+          loading="lazy"
+          {...props}
+        />
       ) : null}
     </div>
   );

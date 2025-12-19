@@ -73,7 +73,22 @@ export function AddToCart({ product }: { product: Product }) {
   const addItemAction = formAction.bind(null, selectedVariantId);
   const finalVariant = variants.find(
     (variant) => variant.id === selectedVariantId
-  )!;
+  );
+
+  // Validación para evitar crash si no se encuentra la variante
+  if (!finalVariant) {
+    return (
+      <form>
+        <SubmitButton
+          availableForSale={false}
+          selectedVariantId={undefined}
+        />
+        <p aria-live="polite" className="sr-only" role="status">
+          Variante no disponible
+        </p>
+      </form>
+    );
+  }
 
   return (
     <form

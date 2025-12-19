@@ -4,7 +4,6 @@ import { ClockIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useSearchAnalytics } from 'hooks/useSearchAnalytics';
 import { highlightText } from 'lib/utils/highlight';
 import { PredictiveSearchResult } from 'lib/shopify/types';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useMemo, useRef } from 'react';
 
@@ -203,11 +202,12 @@ export function SearchDropdown({
                       }`}
                     >
                       {product.featuredImage && (
-                        <Image
+                        <img
                           src={product.featuredImage.url}
                           alt={product.featuredImage.altText || product.title}
                           width={48}
                           height={48}
+                          loading="lazy"
                           className="rounded object-cover"
                         />
                       )}

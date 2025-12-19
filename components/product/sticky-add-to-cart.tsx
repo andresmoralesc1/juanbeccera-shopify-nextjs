@@ -43,7 +43,12 @@ export function StickyAddToCart({ product, className = '' }: StickyAddToCartProp
   const addItemAction = formAction.bind(null, selectedVariantId);
   const finalVariant = variants.find(
     (variant) => variant.id === selectedVariantId
-  )!;
+  );
+
+  // No renderizar si no hay variante válida
+  if (!finalVariant) {
+    return null;
+  }
 
   return (
     <div

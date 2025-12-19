@@ -1,7 +1,6 @@
 'use client';
 
 import { useRef, useState, useEffect, useCallback } from "react";
-import Image from 'next/image';
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface FeaturedProduct {
@@ -183,13 +182,11 @@ export default function FeaturedProducts({ products }: FeaturedProductsProps) {
                     >
                       {/* Card con fondo blanco - formato vertical tipo Instagram */}
                       <div className="relative aspect-[3/4] w-full overflow-hidden bg-white rounded-sm">
-                        <Image
+                        <img
                           src={product.imageSrc}
                           alt={product.name}
-                          fill
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                          className="object-contain object-center group-hover:scale-105 transition-transform duration-500"
                           loading="lazy"
+                          className="absolute inset-0 h-full w-full object-contain object-center group-hover:scale-105 transition-transform duration-500"
                         />
                       </div>
                       {/* Nombre y precio debajo */}

@@ -78,10 +78,11 @@ export function AddToCartCustom({
   const selectedVariantId = variant?.id || defaultVariantId;
   const finalVariant = variants.find(
     (variant) => variant.id === selectedVariantId
-  )!;
+  );
 
   const handleAddToCart = async () => {
-    if (!selectedVariantId || isPending) return;
+    // Validación para evitar crash si no se encuentra la variante
+    if (!selectedVariantId || isPending || !finalVariant) return;
 
     setIsPending(true);
 

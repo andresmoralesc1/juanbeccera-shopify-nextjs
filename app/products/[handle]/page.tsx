@@ -10,7 +10,6 @@ import { HIDDEN_PRODUCT_TAG } from 'lib/constants';
 import { getProduct, getProductRecommendations } from 'lib/shopify';
 import { Image } from 'lib/shopify/types';
 import Link from 'next/link';
-import NextImage from 'next/image';
 import { Suspense } from 'react';
 import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 import { StickyAddToCart } from 'components/product/sticky-add-to-cart';
@@ -171,12 +170,11 @@ async function RelatedProducts({ id }: { id: string }) {
             >
               <div className="aspect-[3/4] overflow-hidden bg-gray-100 relative mb-3 rounded-sm">
                 {product.featuredImage && (
-                  <NextImage
+                  <img
                     src={product.featuredImage.url}
                     alt={product.title}
-                    fill
-                    sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 33vw"
-                    className="h-full w-full object-cover object-center image-hover-zoom"
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover object-center image-hover-zoom"
                   />
                 )}
                 {/* Badge de Agotado */}

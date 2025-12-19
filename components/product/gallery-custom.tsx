@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import { ImageZoomModal } from '@/components/ui/image-zoom-modal';
 
 export function GalleryCustom({ images }: { images: { src: string; altText: string }[] }) {
@@ -29,13 +28,11 @@ export function GalleryCustom({ images }: { images: { src: string; altText: stri
             }}
             className="group relative aspect-[3/4] overflow-hidden bg-gray-50 rounded-sm transition-all duration-300 cursor-zoom-in hover:shadow-lg"
           >
-            <Image
+            <img
               src={image.src}
               alt={image.altText}
-              fill
-              sizes="(min-width: 1024px) 30vw, 50vw"
-              className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
-              priority={index < 2}
+              loading={index < 2 ? 'eager' : 'lazy'}
+              className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
             />
             {/* Overlay sutil en hover */}
             <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-5 transition-opacity duration-300" />
@@ -79,12 +76,11 @@ export function GalleryCustom({ images }: { images: { src: string; altText: stri
                   }}
                   className="relative flex-shrink-0 h-24 w-24 md:h-28 md:w-28 overflow-hidden rounded-sm border-2 border-gray-200 hover:border-gray-900 transition-all duration-200 cursor-zoom-in hover:scale-105 shadow-sm hover:shadow-md"
                 >
-                  <Image
+                  <img
                     src={image.src}
                     alt={image.altText}
-                    fill
-                    sizes="112px"
-                    className="object-cover object-center"
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover object-center"
                   />
                 </button>
               );

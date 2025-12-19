@@ -1,11 +1,12 @@
-export default {
+import { withSentryConfig } from '@sentry/nextjs';
+
+const nextConfig = {
   images: {
-    formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'cdn.shopify.com',
-        pathname: '/s/files/**'
+        pathname: '/**'
       }
     ]
   },
@@ -47,3 +48,29 @@ export default {
     ];
   }
 };
+
+// Sentry configuration
+export default withSentryConfig(nextConfig, {
+  // Para más opciones de configuración: https://github.com/getsentry/sentry-webpack-plugin#options
+
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+
+  // Solo subir source maps en producción
+  silent: !process.env.CI,
+
+  // Suprimir logs durante el build
+  widenClientFileUpload: true,
+
+  // Ocultar source maps de ser públicamente accesibles
+  hideSourceMaps: true,
+
+  // Automáticamente anotar errores con información adicional
+  webpack: {
+    autoInstrumentServerFunctions: true,
+    autoInstrumentMiddleware: true,
+    treeshake: {
+      removeDebugLogging: true,
+    },
+  },
+});

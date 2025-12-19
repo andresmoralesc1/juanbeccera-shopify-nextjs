@@ -31,10 +31,15 @@ export function GridTileImage({
         <img
           src={src}
           alt={alt || ''}
-          className={clsx('absolute inset-0 h-full w-full object-cover', {
+          className={clsx('absolute inset-0 block h-full w-full', {
             'transition duration-300 ease-in-out group-hover:scale-105': isInteractive
           })}
           loading="lazy"
+          style={{
+            display: 'block',
+            objectFit: 'cover',
+            objectPosition: 'center'
+          }}
           {...props}
         />
       ) : null}

@@ -7,12 +7,10 @@ import Link from 'next/link';
 
 function ThreeItemGridItem({
   item,
-  size,
-  priority
+  size
 }: {
   item: Product;
   size: 'full' | 'half';
-  priority?: boolean;
 }) {
   const compareAtPrice = parseFloat(item.variants[0]?.compareAtPrice?.amount || '0');
   const currentPrice = parseFloat(item.priceRange.maxVariantPrice.amount);
@@ -62,8 +60,8 @@ export async function ThreeItemGrid() {
 
   return (
     <section className="mx-auto grid max-w-screen-2xl gap-4 px-4 pb-4 md:grid-cols-6 md:grid-rows-2">
-      <ThreeItemGridItem size="full" item={firstProduct} priority={true} />
-      <ThreeItemGridItem size="half" item={secondProduct} priority={true} />
+      <ThreeItemGridItem size="full" item={firstProduct} />
+      <ThreeItemGridItem size="half" item={secondProduct} />
       <ThreeItemGridItem size="half" item={thirdProduct} />
     </section>
   );

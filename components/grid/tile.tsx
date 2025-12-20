@@ -6,16 +6,12 @@ export function GridTileImage({
   active,
   alt,
   src,
-  sizes,
-  fill,
   ...props
 }: {
   isInteractive?: boolean;
   active?: boolean;
   alt?: string;
   src?: string;
-  sizes?: string;
-  fill?: boolean;
 } & ComponentProps<'img'>) {
   return (
     <div

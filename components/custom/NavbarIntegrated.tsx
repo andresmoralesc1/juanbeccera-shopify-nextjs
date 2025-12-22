@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link';
+import Image from 'next/image';
 
 import { Search, User, Menu, X, ChevronDown } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
@@ -144,7 +145,7 @@ export default function NavbarIntegrated({ variant = 'transparent', collections 
             {/* Logo - Center */}
             <div className="absolute left-1/2 -translate-x-1/2 pointer-events-none">
               <Link href="/" className="pointer-events-auto">
-                <img
+                <Image
                   src="/logo-juan-becerra.png"
                   alt="Juan Becerra"
                   width={128}
@@ -152,6 +153,7 @@ export default function NavbarIntegrated({ variant = 'transparent', collections 
                   className={`h-16 sm:h-20 lg:h-32 w-auto transition-all duration-500 object-contain ${
                     isScrolled || isSolidVariant ? 'brightness-100' : 'brightness-0 invert'
                   }`}
+                  priority
                   loading="eager"
                 />
               </Link>
@@ -243,13 +245,12 @@ export default function NavbarIntegrated({ variant = 'transparent', collections 
         }`}
       >
         <div className="flex items-center justify-between p-6 border-b">
-          <img
+          <Image
             src="/logo-juan-becerra.png"
             alt="Juan Becerra"
             width={64}
             height={64}
             className="w-auto"
-            loading="lazy"
           />
           <button
             onClick={() => setIsMobileMenuOpen(false)}

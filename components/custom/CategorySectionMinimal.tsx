@@ -1,5 +1,6 @@
 'use client'
 import { useRef, useState, useEffect, useCallback } from "react";
+import Image from 'next/image';
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import Link from 'next/link';
@@ -143,10 +144,12 @@ export default function CategorySectionMinimal({ collections }: CategorySectionM
                 className="group shrink-0 w-[120px] sm:w-[140px]"
               >
                 <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-gray-100 mb-2">
-                  <img
+                  <Image
                     src={category.imageSrc}
                     alt={category.title}
-                    className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500"
+                    fill
+                    className="object-cover object-center group-hover:scale-110 transition-transform duration-500"
+                    sizes="140px"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 rounded-lg" />

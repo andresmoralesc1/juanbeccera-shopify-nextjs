@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
+import Image from 'next/image';
 import { X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut } from 'lucide-react';
 
 interface ImageZoomModalProps {
@@ -126,15 +127,20 @@ export function ImageZoomModal({ images, currentIndex, isOpen, onClose }: ImageZ
           onMouseMove={handleMouseMove}
         >
           {images[activeIndex] && (
-            <img
-              src={images[activeIndex].src}
-              alt={images[activeIndex].altText}
-              className="max-w-full max-h-full object-contain transition-transform duration-300"
-              style={{
-                transform: `scale(${zoom})`,
-                transformOrigin: zoom > 1 ? `${position.x}% ${position.y}%` : 'center'
-              }}
-            />
+            <div className="relative w-full h-full flex items-center justify-center">
+              <Image
+                src={images[activeIndex].src}
+                alt={images[activeIndex].altText}
+                fill
+                className="object-contain transition-transform duration-300"
+                sizes="100vw"
+                priority
+                style={{
+                  transform: `scale(${zoom})`,
+                  transformOrigin: zoom > 1 ? `${position.x}% ${position.y}%` : 'center'
+                }}
+              />
+            </div>
           )}
         </div>
       </div>
@@ -177,11 +183,12 @@ export function ImageZoomModal({ images, currentIndex, isOpen, onClose }: ImageZ
                     : 'opacity-60 hover:opacity-100 hover:scale-105 shadow-md'
                 }`}
               >
-                <img
+                <Image
                   src={image.src}
                   alt={image.altText}
-                  loading="lazy"
-                  className="absolute inset-0 h-full w-full object-cover"
+                  fill
+                  className="object-cover"
+                  sizes="80px"
                 />
                 {/* Indicador de imagen activa */}
                 {index === activeIndex && (

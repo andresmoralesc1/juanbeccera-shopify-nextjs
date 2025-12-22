@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import NextImage from 'next/image';
 
 import FooterCustom from '@/components/custom/FooterCustom';
 import AnnouncementBar from '@/components/custom/AnnouncementBar';
@@ -170,11 +171,12 @@ async function RelatedProducts({ id }: { id: string }) {
             >
               <div className="aspect-[3/4] overflow-hidden bg-gray-100 relative mb-3 rounded-sm">
                 {product.featuredImage && (
-                  <img
+                  <NextImage
                     src={product.featuredImage.url}
                     alt={product.title}
-                    loading="lazy"
-                    className="absolute inset-0 h-full w-full object-cover object-center image-hover-zoom"
+                    fill
+                    className="object-cover object-center image-hover-zoom"
+                    sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
                   />
                 )}
                 {/* Badge de Agotado */}

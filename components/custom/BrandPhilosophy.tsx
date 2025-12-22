@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image';
 import { FadeIn } from '@/components/ui/fade-in';
 
 export default function BrandPhilosophy() {
@@ -10,11 +11,12 @@ export default function BrandPhilosophy() {
       <div className="grid grid-cols-1 lg:grid-cols-2">
         {/* Imagen Izquierda */}
         <div className="relative h-[500px] lg:h-[700px]">
-          <img
+          <Image
             src="/banner-manifiesto.png"
             alt="Manifiesto Juan Becerra"
-            className="absolute inset-0 w-full h-full object-cover"
-            loading="lazy"
+            fill
+            className="object-cover"
+            sizes="(max-width: 1024px) 100vw, 50vw"
           />
         </div>
 
@@ -94,10 +96,12 @@ export default function BrandPhilosophy() {
 
         {/* Imagen Derecha */}
         <div className="relative h-[500px] lg:h-[700px] order-1 lg:order-2">
-          <img
+          <Image
             src="/billeteras-materiales.png"
             alt="Materiales excepcionales - Billeteras"
-            className="absolute inset-0 w-full h-full object-cover"
+            fill
+            className="object-cover"
+            sizes="(max-width: 1024px) 100vw, 50vw"
             loading="lazy"
           />
         </div>

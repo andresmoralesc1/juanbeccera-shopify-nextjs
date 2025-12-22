@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useRecentlyViewed } from '@/hooks/useRecentlyViewed';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -35,11 +36,12 @@ export function RecentlyViewed({ currentProductId }: { currentProductId?: string
             >
               <div className="aspect-[3/4] overflow-hidden bg-gray-100 relative mb-3 rounded-sm">
                 {product.featuredImage && (
-                  <img
+                  <Image
                     src={product.featuredImage.url}
                     alt={product.title}
-                    loading="lazy"
-                    className="absolute inset-0 h-full w-full object-cover object-center image-hover-zoom"
+                    fill
+                    className="object-cover object-center image-hover-zoom"
+                    sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
                   />
                 )}
                 {/* Overlay sutil en hover */}

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 type HeroSectionProps = {
   title?: string;
@@ -15,7 +16,7 @@ type HeroSectionProps = {
 export default function HeroSection({
   title = 'BLACK DAYS JUAN BECERRA',
   description = 'Hasta 50% OFF. Es el momento para llevarte tus favoritos.\nVÁLIDO DEL 28 NOV HASTA EL 1 DIC',
-  image = '/black-days-banner.jpg',
+  image = '/black-days-banner.webp',
   buttonText = 'Explorar productos',
   buttonText2 = 'Ver descuentos',
   buttonUrl = '/search/todos',
@@ -43,11 +44,14 @@ export default function HeroSection({
             transition: 'transform 0.1s ease-out'
           }}
         >
-          <img
+          <Image
             src={image}
             alt={`Banner Juan Becerra - ${title}`}
-            className="absolute inset-0 w-full h-full object-cover"
-            loading="eager"
+            fill
+            className="object-cover"
+            priority
+            sizes="100vw"
+            quality={90}
           />
         </div>
         {/* Dark overlay */}

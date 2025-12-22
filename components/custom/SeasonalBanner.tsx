@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -62,11 +63,13 @@ export default function SeasonalBanner({ slides = defaultSlides }: SeasonalBanne
           <div key={slide.id} className="relative">
             <div className="h-[65vh] sm:h-[75vh] lg:h-[85vh] w-full relative">
               {slide.image && (
-                <img
+                <Image
                   src={slide.image}
                   alt={slide.title || 'Banner'}
-                  className="absolute inset-0 w-full h-full object-cover"
-                  loading="eager"
+                  fill
+                  className="object-cover"
+                  priority
+                  sizes="100vw"
                 />
               )}
               {/* Overlay más oscuro para mejor legibilidad */}

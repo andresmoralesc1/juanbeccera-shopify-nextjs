@@ -1,6 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
+import Image from 'next/image';
 import { Dialog, Transition } from '@headlessui/react';
 import { ShoppingCartIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import LoadingDots from 'components/loading-dots';
@@ -129,11 +130,9 @@ export default function CartModal() {
                               </div>
                               <div className="flex flex-row">
                                 <div className="relative h-16 w-16 overflow-hidden rounded-md border border-neutral-300 bg-neutral-300 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800">
-                                  <img
-                                    className="h-full w-full object-cover"
-                                    width={64}
-                                    height={64}
-                                    loading="lazy"
+                                  <Image
+                                    className="object-cover"
+                                    fill
                                     alt={
                                       item.merchandise.product.featuredImage
                                         .altText ||
@@ -142,6 +141,7 @@ export default function CartModal() {
                                     src={
                                       item.merchandise.product.featuredImage.url
                                     }
+                                    sizes="64px"
                                   />
                                 </div>
                                 <Link

@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect, useCallback } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface FeaturedProduct {
@@ -246,12 +247,12 @@ export default function FeaturedProducts({ products }: FeaturedProductsProps) {
             <p className="font-moderat text-base md:text-lg leading-relaxed text-white text-center lg:text-left mb-6">
               Descubre nuestros artículos más populares y exclusivos. Cada pieza ha sido cuidadosamente seleccionada para ofrecerte la mejor calidad y estilo.
             </p>
-            <a
+            <Link
               href="/search"
               className="inline-flex items-center justify-center font-moderat bg-[#620c0b] text-white text-sm tracking-[0.15em] uppercase font-medium px-8 py-3 hover:bg-[#4a0908] transition-all duration-300"
             >
               Ver Todos
-            </a>
+            </Link>
           </div>
 
         </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import FooterCustom from '@/components/custom/FooterCustom';
 
 export const metadata = {
@@ -121,7 +122,7 @@ export default function TerminosYCondiciones() {
               JUAN BECERRA no se hace responsable por retrasos causados por la empresa de mensajería, condiciones climáticas, festivos, o situaciones de fuerza mayor.
             </p>
             <p className="mb-4">
-              Para más información, consulta nuestra <a href="/politica-envios" className="text-blue-600 hover:underline">Política de Envíos</a>.
+              Para más información, consulta nuestra <Link href="/politica-envios" className="text-blue-600 hover:underline">Política de Envíos</Link>.
             </p>
           </section>
 
@@ -133,7 +134,7 @@ export default function TerminosYCondiciones() {
               Conforme al Estatuto del Consumidor (Ley 1480 de 2011), tienes derecho a retractarte de tu compra dentro de los cinco (5) días hábiles siguientes a la recepción del producto.
             </p>
             <p className="mb-4">
-              Para ejercer este derecho y conocer las condiciones, consulta nuestra <a href="/politica-reembolso" className="text-blue-600 hover:underline">Política de Reembolso</a>.
+              Para ejercer este derecho y conocer las condiciones, consulta nuestra <Link href="/politica-reembolso" className="text-blue-600 hover:underline">Política de Reembolso</Link>.
             </p>
           </section>
 
@@ -184,7 +185,7 @@ export default function TerminosYCondiciones() {
               10. PRIVACIDAD Y PROTECCIÓN DE DATOS
             </h2>
             <p className="mb-4">
-              Tu privacidad es importante para nosotros. El uso de tu información personal está regido por nuestra <a href="/politica-proteccion-datos" className="text-blue-600 hover:underline">Política de Protección de Datos</a>, que cumple con la Ley 1581 de 2012.
+              Tu privacidad es importante para nosotros. El uso de tu información personal está regido por nuestra <Link href="/politica-proteccion-datos" className="text-blue-600 hover:underline">Política de Protección de Datos</Link>, que cumple con la Ley 1581 de 2012.
             </p>
           </section>
 

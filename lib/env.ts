@@ -11,7 +11,8 @@ const requiredEnvVars = [
 const optionalEnvVars = {
   COMPANY_NAME: 'Juan Becerra',
   SITE_NAME: 'Juan Becerra - Marroquinería de Lujo',
-  NEXT_PUBLIC_VERCEL_URL: 'localhost:3000'
+  NEXT_PUBLIC_VERCEL_URL: 'localhost:3000',
+  NEXT_PUBLIC_GTM_ID: ''
 } as const;
 
 // Validar variables requeridas
@@ -44,5 +45,6 @@ export const env = {
   COMPANY_NAME: process.env.COMPANY_NAME || optionalEnvVars.COMPANY_NAME,
   SITE_NAME: process.env.SITE_NAME || optionalEnvVars.SITE_NAME,
   NEXT_PUBLIC_VERCEL_URL:
-    process.env.NEXT_PUBLIC_VERCEL_URL || optionalEnvVars.NEXT_PUBLIC_VERCEL_URL
+    process.env.NEXT_PUBLIC_VERCEL_URL || optionalEnvVars.NEXT_PUBLIC_VERCEL_URL,
+  NEXT_PUBLIC_GTM_ID: process.env.NEXT_PUBLIC_GTM_ID || optionalEnvVars.NEXT_PUBLIC_GTM_ID
 } as const;

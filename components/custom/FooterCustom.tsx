@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 import { Facebook, Instagram, Linkedin, Mail, Phone } from "lucide-react";
 import { newsletterSchema } from '@/lib/validations/forms';
@@ -66,9 +67,9 @@ export default function Footer() {
           <div>
             <h4 className="text-lg mb-6">Menú inferior</h4>
             <ul className="space-y-3">
-              <li><a href="/search" className="text-gray-400 hover:text-white transition-colors duration-200">Búsqueda</a></li>
-              <li><a href="/terminos-del-servicio" className="text-gray-400 hover:text-white transition-colors duration-200">Términos del servicio</a></li>
-              <li><a href="/search" className="text-gray-400 hover:text-white transition-colors duration-200">Catálogo</a></li>
+              <li><Link href="/search" className="text-gray-400 hover:text-white transition-colors duration-200">Búsqueda</Link></li>
+              <li><Link href="/terminos-del-servicio" className="text-gray-400 hover:text-white transition-colors duration-200">Términos del servicio</Link></li>
+              <li><Link href="/search" className="text-gray-400 hover:text-white transition-colors duration-200">Catálogo</Link></li>
             </ul>
           </div>
 
@@ -76,10 +77,10 @@ export default function Footer() {
           <div>
             <h4 className="text-lg mb-6">Nuestras Políticas</h4>
             <ul className="space-y-3">
-              <li><a href="/politica-proteccion-datos" className="text-gray-400 hover:text-white transition-colors duration-200">Política de protección de datos</a></li>
-              <li><a href="/politica-reembolso" className="text-gray-400 hover:text-white transition-colors duration-200">Política de Reembolso</a></li>
-              <li><a href="/politica-envios" className="text-gray-400 hover:text-white transition-colors duration-200">Política de Envíos</a></li>
-              <li><a href="/terminos-y-condiciones" className="text-gray-400 hover:text-white transition-colors duration-200">Términos y Condiciones</a></li>
+              <li><Link href="/politica-proteccion-datos" className="text-gray-400 hover:text-white transition-colors duration-200">Política de protección de datos</Link></li>
+              <li><Link href="/politica-reembolso" className="text-gray-400 hover:text-white transition-colors duration-200">Política de Reembolso</Link></li>
+              <li><Link href="/politica-envios" className="text-gray-400 hover:text-white transition-colors duration-200">Política de Envíos</Link></li>
+              <li><Link href="/terminos-y-condiciones" className="text-gray-400 hover:text-white transition-colors duration-200">Términos y Condiciones</Link></li>
             </ul>
           </div>
 

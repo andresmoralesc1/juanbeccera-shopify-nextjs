@@ -3,7 +3,8 @@
     "allow": [
       "Bash(npm i:*)",
       "Bash(npm run build)",
-      "Bash(vercel:*)"
+      "Bash(vercel:*)",
+      "Bash(pnpm install)"
     ]
   }
 }

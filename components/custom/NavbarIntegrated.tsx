@@ -29,7 +29,7 @@ export default function NavbarIntegrated({ variant = 'transparent', collections 
   const categoriesDropdownRef = useRef<HTMLDivElement>(null);
 
   // Si estamos en páginas de búsqueda/catálogo o producto, forzar variant solid
-  const isSearchOrProductPage = pathname?.startsWith('/search') || pathname?.startsWith('/products');
+  const isSearchOrProductPage = pathname?.startsWith('/search') || pathname?.startsWith('/products') || pathname?.startsWith('/prendas-empresas');
   const isSolidVariant = variant === 'solid' || isSearchOrProductPage;
 
   const [isScrolled, setIsScrolled] = useState(isSolidVariant);

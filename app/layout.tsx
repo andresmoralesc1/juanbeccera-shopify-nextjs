@@ -1,6 +1,7 @@
 import Script from 'next/script';
 import { CartProvider } from 'components/cart/cart-context';
 import NavbarIntegrated from '@/components/custom/NavbarIntegrated';
+import AnnouncementBar from '@/components/custom/AnnouncementBar';
 import { WelcomeToast } from 'components/welcome-toast';
 import N8nChatWidget from '@/components/N8nChatWidget';
 import { PageProgress } from '@/components/ui/page-progress';
@@ -73,11 +74,12 @@ export default async function RootLayout({
               height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}></iframe>
           </noscript>
         )}
+        <AnnouncementBar />
         <CartProvider cartPromise={cart}>
           <WebVitals />
           <PageProgress />
           <NavbarIntegrated collections={collections} />
-          <main className="pt-[118px]">
+          <main className="pt-[156px]">
             {children}
             <Toaster closeButton />
             <WelcomeToast />

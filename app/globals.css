@@ -260,3 +260,21 @@ button {
 .hover\:scrollbar-thumb-white\/50:hover {
   scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
 }
+
+/* Carrusel infinito para logos de empresas */
+@keyframes carousel-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-carousel-scroll {
+  animation: carousel-scroll 30s linear infinite;
+}
+
+.animate-carousel-scroll:hover {
+  animation-play-state: paused;
+}

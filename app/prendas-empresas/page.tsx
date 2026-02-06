@@ -1,0 +1,522 @@
+import { Metadata } from 'next';
+import Image from 'next/image';
+import { FadeIn } from '@/components/ui/fade-in';
+import { EnvelopeIcon, PhoneIcon } from '@heroicons/react/24/outline';
+
+export const metadata: Metadata = {
+  title: 'Prendas Personalizadas para Empresas | Juan Becerra',
+  description: 'Desde 20 unidades, transforma la identidad de tu empresa con prendas de alta calidad 100% Colombianas. 8 años de experiencia en marroquinería y textiles.',
+  openGraph: {
+    title: 'Prendas Personalizadas para Empresas | Juan Becerra',
+    description: 'Prendas corporativas premium con personalización DTF, Serigrafía, Bordado y Vinilo textil.',
+    url: '/prendas-empresas',
+  },
+};
+
+const productos = [
+  {
+    categoria: 'CAMISETAS',
+    titulo: 'Camisetas y Polos',
+    descripcion: 'Básicas, polo y deportivas en 100% poliéster transpirable. Ideales para uniformes empresariales y eventos corporativos con un estilo pulido.',
+    minimo: '20 unidades',
+    imagen: '/servicios/p3_11.png',
+    colores: 6,
+  },
+  {
+    categoria: 'SACOS',
+    titulo: 'Sacos Unisex',
+    descripcion: 'Quarter, Cremallera y Crewneck con estructura ligera y detalles refinados. Perfectos para look profesional o casual con elegancia moderna.',
+    minimo: '20 unidades',
+    imagen: '/servicios/p4_20.png',
+    colores: 6,
+  },
+  {
+    categoria: 'HOODIES',
+    titulo: 'Hoodies con Capucha',
+    descripcion: 'Combinan suavidad, abrigo y diseño versátil. Disponibles en amplia gama de colores, ideales para personalizar con tu marca.',
+    minimo: '20 unidades',
+    imagen: '/servicios/p5_34.png',
+    colores: 8,
+  },
+  {
+    categoria: 'CHAQUETAS',
+    titulo: 'Chalecos y Chaquetas Puffer',
+    descripcion: 'Nylon enguatado con forro térmico o liso. Perfectas para climas fríos con estilo sofisticado y manteniendo la calidez.',
+    minimo: '20 unidades',
+    imagen: '/servicios/p6_68.png',
+    colores: 5,
+  },
+  {
+    categoria: 'CAMISAS',
+    titulo: 'Camisas Formales',
+    descripcion: 'Diseñadas para quienes valoran presencia y estilo sin sacrificar comodidad. Confeccionadas en materiales de alta calidad.',
+    minimo: '20 unidades',
+    imagen: '/servicios/p9_110.png',
+    colores: 5,
+  },
+  {
+    categoria: 'CAPS',
+    titulo: 'Gorras y Viseras',
+    descripcion: 'Drill suave con hebilla metálica y fabricación 100% nacional. Cada una pensada para acompañarte a donde quieras llevarla.',
+    minimo: '20 unidades',
+    imagen: '/servicios/p10_121.png',
+    colores: 5,
+  },
+];
+
+const tecnicas = [
+  { nombre: 'DTF', descripcion: 'Direct to Film - Alta definición y colores vibrantes' },
+  { nombre: 'Serigrafía', descripcion: 'Ideal para grandes volúmenes con diseños simples' },
+  { nombre: 'Bordado', descripcion: 'Elegancia premium y máxima durabilidad' },
+  { nombre: 'Vinilo Textil', descripcion: 'Versatilidad de colores con acabado profesional' },
+];
+
+const beneficios = [
+  {
+    titulo: 'Producción 100% Colombiana',
+    descripcion: 'Apostamos por la industria nacional con estándares internacionales de calidad',
+    icono: '🇨🇴',
+  },
+  {
+    titulo: '8 Años de Experiencia',
+    descripcion: 'Consolidados como aliado confiable para empresas de todos los tamaños',
+    icono: '⭐',
+  },
+  {
+    titulo: 'Amplia Gama de Colores',
+    descripcion: 'Más de 20 colores disponibles en stock para pedidos urgentes',
+    icono: '🎨',
+  },
+  {
+    titulo: 'Tallas Unisex Completas',
+    descripcion: 'XXS a 3XL con tablas de medidas detalladas para equipos diversos',
+    icono: '📏',
+  },
+  {
+    titulo: 'Mínimos Accesibles',
+    descripcion: 'Desde 20 unidades por referencia, ideal para PyMEs y empresas grandes',
+    icono: '✅',
+  },
+  {
+    titulo: 'Entregas Optimizadas',
+    descripcion: 'Tiempos de producción competitivos con acompañamiento personalizado',
+    icono: '⚡',
+  },
+];
+
+export default function PrendasEmpresasPage() {
+  return (
+    <main>
+      {/* HERO PRINCIPAL - Split Editorial */}
+      <section className="grid grid-cols-1 lg:grid-cols-2">
+        {/* Imagen */}
+        <div className="relative h-[50vh] lg:h-[600px] order-2 lg:order-1">
+          <Image
+            src="/servicios/p3_11.png"
+            alt="Prendas personalizadas Juan Becerra"
+            fill
+            className="object-cover"
+            priority
+            sizes="(max-width: 1024px) 100vw, 50vw"
+          />
+        </div>
+
+        {/* Contenido */}
+        <div className="bg-[#f8f7f4] flex items-center justify-center p-8 sm:p-12 lg:p-16 xl:p-24 order-1 lg:order-2">
+          <FadeIn delay={0.2} direction="right">
+            <div className="max-w-xl space-y-6">
+              <p className="text-[#620c0b] text-xs tracking-[0.3em] uppercase font-medium">
+                Para Empresas
+              </p>
+
+              <h1 className="font-belleza text-3xl sm:text-4xl lg:text-5xl font-light tracking-wide text-gray-900 leading-tight">
+                Prendas Personalizadas que
+                <span className="block text-[#620c0b] mt-2">Elevan tu Marca</span>
+              </h1>
+
+              <p className="font-moderat text-base text-gray-700 leading-relaxed font-light">
+                Desde 20 unidades, transforma la identidad de tu empresa con prendas de alta calidad 100% Colombianas.
+              </p>
+
+              <p className="font-moderat text-sm text-gray-600">
+                8 años de experiencia • Técnicas premium de personalización
+              </p>
+
+              {/* Botones */}
+              <div className="flex flex-col sm:flex-row gap-4 pt-2">
+                <a
+                  href="#contacto"
+                  className="group inline-flex items-center gap-3 text-[#620c0b] text-sm tracking-[0.2em] uppercase font-medium border-b-2 border-[#620c0b] pb-2 hover:border-[#620c0b]/60 transition-all duration-300"
+                >
+                  Solicitar Cotización
+                  <svg
+                    className="w-5 h-5 transform group-hover:translate-x-1 transition-transform"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </a>
+
+                <a
+                  href="#productos"
+                  className="inline-flex items-center gap-3 text-gray-900 text-sm tracking-[0.15em] uppercase font-light border border-gray-900/30 px-6 py-3 hover:bg-gray-900 hover:text-white transition-all duration-300"
+                >
+                  Ver Productos
+                </a>
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* MARCAS QUE CONFÍAN - Carrusel Infinito */}
+      <section className="py-16 lg:py-20 bg-gray-900 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
+          <p className="text-center text-gray-300 text-sm tracking-[0.2em] uppercase font-medium">
+            Empresas que ya confían en nosotros
+          </p>
+        </div>
+
+        {/* Carrusel Infinito */}
+        <div className="relative">
+          {/* Gradientes para fade en los bordes */}
+          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-gray-900 to-transparent z-10"></div>
+          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-gray-900 to-transparent z-10"></div>
+
+          {/* Contenedor del carrusel */}
+          <div className="flex overflow-hidden">
+            <div className="flex animate-carousel-scroll gap-16 px-8 items-center">
+              {[
+                '/servicios/empresas.png',
+                '/servicios/empresas1.png',
+                '/servicios/empresas2.png',
+                '/servicios/empresas3.png',
+                '/servicios/empresas4.png',
+                '/servicios/empresas5.png',
+                '/servicios/empresas6.png',
+              ].map((logo, index) => (
+                <div key={`logo-${index}`} className="flex-shrink-0 flex items-center justify-center p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-all duration-300">
+                  <Image
+                    src={logo}
+                    alt={`Empresa ${index + 1} que confía en Juan Becerra`}
+                    width={200}
+                    height={100}
+                    className="h-20 w-auto object-contain"
+                  />
+                </div>
+              ))}
+              {/* Duplicar logos para efecto infinito */}
+              {[
+                '/servicios/empresas.png',
+                '/servicios/empresas1.png',
+                '/servicios/empresas2.png',
+                '/servicios/empresas3.png',
+                '/servicios/empresas4.png',
+                '/servicios/empresas5.png',
+                '/servicios/empresas6.png',
+              ].map((logo, index) => (
+                <div key={`logo-dup-${index}`} className="flex-shrink-0 flex items-center justify-center p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-all duration-300">
+                  <Image
+                    src={logo}
+                    alt={`Empresa ${index + 1} que confía en Juan Becerra`}
+                    width={200}
+                    height={100}
+                    className="h-20 w-auto object-contain"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PROPUESTA DE VALOR - Full Width Quote */}
+      <section className="bg-[#620c0b] py-16 lg:py-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-12 text-center">
+          <FadeIn delay={0.3} direction="none">
+            <div className="space-y-6">
+              <svg className="w-12 h-12 mx-auto text-white/20" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+              </svg>
+              <blockquote className="font-belleza text-2xl sm:text-3xl lg:text-4xl font-light text-white leading-relaxed">
+                Diseñamos prendas que generan pertenencia
+              </blockquote>
+              <p className="font-moderat text-white/70 text-xs tracking-[0.2em] uppercase">
+                Desde 2017 • 8 Años de Experiencia
+              </p>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* PILARES */}
+      <section className="bg-[#f8f7f4] py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="text-center p-6">
+              <div className="text-4xl mb-4">✨</div>
+              <h3 className="font-belleza text-xl font-light text-gray-900 mb-3">Calidad Premium</h3>
+              <p className="font-moderat text-gray-600 text-sm leading-relaxed">
+                Materiales de primera con acabados duraderos
+              </p>
+            </div>
+
+            <div className="text-center p-6">
+              <div className="text-4xl mb-4">🎨</div>
+              <h3 className="font-belleza text-xl font-light text-gray-900 mb-3">Personalización Total</h3>
+              <p className="font-moderat text-gray-600 text-sm leading-relaxed">
+                DTF, Serigrafía, Bordado y Vinilo textil
+              </p>
+            </div>
+
+            <div className="text-center p-6">
+              <div className="text-4xl mb-4">🇨🇴</div>
+              <h3 className="font-belleza text-xl font-light text-gray-900 mb-3">Hecho en Colombia</h3>
+              <p className="font-moderat text-gray-600 text-sm leading-relaxed">
+                8 años de experiencia como aliado confiable
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PRODUCTOS - Grid Editorial */}
+      <section id="productos" className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <p className="text-[#620c0b] text-xs tracking-[0.3em] uppercase font-medium mb-3">
+              Catálogo Corporativo
+            </p>
+            <h2 className="font-belleza text-3xl sm:text-4xl lg:text-5xl font-light tracking-wide text-gray-900 mb-4">
+              Elige tu Prenda
+            </h2>
+            <p className="font-moderat text-lg text-gray-600 max-w-2xl mx-auto">
+              Mínimos accesibles desde 20 unidades
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {productos.map((producto, index) => (
+              <div key={index} className="group">
+                <div className="relative aspect-[4/5] overflow-hidden bg-gray-100 mb-4">
+                  <Image
+                    src={producto.imagen}
+                    alt={producto.titulo}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-[#620c0b] text-xs tracking-[0.2em] uppercase font-medium">
+                    {producto.categoria}
+                  </p>
+                  <h3 className="font-belleza text-xl font-light text-gray-900">
+                    {producto.titulo}
+                  </h3>
+                  <p className="font-moderat text-gray-600 text-sm leading-relaxed">
+                    {producto.descripcion}
+                  </p>
+                  <div className="flex items-center justify-between pt-2">
+                    <span className="font-moderat text-xs text-[#620c0b] bg-[#f8f7f4] px-3 py-2">
+                      Desde {producto.minimo}
+                    </span>
+                    <span className="font-moderat text-xs text-gray-500">
+                      {producto.colores}+ colores
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Nota sobre cinturones */}
+          <div className="mt-12 bg-[#364e41] rounded-none p-6 text-center">
+            <p className="font-moderat text-white text-sm leading-relaxed">
+              <strong className="font-medium">Cinturones elásticos:</strong> Mínimo 100 unidades. Hebilla exclusiva Juan Becerra perfecta para looks casuales y elegantes.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* TÉCNICAS */}
+      <section className="py-16 bg-[#f8f7f4]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <p className="text-[#620c0b] text-xs tracking-[0.3em] uppercase font-medium mb-3">
+              Personalización
+            </p>
+            <h2 className="font-belleza text-3xl sm:text-4xl lg:text-5xl font-light tracking-wide text-gray-900">
+              Técnicas de Estampado
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {tecnicas.map((tecnica, index) => (
+              <div key={index} className="text-center p-6">
+                <div className="w-12 h-12 bg-[#620c0b] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white font-belleza text-lg">{index + 1}</span>
+                </div>
+                <h3 className="font-belleza text-lg font-light text-gray-900 mb-2">
+                  {tecnica.nombre}
+                </h3>
+                <p className="font-moderat text-gray-600 text-xs leading-relaxed">
+                  {tecnica.descripcion}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* POR QUÉ ELEGIRNOS - Split Editorial */}
+      <section className="grid grid-cols-1 lg:grid-cols-2">
+        {/* Contenido */}
+        <div className="bg-white flex items-center justify-center p-8 sm:p-12 lg:p-16 xl:p-24 order-2 lg:order-1">
+          <div className="max-w-lg space-y-5">
+            <p className="text-[#620c0b] text-xs tracking-[0.3em] uppercase font-medium">
+              Nuestra Diferencia
+            </p>
+
+            <h2 className="font-belleza text-2xl sm:text-3xl lg:text-4xl font-light tracking-wide text-gray-900 leading-tight">
+              Por qué elegir Juan Becerra
+            </h2>
+
+            <div className="space-y-4 pt-2">
+              {beneficios.map((beneficio, index) => (
+                <div key={index} className="flex gap-3">
+                  <div className="flex-shrink-0 text-2xl">{beneficio.icono}</div>
+                  <div>
+                    <h3 className="font-moderat text-sm font-semibold text-gray-900 mb-1">
+                      {beneficio.titulo}
+                    </h3>
+                    <p className="font-moderat text-gray-600 text-xs leading-relaxed">
+                      {beneficio.descripcion}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Imagen */}
+        <div className="relative h-[50vh] lg:h-[600px] order-1 lg:order-2">
+          <Image
+            src="/servicios/p25_242.png"
+            alt="Productos personalizados Juan Becerra"
+            fill
+            className="object-cover"
+            sizes="(max-width: 1024px) 100vw, 50vw"
+          />
+        </div>
+      </section>
+
+      {/* PROCESO */}
+      <section className="bg-[#f8f7f4] py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <p className="text-[#620c0b] text-xs tracking-[0.3em] uppercase font-medium mb-3">
+              Acompañamiento
+            </p>
+            <h2 className="font-belleza text-3xl sm:text-4xl lg:text-5xl font-light tracking-wide text-gray-900">
+              Nuestro Proceso
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-5 gap-6">
+            {[
+              { paso: '01', titulo: 'Consultoría', desc: 'Entendemos tu marca y necesidades' },
+              { paso: '02', titulo: 'Diseño', desc: 'Validamos muestra antes de producción' },
+              { paso: '03', titulo: 'Producción', desc: 'Confección con estándares de calidad' },
+              { paso: '04', titulo: 'Entrega', desc: 'En tiempos acordados' },
+              { paso: '05', titulo: 'Seguimiento', desc: 'Acompañamiento post-venta continuo' },
+            ].map((item, index) => (
+              <div key={index} className="text-center">
+                <div className="font-belleza text-5xl font-light text-[#620c0b]/20 mb-3">
+                  {item.paso}
+                </div>
+                <h3 className="font-moderat text-xs font-semibold text-gray-900 mb-2 uppercase tracking-wide">
+                  {item.titulo}
+                </h3>
+                <p className="font-moderat text-gray-600 text-xs leading-relaxed">
+                  {item.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA FINAL */}
+      <section id="contacto" className="bg-[#364e41] py-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="font-belleza text-2xl sm:text-3xl lg:text-4xl font-light tracking-wide text-white mb-4">
+            ¿Listo para elevar la imagen de tu empresa?
+          </h2>
+          <p className="font-moderat text-lg text-white/80 mb-8 leading-relaxed">
+            Contáctanos hoy y recibe asesoría personalizada
+          </p>
+
+          <div className="grid sm:grid-cols-2 gap-4 mb-8">
+            <a
+              href="mailto:contacto@juanbecerra.co"
+              className="flex items-center justify-center gap-3 bg-white px-6 py-4 hover:bg-gray-100 transition-colors"
+            >
+              <EnvelopeIcon className="h-5 w-5 text-[#620c0b]" />
+              <span className="font-moderat font-semibold text-gray-900 text-sm">contacto@juanbecerra.co</span>
+            </a>
+            <a
+              href="tel:3172727916"
+              className="flex items-center justify-center gap-3 bg-white px-6 py-4 hover:bg-gray-100 transition-colors"
+            >
+              <PhoneIcon className="h-5 w-5 text-[#620c0b]" />
+              <span className="font-moderat font-semibold text-gray-900 text-sm">317 272 7916</span>
+            </a>
+          </div>
+
+          <div className="bg-white/10 rounded-none p-6 text-left">
+            <h3 className="font-moderat font-semibold mb-4 text-center text-white text-sm uppercase tracking-wide">
+              Incluye en tu mensaje:
+            </h3>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {['Tipo de empresa', 'Prenda de interés', 'Cantidad estimada', 'Plazo requerido'].map((item, i) => (
+                <div key={i} className="flex items-center gap-2">
+                  <svg className="w-4 h-4 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span className="font-moderat text-white/90 text-xs">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* DESCARGA CATÁLOGO */}
+      <section className="bg-gray-900 py-12">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="font-belleza text-xl sm:text-2xl font-light text-white mb-3">
+            Descarga nuestro catálogo completo
+          </h2>
+          <p className="font-moderat text-gray-400 mb-6 text-sm">
+            Revisa todos nuestros productos, medidas y colores disponibles
+          </p>
+          <a
+            href="/catalogo.pdf"
+            download
+            className="inline-flex items-center gap-3 bg-[#620c0b] px-6 py-3 text-white font-moderat text-xs tracking-[0.15em] uppercase font-medium hover:bg-[#4a0908] transition-all duration-300"
+          >
+            Descargar Catálogo PDF
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+          </a>
+        </div>
+      </section>
+    </main>
+  );
+}

@@ -158,7 +158,7 @@ export default function PrendasEmpresasPage() {
         {/* Imagen */}
         <div className="relative h-[50vh] lg:h-[600px] order-2 lg:order-1">
           <Image
-            src="/servicios/p3_11.png"
+            src="/servicios/desing.png"
             alt="Prendas personalizadas Juan Becerra"
             fill
             className="object-cover"

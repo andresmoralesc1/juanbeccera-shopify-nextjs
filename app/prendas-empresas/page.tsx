@@ -111,7 +111,8 @@ const empresasTrabajos = [
     logo: '/brands/unisabana-logo.webp',
     nombre: 'Unisabana',
     trabajos: [
-      // Próximamente
+      '/brands/unisabana-cap.png',
+      '/brands/unisabana-sweter.png',
     ]
   },
 ];

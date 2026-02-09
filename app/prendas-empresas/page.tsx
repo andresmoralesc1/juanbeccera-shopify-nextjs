@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import { FadeIn } from '@/components/ui/fade-in';
 import { EnvelopeIcon, PhoneIcon } from '@heroicons/react/24/outline';
+import FooterCustom from '@/components/custom/FooterCustom';
 
 export const metadata: Metadata = {
   title: 'Prendas Personalizadas para Empresas | Juan Becerra',
@@ -517,6 +518,8 @@ export default function PrendasEmpresasPage() {
           </a>
         </div>
       </section>
+
+      <FooterCustom />
     </main>
   );
 }

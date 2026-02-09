@@ -156,10 +156,10 @@ export function ClientEmpresasCarrusel({ empresas }: ClientEmpresasCarruselProps
           {/* Logos de Empresas - Izquierda */}
           <div className="lg:col-span-2 space-y-6">
             <h2 className="font-belleza text-2xl sm:text-3xl lg:text-4xl font-light tracking-wide mb-6 lg:mb-8 leading-tight text-white text-center lg:text-left">
-              Nuestros Trabajos
+              Nuestros Clientes
             </h2>
 
-            <div className="flex flex-row lg:flex-col gap-4 justify-center lg:justify-start">
+            <div className="grid grid-cols-2 gap-4 justify-center lg:justify-start">
               {empresas.map((empresa) => (
                 <button
                   key={empresa.id}
@@ -184,38 +184,9 @@ export function ClientEmpresasCarrusel({ empresas }: ClientEmpresasCarruselProps
                     />
                   </div>
 
-                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 whitespace-nowrap">
-                    <span className={`
-                      text-xs font-medium px-3 py-1 rounded-full transition-colors duration-300
-                      ${empresaSeleccionada.id === empresa.id
-                        ? 'bg-[#620c0b] text-white'
-                        : 'bg-white/10 text-white/70 group-hover:bg-white/20'
-                      }
-                    `}>
-                      {empresa.nombre}
-                    </span>
-                  </div>
-
-                  {empresa.trabajos.length > 0 && (
-                    <span className={`
-                      absolute -top-2 -right-2
-                      text-[10px] font-bold px-2 py-0.5 rounded-full
-                      transition-colors duration-300
-                      ${empresaSeleccionada.id === empresa.id
-                        ? 'bg-[#620c0b] text-white'
-                        : 'bg-white/20 text-white/70'
-                      }
-                    `}>
-                      {empresa.trabajos.length}
-                    </span>
-                  )}
                 </button>
               ))}
             </div>
-
-            <p className="text-white/70 text-xs text-center lg:text-left hidden lg:block mt-4">
-              Selecciona una empresa para ver sus trabajos
-            </p>
           </div>
 
           {/* Carrusel de Trabajos - Derecha */}
@@ -223,16 +194,6 @@ export function ClientEmpresasCarrusel({ empresas }: ClientEmpresasCarruselProps
             <div className="relative">
               {trabajosActuales.length > 0 ? (
                 <>
-                  {/* Encabezado del carrusel */}
-                  <div className="mb-6 text-center lg:text-left">
-                    <h3 className="text-white text-lg sm:text-xl font-medium mb-2">
-                      {empresaSeleccionada.nombre}
-                    </h3>
-                    <p className="text-white/60 text-sm">
-                      {trabajosActuales.length} {trabajosActuales.length === 1 ? 'trabajo realizado' : 'trabajos realizados'}
-                    </p>
-                  </div>
-
                   {/* Scroll Container */}
                   <div
                     ref={scrollContainerRef}

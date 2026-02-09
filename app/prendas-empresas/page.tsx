@@ -4,6 +4,7 @@ import { FadeIn } from '@/components/ui/fade-in';
 import { EnvelopeIcon, PhoneIcon } from '@heroicons/react/24/outline';
 import FooterCustom from '@/components/custom/FooterCustom';
 import { ClientEmpresas } from '@/components/custom/ClientEmpresas';
+import { TrabajosCarrusel } from '@/components/custom/TrabajosCarrusel';
 
 export const metadata: Metadata = {
   title: 'Prendas Personalizadas para Empresas | Juan Becerra',
@@ -117,6 +118,14 @@ const empresasTrabajos = [
   },
 ];
 
+// Array plano de todos los trabajos para el carrusel
+const todosLosTrabajos = empresasTrabajos.flatMap(empresa =>
+  empresa.trabajos.map(trabajo => ({
+    imagen: trabajo,
+    empresa: empresa.nombre,
+  }))
+);
+
 const beneficios = [
   {
     titulo: 'Producción 100% Colombiana',
@@ -219,6 +228,9 @@ export default function PrendasEmpresasPage() {
 
       {/* MARCAS QUE CONFÍAN - Grid Interactivo */}
       <ClientEmpresas empresas={empresasTrabajos} />
+
+      {/* NUESTROS TRABAJOS - Carrusel Infinito */}
+      <TrabajosCarrusel trabajos={todosLosTrabajos} />
 
       {/* PROPUESTA DE VALOR - Full Width Quote */}
       <section className="bg-[#620c0b] py-16 lg:py-20">

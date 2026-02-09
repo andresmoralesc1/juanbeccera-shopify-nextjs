@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { FadeIn } from '@/components/ui/fade-in';
 import { EnvelopeIcon, PhoneIcon } from '@heroicons/react/24/outline';
 import FooterCustom from '@/components/custom/FooterCustom';
+import { ClientEmpresas } from '@/components/custom/ClientEmpresas';
 
 export const metadata: Metadata = {
   title: 'Prendas Personalizadas para Empresas | Juan Becerra',
@@ -70,6 +71,66 @@ const tecnicas = [
   { nombre: 'Serigrafía', descripcion: 'Ideal para grandes volúmenes con diseños simples' },
   { nombre: 'Bordado', descripcion: 'Elegancia premium y máxima durabilidad' },
   { nombre: 'Vinilo Textil', descripcion: 'Versatilidad de colores con acabado profesional' },
+];
+
+const empresasTrabajos = [
+  {
+    id: 1,
+    logo: '/servicios/empresas.png',
+    nombre: 'Empresa 1',
+    trabajos: [
+      // Agrega aquí las rutas de las imágenes de trabajos para esta empresa
+      // Ejemplo: '/servicios/trabajo-empresa1-1.jpg'
+    ]
+  },
+  {
+    id: 2,
+    logo: '/servicios/empresas1.png',
+    nombre: 'Empresa 2',
+    trabajos: [
+      // Agrega aquí las rutas de las imágenes de trabajos para esta empresa
+    ]
+  },
+  {
+    id: 3,
+    logo: '/servicios/empresas2.png',
+    nombre: 'Empresa 3',
+    trabajos: [
+      // Agrega aquí las rutas de las imágenes de trabajos para esta empresa
+    ]
+  },
+  {
+    id: 4,
+    logo: '/servicios/empresas3.png',
+    nombre: 'Empresa 4',
+    trabajos: [
+      // Agrega aquí las rutas de las imágenes de trabajos para esta empresa
+    ]
+  },
+  {
+    id: 5,
+    logo: '/servicios/empresas4.png',
+    nombre: 'Empresa 5',
+    trabajos: [
+      // Agrega aquí las rutas de las imágenes de trabajos para esta empresa
+    ]
+  },
+  {
+    id: 6,
+    logo: '/servicios/empresas5.png',
+    nombre: 'Empresa 6',
+    trabajos: [
+      // Agrega aquí las rutas de las imágenes de trabajos para esta empresa
+    ]
+  },
+  {
+    id: 7,
+    logo: '/servicios/empresas6.png',
+    nombre: 'Empresa 7',
+    trabajos: [
+      // Agrega aquí las rutas de las imágenes de trabajos para esta empresa
+    ]
+  },
 ];
 
 const beneficios = [
@@ -172,66 +233,8 @@ export default function PrendasEmpresasPage() {
         </div>
       </section>
 
-      {/* MARCAS QUE CONFÍAN - Carrusel Infinito */}
-      <section className="py-16 lg:py-20 bg-gray-900 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
-          <p className="text-center text-gray-300 text-sm tracking-[0.2em] uppercase font-medium">
-            Empresas que ya confían en nosotros
-          </p>
-        </div>
-
-        {/* Carrusel Infinito */}
-        <div className="relative">
-          {/* Gradientes para fade en los bordes */}
-          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-gray-900 to-transparent z-10"></div>
-          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-gray-900 to-transparent z-10"></div>
-
-          {/* Contenedor del carrusel */}
-          <div className="flex overflow-hidden">
-            <div className="flex animate-carousel-scroll gap-16 px-8 items-center">
-              {[
-                '/servicios/empresas.png',
-                '/servicios/empresas1.png',
-                '/servicios/empresas2.png',
-                '/servicios/empresas3.png',
-                '/servicios/empresas4.png',
-                '/servicios/empresas5.png',
-                '/servicios/empresas6.png',
-              ].map((logo, index) => (
-                <div key={`logo-${index}`} className="flex-shrink-0 flex items-center justify-center p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-all duration-300">
-                  <Image
-                    src={logo}
-                    alt={`Empresa ${index + 1} que confía en Juan Becerra`}
-                    width={200}
-                    height={100}
-                    className="h-20 w-auto object-contain"
-                  />
-                </div>
-              ))}
-              {/* Duplicar logos para efecto infinito */}
-              {[
-                '/servicios/empresas.png',
-                '/servicios/empresas1.png',
-                '/servicios/empresas2.png',
-                '/servicios/empresas3.png',
-                '/servicios/empresas4.png',
-                '/servicios/empresas5.png',
-                '/servicios/empresas6.png',
-              ].map((logo, index) => (
-                <div key={`logo-dup-${index}`} className="flex-shrink-0 flex items-center justify-center p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-all duration-300">
-                  <Image
-                    src={logo}
-                    alt={`Empresa ${index + 1} que confía en Juan Becerra`}
-                    width={200}
-                    height={100}
-                    className="h-20 w-auto object-contain"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* MARCAS QUE CONFÍAN - Grid Interactivo */}
+      <ClientEmpresas empresas={empresasTrabajos} />
 
       {/* PROPUESTA DE VALOR - Full Width Quote */}
       <section className="bg-[#620c0b] py-16 lg:py-20">

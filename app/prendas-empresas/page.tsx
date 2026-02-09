@@ -76,59 +76,42 @@ const tecnicas = [
 const empresasTrabajos = [
   {
     id: 1,
-    logo: '/servicios/empresas.png',
-    nombre: 'Empresa 1',
+    logo: '/brands/jimador-logo.webp',
+    nombre: 'Jimador',
     trabajos: [
-      // Agrega aquí las rutas de las imágenes de trabajos para esta empresa
-      // Ejemplo: '/servicios/trabajo-empresa1-1.jpg'
+      '/brands/jimador-jacket.png',
+      '/brands/jimador-shirt.png',
     ]
   },
   {
     id: 2,
-    logo: '/servicios/empresas1.png',
-    nombre: 'Empresa 2',
+    logo: '/brands/mc-logo.png',
+    nombre: 'MC',
     trabajos: [
-      // Agrega aquí las rutas de las imágenes de trabajos para esta empresa
+      '/brands/mc-jacket.png',
+      '/brands/mc-shirt.png',
+      '/brands/mc-sweter.png',
     ]
   },
   {
     id: 3,
-    logo: '/servicios/empresas2.png',
-    nombre: 'Empresa 3',
+    logo: '/brands/uniandes-logo.jpg',
+    nombre: 'Uniandes',
     trabajos: [
-      // Agrega aquí las rutas de las imágenes de trabajos para esta empresa
+      '/brands/uniandes-jacket.png',
+      '/brands/uniandes-jacket-2.png',
+      '/brands/uniandes-jacket-3.png',
+      '/brands/uniandes-polo.png',
+      '/brands/uniandes-sweter.png',
+      '/brands/uniandes-sweter-2.png',
     ]
   },
   {
     id: 4,
-    logo: '/servicios/empresas3.png',
-    nombre: 'Empresa 4',
+    logo: '/brands/unisabana-logo.webp',
+    nombre: 'Unisabana',
     trabajos: [
-      // Agrega aquí las rutas de las imágenes de trabajos para esta empresa
-    ]
-  },
-  {
-    id: 5,
-    logo: '/servicios/empresas4.png',
-    nombre: 'Empresa 5',
-    trabajos: [
-      // Agrega aquí las rutas de las imágenes de trabajos para esta empresa
-    ]
-  },
-  {
-    id: 6,
-    logo: '/servicios/empresas5.png',
-    nombre: 'Empresa 6',
-    trabajos: [
-      // Agrega aquí las rutas de las imágenes de trabajos para esta empresa
-    ]
-  },
-  {
-    id: 7,
-    logo: '/servicios/empresas6.png',
-    nombre: 'Empresa 7',
-    trabajos: [
-      // Agrega aquí las rutas de las imágenes de trabajos para esta empresa
+      // Próximamente
     ]
   },
 ];

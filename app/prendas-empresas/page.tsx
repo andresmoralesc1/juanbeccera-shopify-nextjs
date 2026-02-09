@@ -1,9 +1,9 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
 import { FadeIn } from '@/components/ui/fade-in';
-import { EnvelopeIcon, PhoneIcon } from '@heroicons/react/24/outline';
 import FooterCustom from '@/components/custom/FooterCustom';
 import { ClientEmpresasCarrusel } from '@/components/custom/ClientEmpresasCarrusel';
+import { FormularioContactoB2B } from '@/components/custom/FormularioContactoB2B';
 
 export const metadata: Metadata = {
   title: 'Prendas Personalizadas para Empresas | Juan Becerra',
@@ -439,50 +439,8 @@ export default function PrendasEmpresasPage() {
         </div>
       </section>
 
-      {/* CTA FINAL */}
-      <section id="contacto" className="bg-[#364e41] py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-belleza text-2xl sm:text-3xl lg:text-4xl font-light tracking-wide text-white mb-4">
-            ¿Listo para elevar la imagen de tu empresa?
-          </h2>
-          <p className="font-moderat text-lg text-white/80 mb-8 leading-relaxed">
-            Contáctanos hoy y recibe asesoría personalizada
-          </p>
-
-          <div className="grid sm:grid-cols-2 gap-4 mb-8">
-            <a
-              href="mailto:contacto@juanbecerra.co"
-              className="flex items-center justify-center gap-3 bg-white px-6 py-4 hover:bg-gray-100 transition-colors"
-            >
-              <EnvelopeIcon className="h-5 w-5 text-[#620c0b]" />
-              <span className="font-moderat font-semibold text-gray-900 text-sm">contacto@juanbecerra.co</span>
-            </a>
-            <a
-              href="tel:3172727916"
-              className="flex items-center justify-center gap-3 bg-white px-6 py-4 hover:bg-gray-100 transition-colors"
-            >
-              <PhoneIcon className="h-5 w-5 text-[#620c0b]" />
-              <span className="font-moderat font-semibold text-gray-900 text-sm">317 272 7916</span>
-            </a>
-          </div>
-
-          <div className="bg-white/10 rounded-none p-6 text-left">
-            <h3 className="font-moderat font-semibold mb-4 text-center text-white text-sm uppercase tracking-wide">
-              Incluye en tu mensaje:
-            </h3>
-            <div className="grid sm:grid-cols-2 gap-3">
-              {['Tipo de empresa', 'Prenda de interés', 'Cantidad estimada', 'Plazo requerido'].map((item, i) => (
-                <div key={i} className="flex items-center gap-2">
-                  <svg className="w-4 h-4 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span className="font-moderat text-white/90 text-xs">{item}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* FORMULARIO DE CONTACTO */}
+      <FormularioContactoB2B />
 
       {/* DESCARGA CATÁLOGO */}
       <section className="bg-gray-900 py-12">

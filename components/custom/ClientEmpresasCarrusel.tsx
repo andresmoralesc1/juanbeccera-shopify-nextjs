@@ -15,7 +15,12 @@ interface ClientEmpresasCarruselProps {
 }
 
 export function ClientEmpresasCarrusel({ empresas }: ClientEmpresasCarruselProps) {
-  const [empresaSeleccionada, setEmpresaSeleccionada] = useState<Empresa>(empresas[0]);
+  const [empresaSeleccionada, setEmpresaSeleccionada] = useState<Empresa>(() => empresas[0] ?? {
+    id: 0,
+    logo: '',
+    nombre: '',
+    trabajos: []
+  });
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 

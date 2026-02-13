@@ -124,6 +124,15 @@ const empresasTrabajos = [
       '/brands/vaca-jacket.png',
     ]
   },
+  {
+    id: 6,
+    logo: '/brands/Compensar logo.png',
+    nombre: 'Compensar',
+    trabajos: [
+      '/brands/compensar-jacket.png',
+      '/brands/compensar-jacket-2.png',
+    ]
+  },
 ];
 
 const beneficios = [

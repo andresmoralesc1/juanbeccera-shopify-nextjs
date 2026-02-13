@@ -60,7 +60,7 @@ const productos = [
     categoria: 'CAPS',
     titulo: 'Gorras y Viseras',
     descripcion: 'Drill suave con hebilla metálica y fabricación 100% nacional. Cada una pensada para acompañarte a donde quieras llevarla.',
-    minimo: '30 unidades',
+    minimo: '50 unidades',
     imagen: '/servicios/p10_121.png',
     colores: 5,
   },

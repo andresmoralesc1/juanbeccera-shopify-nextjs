@@ -4,7 +4,15 @@
       "Bash(npm i:*)",
       "Bash(npm run build)",
       "Bash(vercel:*)",
-      "Bash(pnpm install)"
+      "Bash(pnpm install)",
+      "Bash(npm run build:*)",
+      "Bash(pnpm build:*)",
+      "Bash(npm --version:*)",
+      "Bash(pnpm --version)",
+      "Bash(timeout:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
     ]
   }
 }

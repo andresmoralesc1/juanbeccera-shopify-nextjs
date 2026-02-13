@@ -133,6 +133,14 @@ const empresasTrabajos = [
       '/brands/compensar-jacket-2.png',
     ]
   },
+  {
+    id: 7,
+    logo: '/brands/indeleble logo.png',
+    nombre: 'Indeleble',
+    trabajos: [
+      '/brands/indeleble-jacket.png',
+    ]
+  },
 ];
 
 const beneficios = [

@@ -192,7 +192,7 @@ export default function PrendasEmpresasPage() {
               <div className="flex flex-col sm:flex-row gap-4 pt-2">
                 <a
                   href="#contacto"
-                  className="group inline-flex items-center gap-3 text-[#620c0b] text-sm tracking-[0.2em] uppercase font-medium border-b-2 border-[#620c0b] pb-2 hover:border-[#620c0b]/60 transition-all duration-300"
+                  className="group inline-flex items-center gap-3 bg-[#620c0b] text-white text-sm tracking-[0.15em] uppercase font-semibold px-6 py-3 hover:bg-[#4a0908] transition-all duration-300"
                 >
                   Solicitar Cotización
                   <svg
@@ -207,9 +207,17 @@ export default function PrendasEmpresasPage() {
 
                 <a
                   href="#productos"
-                  className="inline-flex items-center gap-3 text-gray-900 text-sm tracking-[0.15em] uppercase font-light border border-gray-900/30 px-6 py-3 hover:bg-gray-900 hover:text-white transition-all duration-300"
+                  className="group inline-flex items-center gap-3 text-gray-900 text-sm tracking-[0.2em] uppercase font-light border-b-2 border-gray-900/30 pb-2 hover:border-gray-900 transition-all duration-300"
                 >
                   Ver Productos
+                  <svg
+                    className="w-5 h-5 transform group-hover:translate-x-1 transition-transform"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
                 </a>
               </div>
             </div>

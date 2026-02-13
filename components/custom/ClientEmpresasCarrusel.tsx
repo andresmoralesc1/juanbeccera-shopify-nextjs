@@ -215,7 +215,7 @@ export function ClientEmpresasCarrusel({ empresas }: ClientEmpresasCarruselProps
                           <div className="group relative block aspect-[3/4] w-full overflow-hidden bg-gray-200 rounded-sm">
                             <Image
                               src={trabajo}
-                              alt={`Trabajo para ${empresaSeleccionada.nombre}`}
+                              alt={`Prenda para ${empresaSeleccionada.nombre}`}
                               fill
                               className="object-cover object-center group-hover:scale-110 transition-transform duration-700"
                               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
@@ -227,7 +227,7 @@ export function ClientEmpresasCarrusel({ empresas }: ClientEmpresasCarruselProps
                             {/* Contenido de texto */}
                             <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-8">
                               <p className="text-white/70 text-xs tracking-wider uppercase mb-1">
-                                Trabajo para
+                                Prenda para
                               </p>
                               <h4 className="text-xl sm:text-2xl font-semibold text-white tracking-wider transform group-hover:scale-105 transition-transform duration-300">
                                 {empresaSeleccionada.nombre}

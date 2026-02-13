@@ -7,7 +7,7 @@ import { FormularioContactoB2B } from '@/components/custom/FormularioContactoB2B
 
 export const metadata: Metadata = {
   title: 'Prendas Personalizadas para Empresas | Juan Becerra',
-  description: 'Desde 20 unidades, transforma la identidad de tu empresa con prendas de alta calidad 100% Colombianas. 8 años de experiencia en marroquinería y textiles.',
+  description: 'Desde 30 unidades, transforma la identidad de tu empresa con prendas de alta calidad 100% Colombianas. 8 años de experiencia en marroquinería y textiles.',
   openGraph: {
     title: 'Prendas Personalizadas para Empresas | Juan Becerra',
     description: 'Prendas corporativas premium con personalización DTF, Serigrafía, Bordado y Vinilo textil.',
@@ -20,7 +20,7 @@ const productos = [
     categoria: 'CAMISETAS',
     titulo: 'Camisetas y Polos',
     descripcion: 'Básicas, polo y deportivas en 100% poliéster transpirable. Ideales para uniformes empresariales y eventos corporativos con un estilo pulido.',
-    minimo: '20 unidades',
+    minimo: '30 unidades',
     imagen: '/servicios/p3_11.png',
     colores: 6,
   },
@@ -28,7 +28,7 @@ const productos = [
     categoria: 'SACOS',
     titulo: 'Sacos Unisex',
     descripcion: 'Quarter, Cremallera y Crewneck con estructura ligera y detalles refinados. Perfectos para look profesional o casual con elegancia moderna.',
-    minimo: '20 unidades',
+    minimo: '30 unidades',
     imagen: '/servicios/p4_20.png',
     colores: 6,
   },
@@ -36,7 +36,7 @@ const productos = [
     categoria: 'HOODIES',
     titulo: 'Hoodies con Capucha',
     descripcion: 'Combinan suavidad, abrigo y diseño versátil. Disponibles en amplia gama de colores, ideales para personalizar con tu marca.',
-    minimo: '20 unidades',
+    minimo: '30 unidades',
     imagen: '/servicios/p5_34.png',
     colores: 8,
   },
@@ -44,7 +44,7 @@ const productos = [
     categoria: 'CHAQUETAS',
     titulo: 'Chalecos y Chaquetas Puffer',
     descripcion: 'Nylon enguatado con forro térmico o liso. Perfectas para climas fríos con estilo sofisticado y manteniendo la calidez.',
-    minimo: '20 unidades',
+    minimo: '30 unidades',
     imagen: '/servicios/p6_68.png',
     colores: 5,
   },
@@ -52,7 +52,7 @@ const productos = [
     categoria: 'CAMISAS',
     titulo: 'Camisas Formales',
     descripcion: 'Diseñadas para quienes valoran presencia y estilo sin sacrificar comodidad. Confeccionadas en materiales de alta calidad.',
-    minimo: '20 unidades',
+    minimo: '30 unidades',
     imagen: '/servicios/p9_110.png',
     colores: 5,
   },
@@ -60,7 +60,7 @@ const productos = [
     categoria: 'CAPS',
     titulo: 'Gorras y Viseras',
     descripcion: 'Drill suave con hebilla metálica y fabricación 100% nacional. Cada una pensada para acompañarte a donde quieras llevarla.',
-    minimo: '20 unidades',
+    minimo: '30 unidades',
     imagen: '/servicios/p10_121.png',
     colores: 5,
   },
@@ -174,7 +174,7 @@ const beneficios = [
   },
   {
     titulo: 'Mínimos Accesibles',
-    descripcion: 'Desde 20 unidades por referencia, ideal para PyMEs y empresas grandes',
+    descripcion: 'Desde 30 unidades por referencia, ideal para PyMEs y empresas grandes',
     icono: '✅',
   },
   {
@@ -215,7 +215,7 @@ export default function PrendasEmpresasPage() {
               </h1>
 
               <p className="font-moderat text-base text-gray-700 leading-relaxed font-light">
-                Desde 20 unidades, transforma la identidad de tu empresa con prendas de alta calidad 100% Colombianas.
+                Desde 30 unidades, transforma la identidad de tu empresa con prendas de alta calidad 100% Colombianas.
               </p>
 
               <p className="font-moderat text-sm text-gray-600">
@@ -323,7 +323,7 @@ export default function PrendasEmpresasPage() {
               Elige tu Prenda
             </h2>
             <p className="font-moderat text-lg text-gray-600 max-w-2xl mx-auto">
-              Mínimos accesibles desde 20 unidades
+              Mínimos accesibles desde 30 unidades
             </p>
           </div>
 

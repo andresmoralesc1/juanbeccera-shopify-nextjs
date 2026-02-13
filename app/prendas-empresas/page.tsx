@@ -141,6 +141,14 @@ const empresasTrabajos = [
       '/brands/indeleble-jacket.png',
     ]
   },
+  {
+    id: 8,
+    logo: '/brands/Optive-fusion-logo.svg',
+    nombre: 'Optive Fusion',
+    trabajos: [
+      '/brands/Optivefusion-jacket.jpg',
+    ]
+  },
 ];
 
 const beneficios = [

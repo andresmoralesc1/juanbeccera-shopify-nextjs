@@ -115,6 +115,15 @@ const empresasTrabajos = [
       '/brands/unisabana-sweter.png',
     ]
   },
+  {
+    id: 5,
+    logo: '/brands/arma-tu-vaca-logo.svg',
+    nombre: 'Arma Tu Vaca',
+    trabajos: [
+      '/brands/vaca-cap.png',
+      '/brands/vaca-jacket.png',
+    ]
+  },
 ];
 
 const beneficios = [

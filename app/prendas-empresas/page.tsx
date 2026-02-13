@@ -117,7 +117,7 @@ const empresasTrabajos = [
   },
   {
     id: 5,
-    logo: '/brands/arma-tu-vaca-logo.svg',
+    logo: '/brands/arma-tu-vaca logo.svg',
     nombre: 'Arma Tu Vaca',
     trabajos: [
       '/brands/vaca-cap.png',

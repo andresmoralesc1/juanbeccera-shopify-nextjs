@@ -156,7 +156,7 @@ export function ClientEmpresasCarrusel({ empresas }: ClientEmpresasCarruselProps
   return (
     <div className="bg-[#364e41] py-8 sm:py-10 lg:py-12 overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-10 gap-6 sm:gap-8 lg:gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-10 gap-6 sm:gap-8 lg:gap-12 items-center">
 
           {/* Logos de Empresas - Izquierda */}
           <div className="lg:col-span-2 space-y-6">
@@ -195,7 +195,7 @@ export function ClientEmpresasCarrusel({ empresas }: ClientEmpresasCarruselProps
           </div>
 
           {/* Carrusel de Trabajos - Derecha */}
-          <div className="lg:col-span-8">
+          <div className="lg:col-span-8 lg:pt-5">
             <div className="relative">
               {trabajosActuales.length > 0 ? (
                 <>

@@ -67,13 +67,6 @@ const productos = [
   },
 ];
 
-const tecnicas = [
-  { nombre: 'DTF', descripcion: 'Direct to Film - Alta definición y colores vibrantes' },
-  { nombre: 'Serigrafía', descripcion: 'Ideal para grandes volúmenes con diseños simples' },
-  { nombre: 'Bordado', descripcion: 'Elegancia premium y máxima durabilidad' },
-  { nombre: 'Vinilo Textil', descripcion: 'Versatilidad de colores con acabado profesional' },
-];
-
 const empresasTrabajos = [
   {
     id: 1,
@@ -282,36 +275,6 @@ export default function PrendasEmpresasPage() {
         </div>
       </section>
 
-      {/* PILARES */}
-      <section className="bg-[#f8f7f4] py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="text-center p-6">
-              <div className="text-4xl mb-4">✨</div>
-              <h3 className="font-belleza text-xl font-light text-gray-900 mb-3">Calidad Premium</h3>
-              <p className="font-moderat text-gray-600 text-sm leading-relaxed">
-                Materiales de primera con acabados duraderos
-              </p>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="text-4xl mb-4">🎨</div>
-              <h3 className="font-belleza text-xl font-light text-gray-900 mb-3">Personalización Total</h3>
-              <p className="font-moderat text-gray-600 text-sm leading-relaxed">
-                DTF, Serigrafía, Bordado y Vinilo textil
-              </p>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="text-4xl mb-4">🇨🇴</div>
-              <h3 className="font-belleza text-xl font-light text-gray-900 mb-3">Hecho en Colombia</h3>
-              <p className="font-moderat text-gray-600 text-sm leading-relaxed">
-                8 años de experiencia como aliado confiable
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* PRODUCTOS - Grid Editorial */}
       <section id="productos" className="py-16 bg-white">
@@ -369,36 +332,6 @@ export default function PrendasEmpresasPage() {
             <p className="font-moderat text-white text-sm leading-relaxed">
               <strong className="font-medium">Cinturones elásticos:</strong> Mínimo 100 unidades. Hebilla exclusiva Juan Becerra perfecta para looks casuales y elegantes.
             </p>
-          </div>
-        </div>
-      </section>
-
-      {/* TÉCNICAS */}
-      <section className="py-16 bg-[#f8f7f4]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <p className="text-[#620c0b] text-xs tracking-[0.3em] uppercase font-medium mb-3">
-              Personalización
-            </p>
-            <h2 className="font-belleza text-3xl sm:text-4xl lg:text-5xl font-light tracking-wide text-gray-900">
-              Técnicas de Estampado
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {tecnicas.map((tecnica, index) => (
-              <div key={index} className="text-center p-6">
-                <div className="w-12 h-12 bg-[#620c0b] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white font-belleza text-lg">{index + 1}</span>
-                </div>
-                <h3 className="font-belleza text-lg font-light text-gray-900 mb-2">
-                  {tecnica.nombre}
-                </h3>
-                <p className="font-moderat text-gray-600 text-xs leading-relaxed">
-                  {tecnica.descripcion}
-                </p>
-              </div>
-            ))}
           </div>
         </div>
       </section>

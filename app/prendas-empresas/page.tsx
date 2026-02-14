@@ -3,6 +3,8 @@ import Image from 'next/image';
 import { FadeIn } from '@/components/ui/fade-in';
 import FooterCustom from '@/components/custom/FooterCustom';
 import { ClientEmpresasCarrusel } from '@/components/custom/ClientEmpresasCarrusel';
+import { FormularioContactoB2B } from '@/components/custom/FormularioContactoB2B';
+import { CalendlyWidget } from '@/components/custom/CalendlyWidget';
 
 export const metadata: Metadata = {
   title: 'Prendas Personalizadas para Empresas | Juan Becerra',
@@ -484,18 +486,17 @@ export default function PrendasEmpresasPage() {
       <FormularioContactoB2B />
 
       {/* WIDGET DE CALENDLY */}
-      <section id="contacto" className="bg-[#364e41] py-16">
+      <section id="calendly" className="bg-[#364e41] py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="font-belleza text-2xl sm:text-3xl lg:text-4xl font-light tracking-wide text-white mb-4">
-            ¿Listo para elevar la imagen de tu empresa?
+            ¿Prefieres agendar una llamada?
           </h2>
           <p className="font-moderat text-lg text-white/80 leading-relaxed mb-8">
-            Contáctanos hoy y recibe asesoría personalizada
+            Reserva un espacio en nuestro calendario y recibe asesoría personalizada
           </p>
 
           {/* Widget de Calendly */}
-          <div className="calendly-inline-widget" data-url="https://calendly.com/cdpsk8/30min?primary_color=%23620c0b" style="min-width: 320px;height: 700px;"></div>
-          <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+          <CalendlyWidget />
         </div>
       </section>
 

@@ -15,7 +15,7 @@ import SearchComponent from 'components/layout/navbar/search';
 const navLinks = [
   { href: "/search/todos", text: "Tienda", highlight: false, hasDropdown: false },
   { href: "/search", text: "Categorías", highlight: false, hasDropdown: true },
-  { href: "/search/billeteras-tarjeteros", text: "Accesorios", highlight: false, hasDropdown: false },
+  { href: "/empresarial-juan-becerra", text: "Empresas", highlight: false, hasDropdown: false },
   { href: "/search/todos", text: "Sale", highlight: true, hasDropdown: false },
 ];
 
@@ -29,7 +29,7 @@ export default function NavbarIntegrated({ variant = 'transparent', collections 
   const categoriesDropdownRef = useRef<HTMLDivElement>(null);
 
   // Si estamos en páginas de búsqueda/catálogo o producto, forzar variant solid
-  const isSearchOrProductPage = pathname?.startsWith('/search') || pathname?.startsWith('/products') || pathname?.startsWith('/prendas-empresas');
+  const isSearchOrProductPage = pathname?.startsWith('/search') || pathname?.startsWith('/products') || pathname?.startsWith('/empresarial-juan-becerra');
   const isSolidVariant = variant === 'solid' || isSearchOrProductPage;
 
   const [isScrolled, setIsScrolled] = useState(isSolidVariant);

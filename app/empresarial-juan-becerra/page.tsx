@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Prendas Personalizadas para Empresas | Juan Becerra',
     description: 'Prendas corporativas premium con personalización DTF, Serigrafía, Bordado y Vinilo textil.',
-    url: '/prendas-empresas',
+    url: '/empresarial-juan-becerra',
   },
 };
 
@@ -21,7 +21,7 @@ const productos = [
     categoria: 'CAMISETAS',
     titulo: 'Camisetas y Polos',
     descripcion: 'Básicas, polo y deportivas en 100% poliéster transpirable. Ideales para uniformes empresariales y eventos corporativos con un estilo pulido.',
-    minimo: '30 unidades',
+    minimo: '50 unidades',
     imagen: '/servicios/p3_11.png',
     colores: 6,
   },
@@ -62,7 +62,7 @@ const productos = [
     titulo: 'Gorras y Viseras',
     descripcion: 'Drill suave con hebilla metálica y fabricación 100% nacional. Cada una pensada para acompañarte a donde quieras llevarla.',
     minimo: '50 unidades',
-    imagen: '/servicios/p10_121.png',
+    imagen: '/gorras.webp',
     colores: 5,
   },
 ];
@@ -149,32 +149,26 @@ const beneficios = [
   {
     titulo: 'Producción 100% Colombiana',
     descripcion: 'Apostamos por la industria nacional con estándares internacionales de calidad',
-    icono: '🇨🇴',
   },
   {
     titulo: '8 Años de Experiencia',
     descripcion: 'Consolidados como aliado confiable para empresas de todos los tamaños',
-    icono: '⭐',
   },
   {
     titulo: 'Amplia Gama de Colores',
     descripcion: 'Más de 20 colores disponibles en stock para pedidos urgentes',
-    icono: '🎨',
   },
   {
     titulo: 'Tallas Unisex Completas',
     descripcion: 'XXS a 3XL con tablas de medidas detalladas para equipos diversos',
-    icono: '📏',
   },
   {
     titulo: 'Mínimos Accesibles',
     descripcion: 'Desde 30 unidades por referencia, ideal para PyMEs y empresas grandes',
-    icono: '✅',
   },
   {
     titulo: 'Entregas Optimizadas',
     descripcion: 'Tiempos de producción competitivos con acompañamiento personalizado',
-    icono: '⚡',
   },
 ];
 
@@ -186,7 +180,7 @@ export default function PrendasEmpresasPage() {
         {/* Imagen */}
         <div className="relative h-[50vh] lg:h-[600px] order-2 lg:order-1">
           <Image
-            src="/servicios/desing.png"
+            src="/servicios/desing.jpg"
             alt="Prendas personalizadas Juan Becerra"
             fill
             className="object-cover"
@@ -204,16 +198,15 @@ export default function PrendasEmpresasPage() {
               </p>
 
               <h1 className="font-belleza text-3xl sm:text-4xl lg:text-5xl font-light tracking-wide text-gray-900 leading-tight">
-                Prendas Personalizadas que
-                <span className="block text-[#620c0b] mt-2">Elevan tu Marca</span>
+                Prendas Personalizadas 
               </h1>
 
               <p className="font-moderat text-base text-gray-700 leading-relaxed font-light">
-                Desde 30 unidades, transforma la identidad de tu empresa con prendas de alta calidad 100% Colombianas.
+                Desde 30 unidades, transforma la identidad de tu empresa con prendas de alta calidad.
               </p>
 
               <p className="font-moderat text-sm text-gray-600">
-                8 años de experiencia • Técnicas premium de personalización
+                8 años de experiencia.
               </p>
 
               {/* Botones */}
@@ -234,10 +227,10 @@ export default function PrendasEmpresasPage() {
                 </a>
 
                 <a
-                  href="#productos"
+                  href="#calendly"
                   className="group inline-flex items-center gap-3 text-gray-900 text-sm tracking-[0.2em] uppercase font-light border-b-2 border-gray-900/30 pb-2 hover:border-gray-900 transition-all duration-300"
                 >
-                  Ver Productos
+                  Agendar llamada
                   <svg
                     className="w-5 h-5 transform group-hover:translate-x-1 transition-transform"
                     fill="none"
@@ -351,16 +344,13 @@ export default function PrendasEmpresasPage() {
 
             <div className="space-y-4 pt-2">
               {beneficios.map((beneficio, index) => (
-                <div key={index} className="flex gap-3">
-                  <div className="flex-shrink-0 text-2xl">{beneficio.icono}</div>
-                  <div>
-                    <h3 className="font-moderat text-sm font-semibold text-gray-900 mb-1">
-                      {beneficio.titulo}
-                    </h3>
-                    <p className="font-moderat text-gray-600 text-xs leading-relaxed">
-                      {beneficio.descripcion}
-                    </p>
-                  </div>
+                <div key={index}>
+                  <h3 className="font-moderat text-sm font-semibold text-gray-900 mb-1">
+                    {beneficio.titulo}
+                  </h3>
+                  <p className="font-moderat text-gray-600 text-xs leading-relaxed">
+                    {beneficio.descripcion}
+                  </p>
                 </div>
               ))}
             </div>

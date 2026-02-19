@@ -44,7 +44,7 @@ export function CalendlyWidget() {
       <div
         ref={containerRef}
         className="calendly-inline-widget"
-        data-url="https://calendly.com/cdpsk8/30min?primary_color=%23620c0b"
+        data-url="https://calendly.com/contacto-juanbecerra"
         style={{
           minWidth: '320px',
           height: '700px',

@@ -16,7 +16,7 @@ const navLinks = [
   { href: "/search/todos", text: "Tienda", highlight: false, hasDropdown: false },
   { href: "/search", text: "Categorías", highlight: false, hasDropdown: true },
   { href: "/empresarial-juan-becerra", text: "Empresas", highlight: false, hasDropdown: false },
-  { href: "/search/todos", text: "Sale", highlight: true, hasDropdown: false },
+  { href: "/by-juan-becerra", text: "By JB", highlight: false, hasDropdown: false },
 ];
 
 interface NavbarIntegratedProps {
@@ -29,7 +29,8 @@ export default function NavbarIntegrated({ variant = 'transparent', collections 
   const categoriesDropdownRef = useRef<HTMLDivElement>(null);
 
   // Si estamos en páginas de búsqueda/catálogo o producto, forzar variant solid
-  const isSearchOrProductPage = pathname?.startsWith('/search') || pathname?.startsWith('/products') || pathname?.startsWith('/empresarial-juan-becerra');
+  // NOTA: /by-juan-becerra permite transparencia (como la home)
+  const isSearchOrProductPage = pathname?.startsWith('/search') || pathname?.startsWith('/products') || pathname?.startsWith('/empresarial-juan-becerra') || pathname?.startsWith('/running-juan-becerra');
   const isSolidVariant = variant === 'solid' || isSearchOrProductPage;
 
   const [isScrolled, setIsScrolled] = useState(isSolidVariant);
@@ -146,11 +147,11 @@ export default function NavbarIntegrated({ variant = 'transparent', collections 
             <div className="absolute left-1/2 -translate-x-1/2 pointer-events-none">
               <Link href="/" className="pointer-events-auto">
                 <Image
-                  src="/logo-juan-becerra.png"
+                  src={pathname?.startsWith('/by-juan-becerra') ? "/logo-by-jb.png" : "/logo-juan-becerra.png"}
                   alt="Juan Becerra"
                   width={128}
                   height={128}
-                  className={`h-16 sm:h-20 lg:h-32 w-auto transition-all duration-500 object-contain ${
+                  className={`h-[calc(var(--spacing)*26)] w-auto transition-all duration-500 object-contain ${
                     isScrolled || isSolidVariant ? 'brightness-100' : 'brightness-0 invert'
                   }`}
                   priority
@@ -246,7 +247,7 @@ export default function NavbarIntegrated({ variant = 'transparent', collections 
       >
         <div className="flex items-center justify-between p-6 border-b">
           <Image
-            src="/logo-juan-becerra.png"
+            src={pathname?.startsWith('/by-juan-becerra') ? "/logo-by-jb.png" : "/logo-juan-becerra.png"}
             alt="Juan Becerra"
             width={64}
             height={64}

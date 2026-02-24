@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue:ital,wght@0,400;1,400;0,700;1,700&display=swap');
+
+.font-bebas { font-family: 'Bebas Neue', sans-serif; }
+.font-bebas-italic { font-family: 'Bebas Neue', sans-serif; font-style: italic; }
+.font-bebas-bold { font-family: 'Bebas Neue', sans-serif; font-weight: 700; }
+.font-bebas-bold-italic { font-family: 'Bebas Neue', sans-serif; font-weight: 700; font-style: italic; }
+
+.font-neulis { font-family: 'Neulis Neue', sans-serif; font-weight: 400; }
+.font-neulis-semibold { font-family: 'Neulis Neue', sans-serif; font-weight: 600; }
+
+/* Custom colors override */
+.by-jb-primary { color: #131859 !important; }
+.by-jb-secondary { color: #1f2c8c !important; }
+.by-jb-accent { color: #eb2e11 !important; }
+.by-jb-green { color: #345644 !important; }
+
+.by-jb-bg-primary { background-color: #131859 !important; }
+.by-jb-bg-secondary { background-color: #1f2c8c !important; }
+.by-jb-bg-accent { background-color: #eb2e11 !important; }
+.by-jb-bg-green { background-color: #345644 !important; }
+.by-jb-bg-white { background-color: #ffffff !important; }
+
+.by-jb-border-primary { border-color: #131859 !important; }
+.by-jb-border-secondary { border-color: #1f2c8c !important; }
+.by-jb-border-accent { border-color: #eb2e11 !important; }

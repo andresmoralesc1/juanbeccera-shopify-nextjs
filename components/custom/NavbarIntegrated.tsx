@@ -39,6 +39,23 @@ export default function NavbarIntegrated({ variant = 'transparent', collections 
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const [isMobileCategoriesOpen, setIsMobileCategoriesOpen] = useState(false);
 
+  // Rotación de imágenes del menú "By JB"
+  const jbImages = [
+    '/jb-star-removebg-preview.png',
+    '/jb-star-2-removebg-preview.png',
+    '/jb-star-3-removebg-preview.png',
+    '/jb-star-4-removebg-preview.png'
+  ] as const;
+  const [currentJbImageIndex, setCurrentJbImageIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentJbImageIndex((prev) => (prev + 1) % jbImages.length);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [jbImages.length]);
+
   // Filtrar colecciones visibles (excluir "All" y las ocultas)
   const visibleCollections = collections.filter(c => c.handle !== '' && !c.handle.startsWith('hidden'));
 
@@ -164,10 +181,24 @@ export default function NavbarIntegrated({ variant = 'transparent', collections 
             <div className="flex items-center space-x-2 sm:space-x-4 lg:space-x-8">
               <nav className="hidden lg:flex items-center space-x-8">
                 {navLinks.slice(2).map((link) => (
-                  <Link key={link.text} href={link.href} className={`font-belleza text-lg tracking-wider transition-colors duration-300 relative group ${isScrolled || isSolidVariant ? 'text-black hover:text-[#620c0b]' : 'text-white hover:text-gray-200'} ${link.highlight ? 'font-semibold' : 'font-medium'}`}>
-                    {link.text}
-                    <span className={`absolute bottom-0 left-0 h-0.5 transition-all duration-300 group-hover:w-full ${link.highlight ? 'w-full' : 'w-0'} ${isScrolled || isSolidVariant ? 'bg-[#620c0b]' : 'bg-white'}`}></span>
-                  </Link>
+                  link.text === "By JB" ? (
+                    <Link key={link.text} href={pathname?.startsWith('/by-juan-becerra') ? "/" : link.href} className="relative group">
+                      <Image
+                        src={pathname?.startsWith('/by-juan-becerra') ? "/toro-juan-becerra.png" : jbImages.at(currentJbImageIndex) ?? jbImages[0]}
+                        alt="By JB"
+                        width={80}
+                        height={40}
+                        className={`h-8 w-auto transition-all duration-300 object-contain ${
+                          isScrolled || isSolidVariant ? 'brightness-100' : 'brightness-0 invert'
+                        }`}
+                      />
+                    </Link>
+                  ) : (
+                    <Link key={link.text} href={link.href} className={`font-belleza text-lg tracking-wider transition-colors duration-300 relative group ${isScrolled || isSolidVariant ? 'text-black hover:text-[#620c0b]' : 'text-white hover:text-gray-200'} ${link.highlight ? 'font-semibold' : 'font-medium'}`}>
+                      {link.text}
+                      <span className={`absolute bottom-0 left-0 h-0.5 transition-all duration-300 group-hover:w-full ${link.highlight ? 'w-full' : 'w-0'} ${isScrolled || isSolidVariant ? 'bg-[#620c0b]' : 'bg-white'}`}></span>
+                    </Link>
+                  )
                 ))}
               </nav>
 

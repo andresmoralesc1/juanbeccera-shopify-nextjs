@@ -13,7 +13,14 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git push:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(npm install:*)",
+      "Bash(pip show:*)",
+      "Bash(npx next lint:*)",
+      "Bash(dir:*)",
+      "Bash(find:*)",
+      "Bash(npx tsx:*)",
+      "Bash(curl:*)"
     ]
   }
 }

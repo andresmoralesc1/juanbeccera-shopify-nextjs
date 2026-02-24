@@ -1,17 +1,15 @@
 import { Suspense } from 'react';
 import AnnouncementBar from '@/components/custom/AnnouncementBar';
 import HeroSectionByJB from '@/components/custom/HeroSectionByJB';
+import TwoColumnBanner from '@/components/custom/TwoColumnBanner';
+import HeroSectionByJBStatic from '@/components/custom/HeroSectionByJBStatic';
 import CategoryProductsByJB from '@/components/custom/CategoryProductsByJB';
-import SeasonalBanner from '@/components/custom/SeasonalBanner';
-import FeaturedProducts from '@/components/custom/FeaturedProducts';
-import BrandPhilosophy from '@/components/custom/BrandPhilosophy';
-import Newsletter from '@/components/custom/Newsletter';
-import InstagramFeed from '@/components/custom/InstagramFeed';
+import FeaturedProductsByJB from '@/components/custom/FeaturedProductsByJB';
+import NewsletterByJB from '@/components/custom/NewsletterByJB';
 import FooterCustom from '@/components/custom/FooterCustom';
 import {
   getProducts,
-  getCollections,
-  getHomeSlides,
+  getCollectionProducts,
   getHomeAnnouncement
 } from 'lib/shopify';
 import { CategorySliderSkeleton, ProductGridSkeleton } from '@/components/ui/skeleton';
@@ -42,11 +40,16 @@ async function FeaturedProductsSection() {
     description: product.description
   }));
 
-  return <FeaturedProducts products={featuredProducts} />;
+  return <FeaturedProductsByJB products={featuredProducts} />;
 }
 
 async function CategorySectionWrapper() {
-  return <CategoryProductsByJB collectionHandle="camisetas" title="Camisetas" limit={8} />;
+  const products = await getCollectionProducts({
+    collection: 'camisetas',
+    sortKey: 'BEST_SELLING'
+  });
+
+  return <CategoryProductsByJB products={products} title="Camisetas" caption="Nuestra colección de camisetas" />;
 }
 
 async function AnnouncementBarWrapper() {
@@ -67,26 +70,41 @@ async function HeroSectionWrapper() {
 }
 
 async function SeasonalBannerWrapper() {
-  const slides = await getHomeSlides();
-  return <SeasonalBanner slides={slides.length > 0 ? slides : undefined} />;
+  return <TwoColumnBanner />;
+}
+
+async function BrandSectionWrapper() {
+  return <HeroSectionByJBStatic />;
+}
+
+async function InstagramSectionWrapper() {
+  return <HeroSectionByJBStatic centerImage="/by-jb-caption-2.png" />;
 }
 
 export default function ByJuanBecerraPage() {
   return (
     <>
-      <HeroSectionWrapper />
+      <Suspense fallback={<div className="h-[90vh] bg-gray-100" />}>
+        <HeroSectionWrapper />
+      </Suspense>
       <CategorySectionWrapper />
-      <SeasonalBannerWrapper />
-      <div className="py-16 sm:py-24" style={{ backgroundColor: '#345644' }}>
+      <Suspense fallback={<div className="h-[90vh] bg-gray-100" />}>
+        <SeasonalBannerWrapper />
+      </Suspense>
+      <div className="py-16 sm:py-24" style={{ backgroundColor: '#1f2c8c' }}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Suspense fallback={<ProductGridSkeleton count={6} />}>
             <FeaturedProductsSection />
           </Suspense>
         </div>
       </div>
-      <BrandPhilosophy />
-      <Newsletter />
-      <InstagramFeed />
+      <Suspense fallback={<div className="h-[90vh] bg-gray-100" />}>
+        <BrandSectionWrapper />
+      </Suspense>
+      <NewsletterByJB />
+      <Suspense fallback={<div className="h-[90vh] bg-gray-100" />}>
+        <InstagramSectionWrapper />
+      </Suspense>
       <FooterCustom />
     </>
   );

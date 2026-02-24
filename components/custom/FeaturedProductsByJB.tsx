@@ -16,12 +16,12 @@ interface FeaturedProduct {
   description: string;
 }
 
-interface FeaturedProductsProps {
+interface FeaturedProductsByJBProps {
   products: FeaturedProduct[];
   title?: string;
 }
 
-export default function FeaturedProducts({ products }: FeaturedProductsProps) {
+export default function FeaturedProductsByJB({ products }: FeaturedProductsByJBProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [visibleCards, setVisibleCards] = useState(3);
@@ -150,7 +150,7 @@ export default function FeaturedProducts({ products }: FeaturedProductsProps) {
   }
 
   return (
-    <div className="py-12 sm:py-16 lg:py-20 overflow-hidden" style={{ backgroundColor: '#345644' }}>
+    <div className="py-12 sm:py-16 lg:py-20 overflow-hidden" style={{ backgroundColor: '#eb2e11' }}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-6 items-center">
 
@@ -194,10 +194,10 @@ export default function FeaturedProducts({ products }: FeaturedProductsProps) {
                       </div>
                       {/* Nombre y precio debajo */}
                       <div className="mt-3 text-white">
-                        <h3 className="font-moderat text-sm sm:text-base font-normal">
+                        <h3 className="font-neulis text-sm sm:text-base font-normal">
                           {product.name}
                         </h3>
-                        <p className="font-moderat text-sm sm:text-base mt-1">
+                        <p className="font-neulis text-sm sm:text-base mt-1">
                           {product.price}
                         </p>
                       </div>
@@ -244,15 +244,12 @@ export default function FeaturedProducts({ products }: FeaturedProductsProps) {
 
           {/* Caption - Derecha */}
           <div className="lg:col-span-3 order-1 lg:order-2 flex flex-col justify-center items-center lg:items-start h-full">
-            <p className="font-moderat text-base md:text-lg leading-relaxed text-white text-center lg:text-left mb-6">
+            <p className="font-neulis text-base md:text-lg leading-relaxed text-white text-center lg:text-left mb-6">
               Descubre nuestros artículos más populares y exclusivos. Cada pieza ha sido cuidadosamente seleccionada para ofrecerte la mejor calidad y estilo.
             </p>
             <Link
               href="/search"
-              className="inline-flex items-center justify-center font-moderat text-white text-sm tracking-[0.15em] uppercase font-medium px-8 py-3 transition-all duration-300"
-              style={{ backgroundColor: '#364e41' }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#eb2e11'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#364e41'}
+              className="inline-flex items-center justify-center font-neulis text-white text-sm tracking-[0.15em] uppercase font-medium px-8 py-3 transition-all duration-300 bg-black hover:bg-gray-800"
             >
               Ver Todos
             </Link>

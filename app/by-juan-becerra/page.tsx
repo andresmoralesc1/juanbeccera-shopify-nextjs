@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import AnnouncementBar from '@/components/custom/AnnouncementBar';
-import HeroSection from '@/components/custom/HeroSection';
-import CategorySectionDynamic from '@/components/custom/CategorySectionDynamic';
+import HeroSectionByJB from '@/components/custom/HeroSectionByJB';
+import CategoryProductsByJB from '@/components/custom/CategoryProductsByJB';
 import SeasonalBanner from '@/components/custom/SeasonalBanner';
 import FeaturedProducts from '@/components/custom/FeaturedProducts';
 import BrandPhilosophy from '@/components/custom/BrandPhilosophy';
@@ -11,7 +11,6 @@ import FooterCustom from '@/components/custom/FooterCustom';
 import {
   getProducts,
   getCollections,
-  getHomeHero,
   getHomeSlides,
   getHomeAnnouncement
 } from 'lib/shopify';
@@ -47,8 +46,7 @@ async function FeaturedProductsSection() {
 }
 
 async function CategorySectionWrapper() {
-  const collections = await getCollections();
-  return <CategorySectionDynamic collections={collections} />;
+  return <CategoryProductsByJB collectionHandle="camisetas" title="Camisetas" limit={8} />;
 }
 
 async function AnnouncementBarWrapper() {
@@ -65,21 +63,7 @@ async function AnnouncementBarWrapper() {
 }
 
 async function HeroSectionWrapper() {
-  const hero = await getHomeHero();
-  if (!hero) {
-    return <HeroSection />;
-  }
-  return (
-    <HeroSection
-      title={hero.title ? hero.title : undefined}
-      description={hero.description ? hero.description : undefined}
-      image={hero.image ? hero.image : undefined}
-      buttonText={hero.buttonText ? hero.buttonText : undefined}
-      buttonText2={hero.buttonText2 ? hero.buttonText2 : undefined}
-      buttonUrl={hero.buttonUrl ? hero.buttonUrl : undefined}
-      buttonUrl2={hero.buttonUrl2 ? hero.buttonUrl2 : undefined}
-    />
-  );
+  return <HeroSectionByJB />;
 }
 
 async function SeasonalBannerWrapper() {

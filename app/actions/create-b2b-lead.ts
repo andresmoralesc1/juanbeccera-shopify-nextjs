@@ -47,6 +47,9 @@ export async function createB2BLead(data: B2BLeadData): Promise<{ success: boole
       }
     }
 
+    // TypeScript: después de la validación, sabemos que accessToken es string
+    const token: string = accessToken
+
     // Separar nombre en first_name y last_name
     const nameParts = data.nombre.trim().split(' ')
     const firstName = nameParts[0] || ''
@@ -119,7 +122,7 @@ ${data.mensaje || 'Sin mensaje adicional'}
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-Shopify-Access-Token': accessToken
+          'X-Shopify-Access-Token': token
         },
         body: JSON.stringify(payload)
       }
@@ -196,14 +199,14 @@ ${data.mensaje || 'Sin mensaje adicional'}
 export async function createOrUpdateB2BLead(data: B2BLeadData): Promise<{ success: boolean; customerId?: number; error?: string }> {
   try {
     const shopifyDomain = process.env.SHOPIFY_STORE_DOMAIN || 'juanbecerra.co'
-    const accessToken = process.env.SHOPIFY_ADMIN_ACCESS_TOKEN
+    const token = process.env.SHOPIFY_ADMIN_ACCESS_TOKEN
 
     // Primero buscar si el cliente ya existe
     const searchResponse = await fetch(
       `https://${shopifyDomain}/admin/api/2024-01/customers/search.json?query=email:${encodeURIComponent(data.email)}`,
       {
         headers: {
-          'X-Shopify-Access-Token': accessToken
+          'X-Shopify-Access-Token': token
         }
       }
     )
@@ -237,7 +240,7 @@ export async function createOrUpdateB2BLead(data: B2BLeadData): Promise<{ succes
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
-            'X-Shopify-Access-Token': accessToken
+            'X-Shopify-Access-Token': token
           },
           body: JSON.stringify(updatePayload)
         }

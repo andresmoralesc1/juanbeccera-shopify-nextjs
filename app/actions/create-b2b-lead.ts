@@ -1,7 +1,5 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
-
 interface B2BLeadData {
   nombre: string
   empresa: string
@@ -19,7 +17,7 @@ interface ShopifyCustomerResponse {
     email: string
     tags: string
   }
-  errors?: any[]
+  errors?: Record<string, string | string[]> | string[]
 }
 
 /**

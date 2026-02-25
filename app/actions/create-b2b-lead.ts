@@ -199,7 +199,16 @@ ${data.mensaje || 'Sin mensaje adicional'}
 export async function createOrUpdateB2BLead(data: B2BLeadData): Promise<{ success: boolean; customerId?: number; error?: string }> {
   try {
     const shopifyDomain = process.env.SHOPIFY_STORE_DOMAIN || 'juanbecerra.co'
-    const token = process.env.SHOPIFY_ADMIN_ACCESS_TOKEN
+    const accessToken = process.env.SHOPIFY_ADMIN_ACCESS_TOKEN
+
+    if (!accessToken) {
+      return {
+        success: false,
+        error: 'Error de configuración del servidor'
+      }
+    }
+
+    const token: string = accessToken
 
     // Primero buscar si el cliente ya existe
     const searchResponse = await fetch(

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { EnvelopeIcon, PhoneIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
+import { createB2BLead } from '@/app/actions/create-b2b-lead';
 
 interface FormData {
   nombre: string;
@@ -28,6 +29,7 @@ export function FormularioContactoB2B() {
 
   const [enviado, setEnviado] = useState(false);
   const [enviando, setEnviando] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -37,12 +39,22 @@ export function FormularioContactoB2B() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setEnviando(true);
+    setError(null);
 
-    // Simular envío (aquí iría la lógica real de envío)
-    setTimeout(() => {
+    try {
+      // Usar el Server Action para enviar a Shopify
+      const result = await createB2BLead(formData);
+
+      if (result.success) {
+        setEnviado(true);
+      } else {
+        setError(result.error || 'Error al enviar el formulario');
+      }
+    } catch (err) {
+      setError('Error de conexión. Por favor intenta nuevamente.');
+    } finally {
       setEnviando(false);
-      setEnviado(true);
-    }, 1500);
+    }
   };
 
   if (enviado) {
@@ -123,6 +135,12 @@ export function FormularioContactoB2B() {
 
           {/* Formulario */}
           <div className="lg:col-span-2">
+            {error && (
+              <div className="mb-4 bg-red-500/20 border border-red-500/50 px-4 py-3 text-white">
+                <p className="font-moderat text-sm">{error}</p>
+              </div>
+            )}
+
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>

@@ -56,23 +56,32 @@ export async function createB2BLead(data: B2BLeadData): Promise<{ success: boole
     const lastName = nameParts.slice(1).join(' ') || '-'
 
     // Formatear teléfono al formato internacional
-    // Si ya tiene código de país (+XX), lo dejamos tal cual
-    // Si no, asumimos que es Colombia (+57)
+    // Solo enviar si tiene un formato válido
     let formattedPhone: string | undefined = undefined
     if (data.telefono && data.telefono.trim()) {
       let phone = data.telefono.replace(/\s/g, '').replace(/\(/g, '').replace(/\)/g, '').replace(/-/g, '')
 
-      // Si ya empieza con +, dejarlo tal cual
-      if (!phone.startsWith('+')) {
-        // Si empieza con 57 y es suficientemente largo, quitar el 57
-        if (phone.startsWith('57') && phone.length > 10) {
-          phone = phone.substring(2)
-        }
-        // Agregar +57 si es un número colombiano
-        phone = `+57${phone}`
-      }
+      // Validar que tenga un rango razonable (10-13 dígitos para Colombia)
+      // Si es más corto o más largo, probablemente es inválido
+      if (phone.length >= 10 && phone.length <= 13) {
+        // Eliminar ceros repetidos al inicio (ej: 0666 -> 666)
+        phone = phone.replace(/^0+/, '')
 
-      formattedPhone = phone
+        // Si ya empieza con +, dejarlo tal cual
+        if (!phone.startsWith('+')) {
+          // Si empieza con 57 y es suficientemente largo, quitar el 57
+          if (phone.startsWith('57') && phone.length > 10) {
+            phone = phone.substring(2)
+          }
+          // Agregar +57 si es un número colombiano
+          phone = `+57${phone}`
+        }
+
+        // Validar que después del formato tenga la longitud correcta (+57 + 10 dígitos = 13)
+        if (phone.length >= 12 && phone.length <= 15) {
+          formattedPhone = phone
+        }
+      }
     }
 
     // Fecha actual para el note

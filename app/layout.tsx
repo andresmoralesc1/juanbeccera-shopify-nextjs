@@ -2,7 +2,6 @@ import Script from 'next/script';
 import { CartProvider } from 'components/cart/cart-context';
 import NavbarIntegrated from '@/components/custom/NavbarIntegrated';
 import AnnouncementBar from '@/components/custom/AnnouncementBar';
-import { WelcomeToast } from 'components/welcome-toast';
 import N8nChatWidget from '@/components/N8nChatWidget';
 import { PageProgress } from '@/components/ui/page-progress';
 import { WebVitals } from '@/components/web-vitals';
@@ -82,7 +81,6 @@ export default async function RootLayout({
           <main className="pt-[156px]">
             {children}
             <Toaster closeButton />
-            <WelcomeToast />
             <N8nChatWidget />
           </main>
         </CartProvider>

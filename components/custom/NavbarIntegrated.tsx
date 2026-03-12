@@ -15,8 +15,8 @@ import SearchComponent from 'components/layout/navbar/search';
 const navLinks = [
   { href: "/search/todos", text: "Tienda", highlight: false, hasDropdown: false },
   { href: "/search", text: "Categorías", highlight: false, hasDropdown: true },
-  { href: "/empresarial-juan-becerra", text: "Empresas", highlight: false, hasDropdown: false },
   { href: "/by-juan-becerra", text: "By JB", highlight: false, hasDropdown: false },
+  { href: "/empresarial-juan-becerra", text: "Empresas", highlight: false, hasDropdown: false },
 ];
 
 interface NavbarIntegratedProps {
@@ -118,7 +118,7 @@ export default function NavbarIntegrated({ variant = 'transparent', collections 
           <div className="h-20 py-3 flex items-center justify-between relative">
 
             <nav className="hidden lg:flex items-center space-x-8">
-              {navLinks.slice(0, 2).map((link) => (
+              {navLinks.slice(0, 3).map((link) => (
                 link.hasDropdown ? (
                   <div key={link.text} className="relative" ref={categoriesDropdownRef}>
                     <button
@@ -151,6 +151,21 @@ export default function NavbarIntegrated({ variant = 'transparent', collections 
                       </div>
                     )}
                   </div>
+                ) : link.text === "By JB" ? (
+                  <Link key={link.text} href={pathname?.startsWith('/by-juan-becerra') ? "/" : link.href} className="relative group flex items-center gap-2">
+                    <Image
+                      src={pathname?.startsWith('/by-juan-becerra') ? "/toro-juan-becerra.png" : jbImages.at(currentJbImageIndex) ?? jbImages[0]}
+                      alt="By JB"
+                      width={80}
+                      height={40}
+                      className={`h-8 w-auto transition-all duration-300 object-contain ${
+                        isScrolled || isSolidVariant ? 'brightness-100' : 'brightness-0 invert'
+                      }`}
+                    />
+                    <span className={`font-belleza text-lg tracking-wider transition-colors duration-300 ${isScrolled || isSolidVariant ? 'text-black' : 'text-white'}`}>
+                      {pathname?.startsWith('/by-juan-becerra') ? 'Juan Becerra' : 'Sport'}
+                    </span>
+                  </Link>
                 ) : (
                   <Link key={link.text} href={link.href} className={`font-belleza text-lg tracking-wider transition-colors duration-300 relative group ${isScrolled || isSolidVariant ? 'text-black hover:text-[#620c0b]' : 'text-white hover:text-gray-200'}`}>
                     {link.text}
@@ -162,13 +177,13 @@ export default function NavbarIntegrated({ variant = 'transparent', collections 
 
             {/* Logo - Center */}
             <div className="absolute left-1/2 -translate-x-1/2 pointer-events-none">
-              <Link href="/" className="pointer-events-auto">
+              <Link href="/" className="pointer-events-auto overflow-hidden w-[58px] p-[5px]">
                 <Image
                   src={pathname?.startsWith('/by-juan-becerra') ? "/logo-by-jb.png" : "/logo-juan-becerra.png"}
                   alt="Juan Becerra"
                   width={128}
                   height={128}
-                  className={`h-[calc(var(--spacing)*26)] w-auto transition-all duration-500 object-contain ${
+                  className={`h-[calc(var(--spacing)*22)] w-auto transition-all duration-500 object-contain ${
                     isScrolled || isSolidVariant ? 'brightness-100' : 'brightness-0 invert'
                   }`}
                   priority
@@ -180,9 +195,9 @@ export default function NavbarIntegrated({ variant = 'transparent', collections 
             {/* Right Navigation & Actions */}
             <div className="flex items-center space-x-2 sm:space-x-4 lg:space-x-8">
               <nav className="hidden lg:flex items-center space-x-8">
-                {navLinks.slice(2).map((link) => (
+                {navLinks.slice(3).map((link) => (
                   link.text === "By JB" ? (
-                    <Link key={link.text} href={pathname?.startsWith('/by-juan-becerra') ? "/" : link.href} className="relative group">
+                    <Link key={link.text} href={pathname?.startsWith('/by-juan-becerra') ? "/" : link.href} className="relative group flex items-center gap-2">
                       <Image
                         src={pathname?.startsWith('/by-juan-becerra') ? "/toro-juan-becerra.png" : jbImages.at(currentJbImageIndex) ?? jbImages[0]}
                         alt="By JB"
@@ -192,6 +207,9 @@ export default function NavbarIntegrated({ variant = 'transparent', collections 
                           isScrolled || isSolidVariant ? 'brightness-100' : 'brightness-0 invert'
                         }`}
                       />
+                      <span className={`font-belleza text-lg tracking-wider transition-colors duration-300 ${isScrolled || isSolidVariant ? 'text-black' : 'text-white'}`}>
+                        {pathname?.startsWith('/by-juan-becerra') ? 'Juan Becerra' : 'Sport'}
+                      </span>
                     </Link>
                   ) : (
                     <Link key={link.text} href={link.href} className={`font-belleza text-lg tracking-wider transition-colors duration-300 relative group ${isScrolled || isSolidVariant ? 'text-black hover:text-[#620c0b]' : 'text-white hover:text-gray-200'} ${link.highlight ? 'font-semibold' : 'font-medium'}`}>

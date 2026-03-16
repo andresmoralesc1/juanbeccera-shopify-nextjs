@@ -49,24 +49,26 @@ export default function HeroSectionByJB({
       </div>
 
       {/* Center Image */}
-      <div
-        className="relative z-10 flex items-center justify-center w-full h-full px-4"
-        style={{
-          opacity: Math.max(0, 1 - scrollY / 400),
-          transform: `translateY(${scrollY * 0.2}px)`
-        }}
-      >
-        <div className="relative max-w-4xl w-full flex items-center justify-center">
-          <Image
-            src={centerImage}
-            alt="By Juan Becerra"
-            width={600}
-            height={400}
-            className="w-auto h-auto object-contain max-w-full"
-            priority
-          />
+      {centerImage && (
+        <div
+          className="relative z-10 flex items-center justify-center w-full h-full px-4"
+          style={{
+            opacity: Math.max(0, 1 - scrollY / 400),
+            transform: `translateY(${scrollY * 0.2}px)`
+          }}
+        >
+          <div className="relative max-w-4xl w-full flex items-center justify-center">
+            <Image
+              src={centerImage}
+              alt="By Juan Becerra"
+              width={600}
+              height={400}
+              className="w-auto h-auto object-contain max-w-full"
+              priority
+            />
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Scroll indicator */}
       <div

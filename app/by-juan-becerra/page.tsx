@@ -66,19 +66,11 @@ async function AnnouncementBarWrapper() {
 }
 
 async function HeroSectionWrapper() {
-  return <HeroSectionByJB />;
+  return <HeroSectionByJB backgroundImage="/FOCUS-ON.png" centerImage="" />;
 }
 
 async function SeasonalBannerWrapper() {
-  return <TwoColumnBanner />;
-}
-
-async function BrandSectionWrapper() {
-  return <HeroSectionByJBStatic />;
-}
-
-async function InstagramSectionWrapper() {
-  return <HeroSectionByJBStatic centerImage="/by-jb-caption-2.png" />;
+  return <TwoColumnBanner image1="/tenis.jpg" />;
 }
 
 export default function ByJuanBecerraPage() {
@@ -98,13 +90,7 @@ export default function ByJuanBecerraPage() {
           </Suspense>
         </div>
       </div>
-      <Suspense fallback={<div className="h-[90vh] bg-gray-100" />}>
-        <BrandSectionWrapper />
-      </Suspense>
       <NewsletterByJB />
-      <Suspense fallback={<div className="h-[90vh] bg-gray-100" />}>
-        <InstagramSectionWrapper />
-      </Suspense>
       <FooterCustom />
     </>
   );

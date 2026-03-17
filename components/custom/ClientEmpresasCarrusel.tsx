@@ -154,13 +154,13 @@ export function ClientEmpresasCarrusel({ empresas }: ClientEmpresasCarruselProps
   };
 
   return (
-    <div className="bg-[#364e41] py-8 sm:py-10 lg:py-12 overflow-hidden">
+    <div className="bg-[#f8f7f4] py-8 sm:py-10 lg:py-12 overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-10 gap-6 sm:gap-8 lg:gap-12 items-center">
 
           {/* Logos de Empresas - Izquierda */}
           <div className="lg:col-span-2 space-y-6">
-            <h2 className="font-belleza text-2xl sm:text-3xl lg:text-4xl font-light tracking-wide mb-6 lg:mb-8 leading-tight text-white text-center lg:text-left">
+            <h2 className="font-belleza text-2xl sm:text-3xl lg:text-4xl font-light tracking-wide mb-6 lg:mb-8 leading-tight text-gray-900 text-center lg:text-left">
               Nuestros Clientes
             </h2>
 
@@ -174,8 +174,8 @@ export function ClientEmpresasCarrusel({ empresas }: ClientEmpresasCarruselProps
                     flex items-center justify-center p-4 rounded-lg
                     transition-all duration-300
                     ${empresaSeleccionada.id === empresa.id
-                      ? 'bg-white/20 ring-2 ring-white'
-                      : 'bg-white/5 hover:bg-white/10 ring-2 ring-transparent'
+                      ? 'bg-white ring-2 ring-gray-900 shadow-lg'
+                      : 'bg-white/50 hover:bg-white ring-2 ring-transparent hover:ring-gray-900/30'
                     }
                   `}
                 >
@@ -278,7 +278,7 @@ export function ClientEmpresasCarrusel({ empresas }: ClientEmpresasCarruselProps
                             style={{
                               width: isActive ? '40px' : '20px',
                               height: '2px',
-                              backgroundColor: isActive ? '#ffffff' : 'rgba(255,255,255,0.4)',
+                              backgroundColor: isActive ? '#131859' : 'rgba(19,24,89,0.3)',
                               transition: 'all 0.3s ease',
                             }}
                           />
@@ -288,16 +288,16 @@ export function ClientEmpresasCarrusel({ empresas }: ClientEmpresasCarruselProps
                   </div>
 
                   {/* Indicador de swipe solo en mobile */}
-                  <div className="block sm:hidden text-center mt-4 text-white/60 text-xs animate-pulse">
+                  <div className="block sm:hidden text-center mt-4 text-gray-500/60 text-xs animate-pulse">
                     ← Desliza para ver más →
                   </div>
                 </>
               ) : (
                 <div className="text-center py-20">
-                  <p className="text-white/60 text-lg">
+                  <p className="text-gray-500/60 text-lg">
                     No hay trabajos disponibles para {empresaSeleccionada.nombre}
                   </p>
-                  <p className="text-white/40 text-sm mt-2">
+                  <p className="text-gray-400/60 text-sm mt-2">
                     Próximamente...
                   </p>
                 </div>

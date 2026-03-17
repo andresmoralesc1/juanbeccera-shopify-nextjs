@@ -22,7 +22,7 @@ const productos = [
     titulo: 'Camisetas y Polos',
     descripcion: 'Básicas, polo y deportivas en 100% poliéster transpirable. Ideales para uniformes empresariales y eventos corporativos con un estilo pulido.',
     minimo: '50 unidades',
-    imagen: '/servicios/p3_11.png',
+    imagen: '/LandingB2B4.png',
     colores: 6,
   },
   {
@@ -180,7 +180,7 @@ export default function PrendasEmpresasPage() {
         {/* Imagen */}
         <div className="relative h-[50vh] lg:h-[600px] order-2 lg:order-1">
           <Image
-            src="/servicios/desing.jpg"
+            src="/Foto Inicio.jpg"
             alt="Prendas personalizadas Juan Becerra"
             fill
             className="object-cover"

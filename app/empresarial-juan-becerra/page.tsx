@@ -38,7 +38,7 @@ const productos = [
     titulo: 'Hoodies con Capucha',
     descripcion: 'Combinan suavidad, abrigo y diseño versátil. Disponibles en amplia gama de colores, ideales para personalizar con tu marca.',
     minimo: '30 unidades',
-    imagen: '/servicios/p5_34.png',
+    imagen: '/LandingB2B1.png',
     colores: 8,
   },
   {

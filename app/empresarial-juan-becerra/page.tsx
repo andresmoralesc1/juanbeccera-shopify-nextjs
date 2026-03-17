@@ -54,7 +54,7 @@ const productos = [
     titulo: 'Camisas Formales',
     descripcion: 'Diseñadas para quienes valoran presencia y estilo sin sacrificar comodidad. Confeccionadas en materiales de alta calidad.',
     minimo: '30 unidades',
-    imagen: '/servicios/p9_110.png',
+    imagen: '/LandingB2B5.png',
     colores: 5,
   },
   {

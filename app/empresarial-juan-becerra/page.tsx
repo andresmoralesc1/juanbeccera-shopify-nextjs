@@ -62,7 +62,7 @@ const productos = [
     titulo: 'Gorras y Viseras',
     descripcion: 'Drill suave con hebilla metálica y fabricación 100% nacional. Cada una pensada para acompañarte a donde quieras llevarla.',
     minimo: '50 unidades',
-    imagen: '/gorras.webp',
+    imagen: '/LandingB2B6.png',
     colores: 5,
   },
 ];

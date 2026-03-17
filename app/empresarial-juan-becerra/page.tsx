@@ -30,7 +30,7 @@ const productos = [
     titulo: 'Sacos Unisex',
     descripcion: 'Quarter, Cremallera y Crewneck con estructura ligera y detalles refinados. Perfectos para look profesional o casual con elegancia moderna.',
     minimo: '30 unidades',
-    imagen: '/servicios/p4_20.png',
+    imagen: '/LandingB2B3.png',
     colores: 6,
   },
   {

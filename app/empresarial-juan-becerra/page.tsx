@@ -46,7 +46,7 @@ const productos = [
     titulo: 'Chalecos y Chaquetas Puffer',
     descripcion: 'Nylon enguatado con forro térmico o liso. Perfectas para climas fríos con estilo sofisticado y manteniendo la calidez.',
     minimo: '30 unidades',
-    imagen: '/servicios/p6_68.png',
+    imagen: '/LandingB2B2.png',
     colores: 5,
   },
   {

@@ -68,81 +68,14 @@ const productos = [
 ];
 
 const empresasTrabajos = [
-  {
-    id: 1,
-    logo: '/brands/jimador-logo.webp',
-    nombre: 'Jimador',
-    trabajos: [
-      '/brands/jimador-jacket.png',
-      '/brands/jimador-shirt.png',
-    ]
-  },
-  {
-    id: 2,
-    logo: '/brands/mc-logo.png',
-    nombre: 'MC',
-    trabajos: [
-      '/brands/mc-jacket.png',
-      '/brands/mc-shirt.png',
-      '/brands/mc-sweter.png',
-    ]
-  },
-  {
-    id: 3,
-    logo: '/brands/uniandes-logo.jpg',
-    nombre: 'Uniandes',
-    trabajos: [
-      '/brands/uniandes-jacket.png',
-      '/brands/uniandes-jacket-2.png',
-      '/brands/uniandes-jacket-3.png',
-      '/brands/uniandes-polo.png',
-      '/brands/uniandes-sweter.png',
-      '/brands/uniandes-sweter-2.png',
-    ]
-  },
-  {
-    id: 4,
-    logo: '/brands/unisabana-logo.webp',
-    nombre: 'Unisabana',
-    trabajos: [
-      '/brands/unisabana-cap.png',
-      '/brands/unisabana-sweter.png',
-    ]
-  },
-  {
-    id: 5,
-    logo: '/brands/arma-tu-vaca logo.svg',
-    nombre: 'Arma Tu Vaca',
-    trabajos: [
-      '/brands/vaca-cap.png',
-      '/brands/vaca-jacket.png',
-    ]
-  },
-  {
-    id: 6,
-    logo: '/brands/Compensar logo.png',
-    nombre: 'Compensar',
-    trabajos: [
-      '/brands/compensar-jacket.png',
-      '/brands/compensar-jacket-2.png',
-    ]
-  },
-  {
-    id: 7,
-    logo: '/brands/indeleble logo.png',
-    nombre: 'Indeleble',
-    trabajos: [
-      '/brands/indeleble-jacket.png',
-    ]
-  },
-  {
-    id: 8,
-    logo: '/brands/Optive-fusion-logo.svg',
-    nombre: 'Optive Fusion',
-    trabajos: [
-      '/brands/Optivefusion-jacket.jpg',
-    ]
-  },
+  { id: 1, logo: '/brands/jimador-logo.webp', nombre: 'Jimador' },
+  { id: 2, logo: '/brands/mc-logo.png', nombre: 'MC' },
+  { id: 3, logo: '/brands/uniandes-logo.jpg', nombre: 'Uniandes' },
+  { id: 4, logo: '/brands/unisabana-logo.webp', nombre: 'Unisabana' },
+  { id: 5, logo: '/brands/arma-tu-vaca logo.svg', nombre: 'Arma Tu Vaca' },
+  { id: 6, logo: '/brands/Compensar logo.png', nombre: 'Compensar' },
+  { id: 7, logo: '/brands/indeleble logo.png', nombre: 'Indeleble' },
+  { id: 8, logo: '/brands/Optive-fusion-logo.svg', nombre: 'Optive Fusion' },
 ];
 
 const beneficios = [

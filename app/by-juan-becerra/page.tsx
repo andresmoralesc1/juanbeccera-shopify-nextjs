@@ -27,15 +27,18 @@ export const metadata = {
 };
 
 async function FeaturedProductsSection() {
-  const products = await getProducts({ sortKey: 'BEST_SELLING' });
+  const products = await getCollectionProducts({
+    collection: 'deportivo',
+    sortKey: 'BEST_SELLING'
+  });
 
-  const featuredProducts = products.slice(0, 6).map((product) => ({
+  const featuredProducts = products.slice(6, 12).map((product) => ({
     id: product.id,
     name: product.title,
     slug: product.handle,
     price: `$${parseFloat(product.priceRange.maxVariantPrice.amount).toLocaleString('es-CO')}`,
-    category: 'Accesorios',
-    categorySlug: 'accesorios',
+    category: 'Deportivo',
+    categorySlug: 'deportivo',
     imageSrc: product.featuredImage?.url || '/placeholder.jpg',
     description: product.description
   }));
@@ -45,11 +48,12 @@ async function FeaturedProductsSection() {
 
 async function CategorySectionWrapper() {
   const products = await getCollectionProducts({
-    collection: 'camisetas',
+    collection: 'deportivo',
     sortKey: 'BEST_SELLING'
   });
 
-  return <CategoryProductsByJB products={products} title="Camisetas" caption="Nuestra colección de camisetas" />;
+  const firstSix = products.slice(0, 6);
+  return <CategoryProductsByJB products={firstSix} title="Productos Destacados" caption="Nuestra colección destacada" />;
 }
 
 async function AnnouncementBarWrapper() {
@@ -83,7 +87,7 @@ export default function ByJuanBecerraPage() {
       <Suspense fallback={<div className="h-[90vh] bg-gray-100" />}>
         <SeasonalBannerWrapper />
       </Suspense>
-      <div className="py-16 sm:py-24" style={{ backgroundColor: '#1f2c8c' }}>
+      <div className="py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Suspense fallback={<ProductGridSkeleton count={6} />}>
             <FeaturedProductsSection />

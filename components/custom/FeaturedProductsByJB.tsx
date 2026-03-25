@@ -19,9 +19,10 @@ interface FeaturedProduct {
 interface FeaturedProductsByJBProps {
   products: FeaturedProduct[];
   title?: string;
+  showCaption?: boolean;
 }
 
-export default function FeaturedProductsByJB({ products }: FeaturedProductsByJBProps) {
+export default function FeaturedProductsByJB({ products, title, showCaption = false }: FeaturedProductsByJBProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [visibleCards, setVisibleCards] = useState(3);
@@ -150,12 +151,20 @@ export default function FeaturedProductsByJB({ products }: FeaturedProductsByJBP
   }
 
   return (
-    <div className="py-12 sm:py-16 lg:py-20 overflow-hidden" style={{ backgroundColor: '#eb2e11' }}>
+    <div className="py-12 sm:py-16 lg:py-20 overflow-hidden" style={{ backgroundColor: showCaption ? '#131859' : '#ffffff' }}>
+      {/* Título personalizado si se proporciona */}
+      {title && (
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-8">
+          <h2 className="font-belleza text-2xl lg:text-3xl font-light tracking-wide text-center" style={{ color: showCaption ? '#ffffff' : '#111827' }}>
+            {title}
+          </h2>
+        </div>
+      )}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-6 items-center">
 
           {/* Slider con flechas - Izquierda */}
-          <div className="lg:col-span-9 order-2 lg:order-1">
+          <div className={showCaption ? "lg:col-span-9 order-2 lg:order-1" : "lg:col-span-12"}>
             <div className="relative flex items-center">
 
               {/* Botón izquierdo */}
@@ -193,7 +202,7 @@ export default function FeaturedProductsByJB({ products }: FeaturedProductsByJBP
                         />
                       </div>
                       {/* Nombre y precio debajo */}
-                      <div className="mt-3 text-white">
+                      <div className={`mt-3 ${showCaption ? 'text-white' : 'text-gray-900'}`}>
                         <h3 className="font-neulis text-sm sm:text-base font-normal">
                           {product.name}
                         </h3>
@@ -229,7 +238,8 @@ export default function FeaturedProductsByJB({ products }: FeaturedProductsByJBP
                     aria-label={`Ir a página ${pageIndex + 1}`}
                   >
                     <div
-                      className={`h-0.5 transition-all duration-300 ${isActive ? 'w-8 bg-white' : 'w-4 bg-white/50'}`}
+                      className={`h-0.5 transition-all duration-300 ${isActive ? 'w-8' : 'w-4'}`}
+                      style={{ backgroundColor: isActive ? (showCaption ? '#ffffff' : '#111827') : showCaption ? 'rgba(255,255,255,0.5)' : 'rgba(17,24,39,0.3)' }}
                     />
                   </button>
                 );
@@ -237,23 +247,25 @@ export default function FeaturedProductsByJB({ products }: FeaturedProductsByJBP
             </div>
 
             {/* Indicador de swipe solo en mobile */}
-            <div className="block sm:hidden text-center mt-4 text-white/60 text-xs animate-pulse">
+            <div className={`block sm:hidden text-center mt-4 text-xs animate-pulse ${showCaption ? 'text-white/60' : 'text-gray-500/60'}`}>
               ← Desliza para ver más →
             </div>
           </div>
 
-          {/* Caption - Derecha */}
-          <div className="lg:col-span-3 order-1 lg:order-2 flex flex-col justify-center items-center lg:items-start h-full">
-            <p className="font-neulis text-base md:text-lg leading-relaxed text-white text-center lg:text-left mb-6">
-              Descubre nuestros artículos más populares y exclusivos. Cada pieza ha sido cuidadosamente seleccionada para ofrecerte la mejor calidad y estilo.
-            </p>
-            <Link
-              href="/search"
-              className="inline-flex items-center justify-center font-neulis text-white text-sm tracking-[0.15em] uppercase font-medium px-8 py-3 transition-all duration-300 bg-black hover:bg-gray-800"
-            >
-              Ver Todos
-            </Link>
-          </div>
+          {/* Caption - Derecha (opcional) */}
+          {showCaption && (
+            <div className="lg:col-span-3 order-1 lg:order-2 flex flex-col justify-center items-center lg:items-start h-full">
+              <p className="font-neulis text-base md:text-lg leading-relaxed text-white text-center lg:text-left mb-6">
+                Descubre nuestros artículos más populares y exclusivos. Cada pieza ha sido cuidadosamente seleccionada para ofrecerte la mejor calidad y estilo.
+              </p>
+              <Link
+                href="/search"
+                className="inline-flex items-center justify-center font-neulis text-white text-sm tracking-[0.15em] uppercase font-medium px-8 py-3 transition-all duration-300 bg-black hover:bg-gray-800"
+              >
+                Ver Todos
+              </Link>
+            </div>
+          )}
 
         </div>
       </div>

@@ -17,6 +17,7 @@ import { StickyAddToCart } from 'components/product/sticky-add-to-cart';
 import { TrustBadges } from '@/components/ui/trust-badges';
 import { TrackRecentlyViewed } from 'components/product/track-recently-viewed';
 import { RecentlyViewed } from 'components/product/recently-viewed';
+import FeaturedProductsByJB from '@/components/custom/FeaturedProductsByJB';
 
 export async function generateMetadata(props: {
   params: Promise<{ handle: string }>;
@@ -155,55 +156,16 @@ async function RelatedProducts({ id }: { id: string }) {
 
   if (!relatedProducts.length) return null;
 
-  return (
-    <div className="py-16 bg-gray-50">
-      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
-        <h2 className="font-belleza text-2xl lg:text-3xl font-light tracking-wide mb-10 text-gray-900 text-center">
-          También podría gustarte
-        </h2>
-        <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-3">
-          {relatedProducts.map((product) => (
-            <Link
-              key={product.handle}
-              href={`/products/${product.handle}`}
-              className="group relative block product-card"
-              prefetch={true}
-            >
-              <div className="aspect-[3/4] overflow-hidden bg-gray-100 relative mb-3 rounded-sm">
-                {product.featuredImage && (
-                  <NextImage
-                    src={product.featuredImage.url}
-                    alt={product.title}
-                    fill
-                    className="object-cover object-center image-hover-zoom"
-                    sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-                  />
-                )}
-                {/* Badge de Agotado */}
-                {!product.availableForSale && (
-                  <div className="absolute top-3 right-3 z-10">
-                    <span className="inline-flex items-center px-3 py-1 text-xs font-medium tracking-wider uppercase bg-gray-900 text-white">
-                      Agotado
-                    </span>
-                  </div>
-                )}
-                {/* Overlay sutil en hover */}
-                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-5 image-overlay" />
-              </div>
+  const formattedProducts = relatedProducts.map((product) => ({
+    id: product.id,
+    name: product.title,
+    slug: product.handle,
+    price: `$${parseFloat(product.priceRange.maxVariantPrice.amount).toLocaleString('es-CO', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`,
+    category: 'Producto',
+    categorySlug: 'producto',
+    imageSrc: product.featuredImage?.url || '/placeholder.jpg',
+    description: product.description
+  }));
 
-              {/* Info debajo de la imagen - estilo Versace */}
-              <div className="text-left">
-                <h3 className="font-belleza text-sm font-light text-gray-900 tracking-wide mb-1">
-                  {product.title}
-                </h3>
-                <p className="font-moderat text-sm font-semibold text-gray-900">
-                  ${parseFloat(product.priceRange.maxVariantPrice.amount).toLocaleString('es-CO', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
-                </p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
+  return <FeaturedProductsByJB products={formattedProducts} title="También podría gustarte" showCaption={false} />;
 }

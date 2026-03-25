@@ -32,9 +32,28 @@ export const metadata = {
     default: siteName,
     template: `%s | ${siteName}`
   },
+  description: 'Prendas de alta calidad 100% Colombianas. Descubre nuestra colección de camisetas, hoodies, chaquetas y accesorios con diseños únicos y elegancia sin límites.',
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png'
+  },
   robots: {
     follow: true,
     index: true
+  },
+  openGraph: {
+    title: siteName,
+    description: 'Prendas de alta calidad 100% Colombianas. Diseños únicos que combinan elegancia y comodidad.',
+    url: baseUrl,
+    siteName: siteName,
+    images: [{
+      url: '/og-image.png',
+      width: 1200,
+      height: 630,
+      alt: siteName
+    }],
+    locale: 'es_CO',
+    type: 'website'
   }
 };
 
@@ -47,7 +66,8 @@ export default async function RootLayout({
 }: {
   children: ReactNode;
 }) {
-  // Don't await the fetch, pass the Promise to the context provider
+  // Don't await cart, pass the Promise to the context provider for streaming
+  // Collections are awaited for Navbar rendering
   const cart = getCart();
   const collections = await getCollections();
 

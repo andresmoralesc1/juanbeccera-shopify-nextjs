@@ -30,12 +30,20 @@ const siteName = process.env.SITE_NAME || 'Juan Becerra | Elegancia sin limites'
 export const metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: siteName,
-    template: `%s | ${siteName}`
+    default: 'By Juan Becerra - Colección Exclusiva',
+    template: `%s | By Juan Becerra`
   },
+  description: 'Descubre la colección exclusiva By Juan Becerra. Diseños únicos con la mejor calidad y estilo para quienes buscan destacar.',
   robots: {
     follow: true,
     index: true
+  },
+  openGraph: {
+    title: 'By Juan Becerra - Colección Exclusiva',
+    description: 'Descubre la colección exclusiva By Juan Becerra. Diseños únicos con la mejor calidad y estilo.',
+    url: `${baseUrl}/by-juan-becerra`,
+    siteName: siteName,
+    type: 'website'
   }
 };
 

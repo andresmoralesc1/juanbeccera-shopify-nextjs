@@ -52,3 +52,23 @@ export function CategorySliderSkeleton() {
     </div>
   );
 }
+
+export function CarouselSkeleton() {
+  return (
+    <div className="py-12 sm:py-16 lg:py-20 bg-white">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Title skeleton */}
+        <div className="mb-8">
+          <Skeleton className="h-10 w-64 mx-auto" />
+        </div>
+
+        {/* Carousel skeletons */}
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+          {[1, 2, 3].map((i) => (
+            <ProductCardSkeleton key={i} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}

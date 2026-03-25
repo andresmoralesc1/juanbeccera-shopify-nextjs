@@ -18,6 +18,7 @@ import { TrustBadges } from '@/components/ui/trust-badges';
 import { TrackRecentlyViewed } from 'components/product/track-recently-viewed';
 import { RecentlyViewed } from 'components/product/recently-viewed';
 import FeaturedProductsByJB from '@/components/custom/FeaturedProductsByJB';
+import { CarouselSkeleton } from '@/components/ui/skeleton';
 
 export async function generateMetadata(props: {
   params: Promise<{ handle: string }>;
@@ -136,7 +137,7 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
       </div>
 
       {/* Related Products */}
-      <Suspense fallback={<div className="py-16 text-center">Cargando productos relacionados...</div>}>
+      <Suspense fallback={<CarouselSkeleton />}>
         <RelatedProducts id={product.id} />
       </Suspense>
 

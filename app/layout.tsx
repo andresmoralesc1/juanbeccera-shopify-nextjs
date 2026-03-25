@@ -4,6 +4,7 @@ import NavbarIntegrated from '@/components/custom/NavbarIntegrated';
 import AnnouncementBar from '@/components/custom/AnnouncementBar';
 import { PageProgress } from '@/components/ui/page-progress';
 import { WebVitals } from '@/components/web-vitals';
+import { SkipLink } from '@/components/ui/skip-link';
 import { GeistSans } from 'geist/font/sans';
 import { getCart, getCollections } from 'lib/shopify';
 import type { ReactNode } from 'react';
@@ -72,12 +73,13 @@ export default async function RootLayout({
               height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}></iframe>
           </noscript>
         )}
+        <SkipLink />
         <AnnouncementBar />
         <CartProvider cartPromise={cart}>
           <WebVitals />
           <PageProgress />
           <NavbarIntegrated collections={collections} />
-          <main className="pt-[156px]">
+          <main id="main" className="pt-[156px]">
             {children}
             <Toaster closeButton />
           </main>

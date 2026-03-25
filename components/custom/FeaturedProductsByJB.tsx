@@ -247,7 +247,7 @@ export default function FeaturedProductsByJB({ products, title, showCaption = fa
             </div>
 
             {/* Indicador de swipe solo en mobile */}
-            <div className={`block sm:hidden text-center mt-4 text-xs animate-pulse ${showCaption ? 'text-white/60' : 'text-gray-500/60'}`}>
+            <div className={`block sm:hidden text-center mt-4 text-xs animate-pulse ${showCaption ? 'text-white/80' : 'text-gray-600'}`}>
               ← Desliza para ver más →
             </div>
           </div>

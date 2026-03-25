@@ -77,7 +77,7 @@ export function Toast({ message, type, duration = 3000, onClose }: ToastProps) {
             setIsVisible(false);
             setTimeout(onClose, 300);
           }}
-          className="flex-shrink-0 text-gray-400 hover:text-gray-600 transition-colors"
+          className="flex-shrink-0 text-gray-500 hover:text-gray-700 transition-colors"
           aria-label="Cerrar"
         >
           <X className="h-4 w-4" />
